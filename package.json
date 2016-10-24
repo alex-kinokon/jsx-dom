@@ -1,0 +1,32 @@
+{
+  "name": "jsx-dom",
+  "version": "2.0.2",
+  "description": "JSX to document.createElement.",
+  "main": "dist/index.cjs.js",
+  "jsnext:main": "dist/index.es.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "jsx"
+  ],
+  "typings": "dist/jsx-dom.d.ts",
+  "author": "Alex Mattrick",
+  "license": "MIT",
+  "devDependencies": {
+    "rollup": "^0.36.3",
+    "rollup-plugin-buble": "^0.14.0"
+  },
+  "dependencies": {
+    "rollup": "^0.36.3",
+    "rollup-plugin-buble": "^0.14.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexlur/jsx-dom.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alexlur/jsx-dom/issues"
+  },
+  "homepage": "https://github.com/alexlur/jsx-dom#readme"
+}
