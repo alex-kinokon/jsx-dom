@@ -25,8 +25,10 @@ export function createElement( tag, attr, ...children ) {
 		append( children, node );
 		return node;
 	} else if (isFunction( tag )) {
-		const props = Object.assign({}, attr, { children });
-		return tag( props );
+		// Custom elements.
+		const node = new tag();
+		attributes(attr, node);
+		return node;
 	}
 }
 
