@@ -1,7 +1,7 @@
 {
   "name": "jsx-dom",
-  "version": "2.0.2",
-  "description": "JSX to document.createElement.",
+  "version": "3.0.0",
+  "description": "JSX to document.createElement",
   "main": "dist/index.cjs.js",
   "jsnext:main": "dist/index.es.js",
   "scripts": {
