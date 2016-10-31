@@ -44,8 +44,10 @@ function createElement( tag, attr ) {
 		append( children, node );
 		return node;
 	} else if (isFunction( tag )) {
-		var props = Object.assign({}, attr, { children: children });
-		return tag( props );
+		// Custom elements.
+		var node$1 = new tag();
+		attributes(attr, node$1);
+		return node$1;
 	}
 }
 
