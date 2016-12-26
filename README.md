@@ -43,4 +43,4 @@ Two extra functions are provided by this package:
 2. `stopPropagation(event: Event): Event`
 
 ## Browser Support
-`jsx-dom` requires `Object.keys` and `Object.assign` (an ES6 feature). If you are using Babel, the [`transform-object-assign`](https://babeljs.io/docs/plugins/transform-object-assign/#usage) plugin should eliminate the need for a polyfill.
+`jsx-dom` requires `Object.keys`.
