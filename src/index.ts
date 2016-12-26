@@ -1,3 +1,5 @@
+import { __assign } from 'tslib';
+
 import {
 	isArrayLike,
 	isElement,
@@ -6,6 +8,15 @@ import {
 	isObject,
 	isFunction
 } from './util';
+
+export function preventDefault(event: Event) {
+	event.preventDefault();
+	return event;
+}
+export function stopPropagation(event: Event) {
+	event.stopPropagation();
+	return event;
+}
 
 
 function className( value ) {
@@ -26,9 +37,7 @@ export function createElement( tag, attr, ...children ) {
 		return node;
 	} else if (isFunction( tag )) {
 		// Custom elements.
-		const node = new tag();
-		attributes(attr, node);
-		return node;
+		return tag({ ...attr, children });
 	}
 }
 
@@ -57,11 +66,11 @@ function attributes( attr, node ) {
 		switch (key) {
 			case 'style':
 				typeof value === 'object'
-				? Object.assign( node[key], value )
+				? __assign( node[key], value )
 				: node.style = value;
 				continue;
 			case 'dataset':
-				Object.assign( node[key], value );
+				__assign( node[key], value );
 				continue;
 			case 'innerHTML':
 			case 'innerText':
