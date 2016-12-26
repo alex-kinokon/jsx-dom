@@ -9,8 +9,8 @@ npm install --save jsx-dom
 ```javascript
 // Using React namespace, works with most transpilers directly
 import * as React from 'jsx-dom';
-// Or: Using a custom namespace, see the paragraph below.
-import * as jsxDom from 'jsx-dom';
+// Or: specify the JSX pragma directly. See below for instructions.
+import { createElement } from 'jsx-dom';
 
 document.body.appendChild( <div id="hello" /> );
 ```
@@ -21,8 +21,20 @@ you need to provide the module name as pragma with your Babel settings, specific
 ```js
 {
 	"plugins": [
-		[ "transform-react-jsx", { "pragma": "jsxDom" } ]
+		[ "transform-react-jsx", { "pragma": "createElement" } ]
 	]
+}
+```
+
+Or if you prefer to work with TypeScript:
+
+```js
+import { createElement } from 'jsx-dom';
+
+// In tsconfig.json:
+{
+	"jsx": "react",
+	"jsxFactory": "createElement",
 }
 ```
 
