@@ -1,6 +1,6 @@
 {
   "name": "jsx-dom",
-  "version": "3.0.0",
+  "version": "4.0.1",
   "description": "JSX to document.createElement",
   "main": "dist/index.cjs.js",
   "jsnext:main": "dist/index.es.js",
@@ -14,12 +14,11 @@
   "author": "Alex Mattrick",
   "license": "MIT",
   "devDependencies": {
-    "rollup": "^0.36.3",
-    "rollup-plugin-buble": "^0.14.0"
-  },
-  "dependencies": {
-    "rollup": "^0.36.3",
-    "rollup-plugin-buble": "^0.14.0"
+    "@alexlur/rollup-plugin-typescript": "^1.0.2",
+    "@types/babel-core": "^6.7.14",
+    "babel-core": "^6.21.0",
+    "rollup": "^0.38.0",
+    "typescript": "^2.1.4"
   },
   "repository": {
     "type": "git",
