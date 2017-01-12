@@ -99,7 +99,7 @@ function attributes( attr, node ) {
         continue;
       case 'class':
       case 'className':
-        node.className = className( value );
+        node.setAttribute('class', className( value ));
         continue;
     }
 
