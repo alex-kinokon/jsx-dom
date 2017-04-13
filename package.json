@@ -1,12 +1,12 @@
 {
   "name": "jsx-dom",
-  "version": "4.0.5",
+  "version": "4.1.0",
   "description": "JSX to document.createElement.",
   "main": "dist/index.cjs.js",
   "jsnext:main": "dist/index.es.js",
   "module": "dist/index.es.js",
   "scripts": {
-    "test": "test"
+    "test": "mocha ./test/test.tsx --compilers ts:ts-node/register"
   },
   "keywords": [
     "jsx"
@@ -17,9 +17,17 @@
   "devDependencies": {
     "@alexlur/rollup-plugin-typescript": "^1.0.4",
     "@types/babel-core": "^6.7.14",
-    "babel-core": "^6.23.1",
-    "rollup": "^0.41.4",
-    "typescript": "^2.2.1"
+    "@types/chai": "^3.5.0",
+    "@types/jsdom": "^2.0.30",
+    "@types/mocha": "^2.2.40",
+    "@types/node": "^7.0.12",
+    "babel-core": "^6.24.1",
+    "chai": "^3.5.0",
+    "jsdom": "^9.12.0",
+    "mocha": "^3.2.0",
+    "rollup": "^0.41.6",
+    "ts-node": "^3.0.2",
+    "typescript": "^2.2.2"
   },
   "repository": {
     "type": "git",

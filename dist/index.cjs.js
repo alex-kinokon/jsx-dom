@@ -10,6 +10,9 @@ var __assign = Object.assign || function __assign(t) {
     return t;
 };
 
+function isBoolean(val) {
+    return typeof val === 'boolean';
+}
 function isElement(val) {
     return val && typeof val.nodeType === 'number';
 }
@@ -75,9 +78,13 @@ function stopPropagation(event) {
     event.stopPropagation();
     return event;
 }
+
+function isVisibleChild(value) {
+    return !isBoolean(value) && value != null;
+}
 function className(value) {
     if (Array.isArray(value)) {
-        return value.filter(Boolean).join(' ');
+        return value.filter(isVisibleChild).join(' ');
     } else if (isObject(value)) {
         return Object.keys(value).filter(function (k) {
             return value[k];
