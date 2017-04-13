@@ -2,6 +2,7 @@ import { __assign } from 'tslib';
 
 import {
   isArrayLike,
+  isBoolean,
   isElement,
   isNumber,
   isString,
@@ -19,9 +20,16 @@ export function stopPropagation(event: Event) {
   event.stopPropagation();
   return event;
 }
+
+// https://facebook.github.io/react/docs/jsx-in-depth.html#booleans-null-and-undefined-are-ignored
+// Emulate JSX Expression logic to ignore certain type of children or className.
+function isVisibleChild( value: any ) {
+  return !isBoolean(value) && value != null;
+}
+
 function className( value: any ) {
   if (Array.isArray( value )) {
-    return value.filter( Boolean ).join(' ');
+    return value.filter( isVisibleChild ).join(' ');
   } else if (isObject( value )) {
     return Object.keys( value ).filter( k => value[k] ).join(' ');
   } else {
@@ -69,7 +77,7 @@ function append( children, node = this ) {
     if (isArrayLike( child )) {
       append( child, node );
     } else if (isString( child ) || isNumber( child )) {
-      node.appendChild( document.createTextNode( child ) );
+      node.appendChild( document.createTextNode( child as any ) );
     } else if (child === null) {
       node.appendChild( document.createComment('') );
     } else if (isElement( child )) {

@@ -1,48 +1,53 @@
 # jsx-dom
 Use JSX for creating DOM elements.
 
-## Usage
+## Installation
 ```bash
 npm install --save jsx-dom
 ```
 
-```javascript
-// Using React namespace, works with most transpilers directly
-import * as React from 'jsx-dom';
-// Or: specify the JSX pragma directly. See below for instructions.
+## Usage
+```jsx
 import { createElement } from 'jsx-dom';
-
-document.body.appendChild( <div id="hello" /> );
+document.body.appendChild( <div id="greeting" class="alert">Hello World</div> );
 ```
 
-If you prefer `jsx-dom` not to occupy the React namespace,
-you need to provide the module name as pragma with your Babel settings, specifically within your `.babelrc`:
+You need to tell your transpiler to use the name `createElement`. If you prefer not to, skip to the next section for instrutions. For Babel users, specify within your `.babelrc`:
 
 ```js
 {
-	"plugins": [
-		[ "transform-react-jsx", { "pragma": "createElement" } ]
-	]
+  "plugins": [
+    [ "transform-react-jsx", { "pragma": "createElement" } ]
+  ]
 }
 ```
 
 Or if you prefer to work with TypeScript:
 
-```js
-import { createElement } from 'jsx-dom';
-
+```json
 // In tsconfig.json:
 {
-	"jsx": "react",
-	"jsxFactory": "createElement",
+  "jsx": "react",
+  "jsxFactory": "createElement",
 }
+```
+
+### Usage without `.babelrc` or `tsconfig` options
+
+If you don’t want to configure your transpiler to use `jsx-dom`, simply import it using 
+the React namespace:
+
+```js
+import * as React from 'jsx-dom';
 ```
 
 ## Syntax
 `jsx-dom` is based on the React JSX syntax with a few additions:
 
 1. `class` is supported as an attribute as well as `className`
-2. `class` can take an array of strings (and booleans, but they will be filtered out automatically) or an object with the format `{ [key: string]: boolean }`.
+2. `class` can take an object with the format `{ [key: string]: boolean }`. Keys with a truthy value will be added to the classList.
+2. `class` can also take an array of values: 
+Note that `false`, `true`, `null`, `undefined` will be ignored per [React documentations](https://facebook.github.io/react/docs/jsx-in-depth.html#booleans-null-and-undefined-are-ignored), and everything else will be used. As an example: `<div class={[ condition && "class" ]} />`;
 3. `style` accepts both strings and objects.
 4. `dataset` accepts an object.
 5. Attributes starts with `on` and has a function value will be treated as an event listener and thus attached to the node.
@@ -55,4 +60,4 @@ Two extra functions are provided by this package:
 2. `stopPropagation(event: Event): Event`
 
 ## Browser Support
-`jsx-dom` requires `Object.keys`.
+`jsx-dom` requires `Object.keys` support. This means IE9 or later.
