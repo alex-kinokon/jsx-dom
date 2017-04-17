@@ -156,7 +156,11 @@ function attributes(attr, node) {
                 node.setAttribute(key, value);
             }
         } else if (node) {
-            node.setAttribute(key, value);
+            if (value === true) {
+                node.setAttribute(key, '');
+            } else if (value !== false && value != null) {
+                node.setAttribute(key, value);
+            }
         }
     }
     return node;
