@@ -38,4 +38,8 @@ describe('jsx-dom', function () {
 
 	});
 
+  it('supports boolean attributes', function () {
+		expect((<input disabled={true} />).getAttribute("disabled")).to.equal("");
+		expect((<input disabled={false} />).getAttribute("disabled")).to.equal(null);
+	});
 });
