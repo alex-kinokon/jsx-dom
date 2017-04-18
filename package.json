@@ -6,6 +6,7 @@
   "jsnext:main": "dist/index.es.js",
   "module": "dist/index.es.js",
   "scripts": {
+    "build": "rollup -c",
     "test": "mocha ./test/test.tsx --compilers ts:ts-node/register"
   },
   "keywords": [
