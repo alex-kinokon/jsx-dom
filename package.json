@@ -1,6 +1,6 @@
 {
   "name": "jsx-dom",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "description": "JSX to document.createElement.",
   "main": "dist/index.cjs.js",
   "jsnext:main": "dist/index.es.js",
@@ -24,7 +24,7 @@
     "@types/node": "^7.0.12",
     "babel-core": "^6.24.1",
     "chai": "^3.5.0",
-    "jsdom": "^9.12.0",
+    "jsdom": "^10.1.0",
     "mocha": "^3.2.0",
     "rollup": "^0.41.6",
     "ts-node": "^3.0.2",
