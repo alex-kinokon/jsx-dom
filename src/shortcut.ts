@@ -1,36 +1,39 @@
 import { createElement } from './index';
 
-function createFactory(tag: keyof HTMLElementTagNameMap | string) {
+/**
+ * Create factory function.
+ */
+function f(tag: keyof HTMLElementTagNameMap | string) {
 	return function create(attr?, ...children) {
 		return createElement(tag, attr, ...children);
 	};
 }
 
-export default {
-	a: createFactory('a'),
-	blockquote: createFactory('blockquote'),
-	button: createFactory('button'),
-	div: createFactory('div'),
-	em: createFactory('em'),
-	h1: createFactory('h1'),
-	h2: createFactory('h2'),
-	h3: createFactory('h3'),
-	h4: createFactory('h4'),
-	h5: createFactory('h5'),
-	h6: createFactory('h6'),
-	hr: createFactory('hr'),
-	img: createFactory('img'),
-	input: createFactory('input'),
-	li: createFactory('li'),
-	link: createFactory('link'),
-	ol: createFactory('ol'),
-	p: createFactory('p'),
-	script: createFactory('script'),
-	span: createFactory('span'),
-	strong: createFactory('strong'),
-	table: createFactory('table'),
-	td: createElement('td'),
-	th: createElement('th'),
-	tr: createFactory('tr'),
-	ul: createFactory('ul'),
+export const DOM = {
+	a: f('a'),
+	blockquote: f('blockquote'),
+	button: f('button'),
+	div: f('div'),
+	em: f('em'),
+	h1: f('h1'),
+	h2: f('h2'),
+	h3: f('h3'),
+	h4: f('h4'),
+	h5: f('h5'),
+	h6: f('h6'),
+	hr: f('hr'),
+	img: f('img'),
+	input: f('input'),
+	li: f('li'),
+	link: f('link'),
+	ol: f('ol'),
+	p: f('p'),
+	script: f('script'),
+	span: f('span'),
+	strong: f('strong'),
+	table: f('table'),
+	td: f('td'),
+	th: f('th'),
+	tr: f('tr'),
+	ul: f('ul'),
 };

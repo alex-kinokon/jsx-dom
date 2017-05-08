@@ -30,7 +30,7 @@ function isArrayLike(obj) {
     return isObject(obj) && typeof obj.length === 'number' && typeof obj.nodeType !== 'number';
 }
 
-function createFactory(tag) {
+function f(tag) {
     return function create(attr) {
         var children = [];
         for (var _i = 1; _i < arguments.length; _i++) {
@@ -39,35 +39,36 @@ function createFactory(tag) {
         return createElement.apply(void 0, [tag, attr].concat(children));
     };
 }
-var shortcut = {
-    a: createFactory('a'),
-    blockquote: createFactory('blockquote'),
-    button: createFactory('button'),
-    div: createFactory('div'),
-    em: createFactory('em'),
-    h1: createFactory('h1'),
-    h2: createFactory('h2'),
-    h3: createFactory('h3'),
-    h4: createFactory('h4'),
-    h5: createFactory('h5'),
-    h6: createFactory('h6'),
-    hr: createFactory('hr'),
-    img: createFactory('img'),
-    input: createFactory('input'),
-    li: createFactory('li'),
-    link: createFactory('link'),
-    ol: createFactory('ol'),
-    p: createFactory('p'),
-    script: createFactory('script'),
-    span: createFactory('span'),
-    strong: createFactory('strong'),
-    table: createFactory('table'),
-    td: createElement('td'),
-    th: createElement('th'),
-    tr: createFactory('tr'),
-    ul: createFactory('ul')
+var DOM$$1 = {
+    a: f('a'),
+    blockquote: f('blockquote'),
+    button: f('button'),
+    div: f('div'),
+    em: f('em'),
+    h1: f('h1'),
+    h2: f('h2'),
+    h3: f('h3'),
+    h4: f('h4'),
+    h5: f('h5'),
+    h6: f('h6'),
+    hr: f('hr'),
+    img: f('img'),
+    input: f('input'),
+    li: f('li'),
+    link: f('link'),
+    ol: f('ol'),
+    p: f('p'),
+    script: f('script'),
+    span: f('span'),
+    strong: f('strong'),
+    table: f('table'),
+    td: f('td'),
+    th: f('th'),
+    tr: f('tr'),
+    ul: f('ul')
 };
 
+var SVGNamespace = 'http://www.w3.org/2000/svg';
 function preventDefault(event) {
     event.preventDefault();
     return event;
@@ -80,6 +81,7 @@ function stopPropagation(event) {
 function isVisibleChild(value) {
     return !isBoolean(value) && value != null;
 }
+
 function className(value) {
     if (Array.isArray(value)) {
         return value.filter(isVisibleChild).join(' ');
@@ -91,14 +93,71 @@ function className(value) {
         return '' + value;
     }
 }
+var svg = __assign(Object.create(null), {
+    svg: 0,
+    animate: 0,
+    circle: 0,
+    clipPath: 0,
+    defs: 0,
+    desc: 0,
+    ellipse: 0,
+    feBlend: 0,
+    feColorMatrix: 0,
+    feComponentTransfer: 0,
+    feComposite: 0,
+    feConvolveMatrix: 0,
+    feDiffuseLighting: 0,
+    feDisplacementMap: 0,
+    feDistantLight: 0,
+    feFlood: 0,
+    feFuncA: 0,
+    feFuncB: 0,
+    feFuncG: 0,
+    feFuncR: 0,
+    feGaussianBlur: 0,
+    feImage: 0,
+    feMerge: 0,
+    feMergeNode: 0,
+    feMorphology: 0,
+    feOffset: 0,
+    fePointLight: 0,
+    feSpecularLighting: 0,
+    feSpotLight: 0,
+    feTile: 0,
+    feTurbulence: 0,
+    filter: 0,
+    foreignObject: 0,
+    g: 0,
+    image: 0,
+    line: 0,
+    linearGradient: 0,
+    marker: 0,
+    mask: 0,
+    metadata: 0,
+    path: 0,
+    pattern: 0,
+    polygon: 0,
+    polyline: 0,
+    radialGradient: 0,
+    rect: 0,
+    stop: 0,
+    switch: 0,
+    symbol: 0,
+    text: 0,
+    textPath: 0,
+    tspan: 0,
+    use: 0,
+    view: 0
+});
 function createElement(tag, attr) {
     var children = [];
     for (var _i = 2; _i < arguments.length; _i++) {
         children[_i - 2] = arguments[_i];
     }
+    attr = attr || {};
     if (isString(tag)) {
-        var node = document.createElement(tag);
-        attributes(attr || {}, node);
+        var node = 'namespaceURI' in attr ? document.createElementNS(attr.namespaceURI, tag) : tag in svg ? document.createElementNS(SVGNamespace, tag) : document.createElement(tag);
+        attributes(attr, node);
         append(children, node);
         return node;
     } else if (isFunction(tag)) {
@@ -146,6 +205,8 @@ function attributes(attr, node) {
             case 'className':
                 node.setAttribute('class', className(value));
                 continue;
+            case 'namespaceURI':
+                continue;
         }
         if (isFunction(value)) {
             if (key.startsWith('on')) {
@@ -170,4 +231,4 @@ function listen(node, eventName, callback) {
     return node;
 }
 
-export { preventDefault, stopPropagation, createElement, shortcut as DOM };
+export { SVGNamespace, preventDefault, stopPropagation, createElement, DOM$$1 as DOM };

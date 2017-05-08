@@ -1,15 +1,17 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "target": "es5",
-        "noImplicitAny": false,
-        "sourceMap": false,
-        "allowJs": true,
-        "jsx": "react",
-        "jsxFactory": "jsx.createElement",
-        "lib": [
-            "dom", "es2015"
-        ]
-    }
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es5",
+    "noImplicitAny": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": false,
+    "allowJs": true,
+    "jsx": "react",
+    "jsxFactory": "jsx.createElement",
+    "lib": [
+      "dom", "es2015"
+    ]
+  }
 }
