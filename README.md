@@ -68,7 +68,7 @@ Two extra functions and one constant are provided by this package:
 
 1. `preventDefault(event: Event): Event`
 2. `stopPropagation(event: Event): Event`
-3. `SVGNamespace` is the `namespaceURI` for SVG Elements.
+3. `SVGNamespace` is the `namespaceURI` string for SVG Elements.
 
 ## Browser Support
 `jsx-dom` requires `Object.keys` and `Object.create` support. This means IE9 or later.

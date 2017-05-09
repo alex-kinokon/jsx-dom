@@ -4,8 +4,8 @@ import { createElement } from './index';
  * Create factory function.
  */
 function f(tag: keyof HTMLElementTagNameMap | string) {
-	return function create(attr?, ...children) {
-		return createElement(tag, attr, ...children);
+	return function create(attr, ...children): Element {
+		return createElement(tag, attr, children);
 	};
 }
 

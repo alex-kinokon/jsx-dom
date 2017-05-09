@@ -1,17 +1,15 @@
-// import { ok as assert } from 'assert';
 const { JSDOM } = require('jsdom');
+import jsx = require('../dist/index.cjs');
 import { expect } from 'chai';
 import 'mocha';
 
 // Set up jsdom
 const dom = new JSDOM('');
-const window: Window = dom.window;
-global['document'] = window.document;
-
-const jsx = require('../dist/index.cjs.js');
+(global as any).window = dom.window;
+(global as any).document = dom.window.document;
 
 // Monkey patch jsdom to support dataset.
-function toPropKey(prop) {
+function toPropKey(prop: PropertyKey) {
 	return 'data-' + `${prop}`.toLowerCase();
 }
 Object.defineProperty((window as any).Element.prototype, 'dataset', {
@@ -31,7 +29,7 @@ Object.defineProperty((window as any).Element.prototype, 'dataset', {
 describe('jsx-dom', function () {
 
 	it('creates a <div> element', function () {
-		expect((<div id="hello">world</div>).outerHTML).to.equal(`<div id="hello">world</div>`);
+		expect((<div id="hello">world</div>).outerHTML).to.equal('<div id="hello">world</div>');
 	});
 
 	it('supports functional components', function () {
@@ -49,35 +47,44 @@ describe('jsx-dom', function () {
 	describe('className', function () {
 
 		it('accepts both `class`, `className` as valid input for classes.', function () {
-			expect((<div className="me irl" />).className).to.equal("me irl");
-			expect((<div class="me too thanks" />).className).to.equal("me too thanks");
+			expect((<div className="me irl" />).className).to.equal('me irl');
+			expect((<div class="me too thanks" />).className).to.equal('me too thanks');
 		});
 
 		it('accepts an array as valid input for class', function () {
-			expect((<div class={["le", "devoir"]} />).className).to.equal("le devoir");
+			expect((<div class={["le", "devoir"]} />).className).to.equal('le devoir');
+		});
+
+		it('accepts an object literal as a valid input', function () {
+			const node = <div class={{
+				included: true,
+				excluded: false
+			}} />;
+
+			expect(node.className).to.equal('included');
 		});
 
 		it('filters out falsy values, but not 0, from the class array', function () {
 			const node = <div class={[
-				(Math.PI < 3) && "Hell is freezing over",
-				([].length && "should be 0"),
-				"rest"
+				(Math.PI < 3) && 'Hell is freezing over',
+				([].length && 'should be 0'),
+				'rest'
 			]} />;
 
-			expect(node.className).to.equal("0 rest");
+			expect(node.className).to.equal('0 rest');
 		});
 
 	});
 
 	describe('attributes', function () {
 		it('supports boolean attributes', function () {
-			expect((<input disabled={true} />).getAttribute("disabled")).to.equal("");
-			expect((<input disabled={false} />).getAttribute("disabled")).to.equal(null);
+			expect((<input disabled={true} />).getAttribute('disabled')).to.equal('');
+			expect((<input disabled={false} />).getAttribute('disabled')).to.equal(null);
 		});
 
 		it('supports dataset', function () {
-			expect((<div data-key="value" />).dataset.key).to.equal("value");
-			expect((<div dataset={{ key: "value" }} />).getAttribute('data-key')).to.equal("value");
+			expect((<div data-key="value" />).dataset.key).to.equal('value');
+			expect((<div dataset={{ key: 0 }} />).getAttribute('data-key')).to.equal('0');
 		});
 	});
 
