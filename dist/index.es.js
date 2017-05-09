@@ -36,7 +36,7 @@ function f(tag) {
         for (var _i = 1; _i < arguments.length; _i++) {
             children[_i - 1] = arguments[_i];
         }
-        return createElement.apply(void 0, [tag, attr].concat(children));
+        return createElement(tag, attr, children);
     };
 }
 var DOM$$1 = {
