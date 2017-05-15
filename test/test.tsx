@@ -93,6 +93,13 @@ describe('jsx-dom', function () {
 		button.click();
 	});
 
+	it('supports ref store function', function () {
+		let button = null;
+		const div = <div><button ref={e=>button=e}/></div> as HTMLButtonElement;
+		expect(button).not.to.equal(null);
+		expect(div.children[0]).to.equal(button);
+	});
+
 	describe('SVG', function () {
 		const namespace = jsx.SVGNamespace;
 

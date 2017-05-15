@@ -7,6 +7,13 @@ type NativeElement = HTMLElement | SVGElement;
 type Dictionary<T> = {
   [key: string]: T;
 }
+type Ref<T> = ((instance: T) => any);
+
+declare module JSX {
+  interface IntrinsicAttributes {
+    ref?: Ref<Element>;
+  }
+}
 
 declare module "jsx-dom" {
   export function createElement<Tag extends keyof HTMLElementTagNameMap>(
@@ -23,7 +30,7 @@ declare module "jsx-dom" {
 
   export function createElement<Result extends Element, Props>(
     factory: (props: Props & { children: JSX.Child[] }) => Result,
-    props?: Props & { children?: any },
+    props?: Props & { ref?: Ref<Result>; children?: any },
     ...children: JSX.Child[]
   ): Result;
 
@@ -1834,6 +1841,7 @@ declare namespace JSX {
     innerText?: string;
     textContent?: string;
     namespaceURI?: string;
+    ref?: (e: Element) => void;
 
     // Clipboard Events
     onCopy?: ClipboardEventHandler;
