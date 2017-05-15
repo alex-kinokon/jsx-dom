@@ -190,6 +190,9 @@ function attributes(attr, node) {
         var key = _a[_i];
         var value = attr[key];
         switch (key) {
+            case 'ref':
+                isFunction(value) && value(node);
+                continue;
             case 'style':
                 typeof value === 'object' ? __assign(node[key], value) : node.style = value;
                 continue;

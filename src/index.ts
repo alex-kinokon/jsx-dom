@@ -142,6 +142,9 @@ function attributes( attr, node ) {
     let value = attr[key];
 
     switch (key) {
+      case 'ref':
+        isFunction(value) && value(node);
+        continue;
       case 'style':
         typeof value === 'object'
         ? __assign( node[key], value )
