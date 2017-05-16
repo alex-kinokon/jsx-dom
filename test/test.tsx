@@ -95,7 +95,15 @@ describe('jsx-dom', function () {
 
 	it('supports ref store function', function () {
 		let button = null;
-		const div = <div><button ref={e=>button=e}/></div> as HTMLButtonElement;
+		const div = <div><button ref={ e => button=e }/></div>;
+		expect(button).not.to.equal(null);
+		expect(div.children[0]).to.equal(button);
+	});
+	
+	it('supports ref in functional components', function () {
+		let button = null;
+		const Button = () => <button/>;
+		const div = <div><Button ref={ e => button=e }/></div>;
 		expect(button).not.to.equal(null);
 		expect(div.children[0]).to.equal(button);
 	});
