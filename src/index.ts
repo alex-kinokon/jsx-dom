@@ -105,18 +105,22 @@ const svg = __assign(Object.create(null), {
 
 export function createElement( tag, attr, ...children ) {
   attr = attr || {};
+  let node: Element;
   if (isString( tag )) {
-    const node =
+     node =
       'namespaceURI' in attr ? document.createElementNS( attr.namespaceURI, tag )
       : tag in svg ? document.createElementNS( SVGNamespace, tag )
       : document.createElement( tag );
     attributes( attr, node );
     append( children, node );
-    return node;
   } else if (isFunction( tag )) {
     // Custom elements.
-    return tag({ ...attr, children });
+    node = tag({ ...attr, children });
   }
+  if ('ref' in attr && isFunction(attr.ref)) {
+    attr.ref(node);
+  }
+  return node;
 }
 
 function append( children, node = this ) {
@@ -159,6 +163,7 @@ function attributes( attr, node ) {
       case 'className':
         node.setAttribute('class', className( value ));
         continue;
+      case 'ref':
       case 'namespaceURI':
         continue;
     }
