@@ -35,7 +35,7 @@ function isVisibleChild( value: any ) {
  * Convert a `value` to a className string.
  * `value` can be a string, an array or a `Dictionary<boolean>`.
  */
-function className( value: any ): string {
+export function className( value: string | (string | boolean)[] | { [className: string]: boolean} ): string {
   if (Array.isArray( value )) {
     return value.filter( isVisibleChild ).join(' ');
   } else if (isObject( value )) {
@@ -105,18 +105,22 @@ const svg = __assign(Object.create(null), {
 
 export function createElement( tag, attr, ...children ) {
   attr = attr || {};
+  let node: Element;
   if (isString( tag )) {
-    const node =
+     node =
       'namespaceURI' in attr ? document.createElementNS( attr.namespaceURI, tag )
       : tag in svg ? document.createElementNS( SVGNamespace, tag )
       : document.createElement( tag );
     attributes( attr, node );
     append( children, node );
-    return node;
   } else if (isFunction( tag )) {
     // Custom elements.
-    return tag({ ...attr, children });
+    node = tag({ ...attr, children });
   }
+  if("ref" in attr && isFunction(attr.ref)) {
+    attr.ref(node);
+  }
+  return node;
 }
 
 function append( children, node = this ) {
@@ -143,7 +147,6 @@ function attributes( attr, node ) {
 
     switch (key) {
       case 'ref':
-        isFunction(value) && value(node);
         continue;
       case 'style':
         typeof value === 'object'
