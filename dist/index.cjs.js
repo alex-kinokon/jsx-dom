@@ -157,14 +157,18 @@ function createElement(tag, attr) {
         children[_i - 2] = arguments[_i];
     }
     attr = attr || {};
+    var node;
     if (isString(tag)) {
-        var node = 'namespaceURI' in attr ? document.createElementNS(attr.namespaceURI, tag) : tag in svg ? document.createElementNS(SVGNamespace, tag) : document.createElement(tag);
+        node = 'namespaceURI' in attr ? document.createElementNS(attr.namespaceURI, tag) : tag in svg ? document.createElementNS(SVGNamespace, tag) : document.createElement(tag);
         attributes(attr, node);
         append(children, node);
-        return node;
     } else if (isFunction(tag)) {
-        return tag(__assign({}, attr, { children: children }));
+        node = tag(__assign({}, attr, { children: children }));
     }
+    if ('ref' in attr && isFunction(attr.ref)) {
+        attr.ref(node);
+    }
+    return node;
 }
 function append(children, node) {
     if (node === void 0) {
@@ -207,6 +211,7 @@ function attributes(attr, node) {
             case 'className':
                 node.setAttribute('class', className(value));
                 continue;
+            case 'ref':
             case 'namespaceURI':
                 continue;
         }

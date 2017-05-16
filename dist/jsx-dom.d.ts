@@ -2,11 +2,6 @@
  * Adapted from React’s TypeScript definition from DefinitelyTyped.
  * @see https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/react/index.d.ts
  */
-type NativeElement = HTMLElement | SVGElement;
-
-type Dictionary<T> = {
-  [key: string]: T;
-}
 
 declare module "jsx-dom" {
   export function createElement<Tag extends keyof HTMLElementTagNameMap>(
@@ -23,7 +18,7 @@ declare module "jsx-dom" {
 
   export function createElement<Result extends Element, Props>(
     factory: (props: Props & { children: JSX.Child[] }) => Result,
-    props?: Props & { children?: any },
+    props?: Props & { ref?: (instance: Result) => void; children?: any },
     ...children: JSX.Child[]
   ): Result;
 
@@ -66,6 +61,12 @@ declare module "jsx-dom" {
 declare namespace JSX {
   export type Child = Node | string | number;
   export type Children = Child | Child[];
+
+  type NativeElement = HTMLElement | SVGElement;
+
+  interface IntrinsicAttributes {
+    ref?: (instance: Element) => void;
+  }
 
   // TypeScript SVGElement has no `dataset` (Chrome 55+, Firefox 51+).
   type Element = NativeElement & {
@@ -1834,6 +1835,7 @@ declare namespace JSX {
     innerText?: string;
     textContent?: string;
     namespaceURI?: string;
+    ref?: (e: Element) => void;
 
     // Clipboard Events
     onCopy?: ClipboardEventHandler;
