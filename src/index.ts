@@ -27,7 +27,7 @@ export function stopPropagation(event: Event) {
 
 // https://facebook.github.io/react/docs/jsx-in-depth.html#booleans-null-and-undefined-are-ignored
 // Emulate JSX Expression logic to ignore certain type of children or className.
-function isVisibleChild( value: any ) {
+function isVisibleChild(value: any) {
   return !isBoolean(value) && value != null;
 }
 
@@ -35,7 +35,7 @@ function isVisibleChild( value: any ) {
  * Convert a `value` to a className string.
  * `value` can be a string, an array or a `Dictionary<boolean>`.
  */
-function className( value: any ): string {
+function className(value: any): string {
   if (Array.isArray( value )) {
     return value.filter( isVisibleChild ).join(' ');
   } else if (isObject( value )) {
@@ -46,7 +46,6 @@ function className( value: any ): string {
 }
 
 const svg = __assign(Object.create(null), {
-  // SVG
   svg: 0,
   animate: 0,
   circle: 0,
@@ -103,54 +102,59 @@ const svg = __assign(Object.create(null), {
   view: 0,
 });
 
-export function createElement( tag, attr, ...children ) {
+export function createElement(tag, attr, ...children) {
   attr = attr || {};
-  let node: Element;
+  let node: HTMLElement | SVGElement;
   if (isString( tag )) {
-     node =
-      'namespaceURI' in attr ? document.createElementNS( attr.namespaceURI, tag )
+    node = attr.namespaceURI ? document.createElementNS( attr.namespaceURI, tag )
       : tag in svg ? document.createElementNS( SVGNamespace, tag )
       : document.createElement( tag );
     attributes( attr, node );
-    append( children, node );
+    appendChildren( children, node );
   } else if (isFunction( tag )) {
     // Custom elements.
     node = tag({ ...attr, children });
   }
-  if ('ref' in attr && isFunction(attr.ref)) {
+  if (isFunction(attr.ref)) {
     attr.ref(node);
   }
   return node;
 }
 
-function append( children, node = this ) {
-  if (isElement( children ) || isString( children )) {
-    children = [ children ];
+function appendChild(child, node: Node) {
+  if (isArrayLike(child)) {
+    appendChildren( child, node );
+  } else if (isString(child) || isNumber(child)) {
+    node.appendChild( document.createTextNode( child as any ) );
+  } else if (child === null) {
+    node.appendChild( document.createComment('') );
+  } else if (isElement(child)) {
+    node.appendChild( child );
   }
-  for (let child of children) {
-    if (isArrayLike( child )) {
-      append( child, node );
-    } else if (isString( child ) || isNumber( child )) {
-      node.appendChild( document.createTextNode( child as any ) );
-    } else if (child === null) {
-      node.appendChild( document.createComment('') );
-    } else if (isElement( child )) {
-      node.appendChild( child );
+}
+
+function appendChildren(children, node: Node) {
+  if (isElement(children) || isString(children)) {
+    appendChild(children, node);
+  } else {
+    for (const child of children) {
+      appendChild(child, node);
     }
   }
   return node;
 }
 
-function attributes( attr, node ) {
-  for (let key of Object.keys(attr)) {
-    let value = attr[key];
+function attributes(attr, node: HTMLElement | SVGElement) {
+  for (const key of Object.keys(attr)) {
+    const value = attr[key];
 
     switch (key) {
       case 'style':
-        typeof value === 'object'
-        ? __assign( node[key], value )
-        : node.style = value;
-        continue;
+        if (isObject(value)) {
+          __assign( node[key], value );
+          continue;
+        }
+        break;
       case 'dataset':
         __assign( node[key], value );
         continue;
@@ -170,11 +174,8 @@ function attributes( attr, node ) {
 
     if (isFunction( value )) {
       if (key.startsWith('on')) {
-        let name = key.slice(2).toLowerCase();
+        const name = key.slice(2).toLowerCase();
         listen( node, name, value );
-      } else {
-        value = value.call( node, node.getAttribute( key ));
-        node.setAttribute( key, value );
       }
     } else if ( node ) {
       if ( value === true ) {
