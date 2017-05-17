@@ -10,9 +10,7 @@ import {
   isFunction
 } from './util';
 
-export {
-  DOM,
-} from './shortcut';
+export { DOM } from './shortcut';
 
 export const SVGNamespace = 'http://www.w3.org/2000/svg';
 
@@ -172,13 +170,13 @@ function attributes(attr, node: HTMLElement | SVGElement) {
         continue;
     }
 
-    if (isFunction( value )) {
-      if (key.startsWith('on')) {
+    if (isFunction(value)) {
+      if (key.substr(0, 2) === 'on') {
         const name = key.slice(2).toLowerCase();
         listen( node, name, value );
       }
-    } else if ( node ) {
-      if ( value === true ) {
+    } else if (node) {
+      if (value === true) {
         node.setAttribute( key, '' );
       } else if ( value !== false && value != null ) {
         node.setAttribute( key, value );
@@ -188,8 +186,7 @@ function attributes(attr, node: HTMLElement | SVGElement) {
   return node;
 }
 
-
-function listen( node, eventName, callback ) {
-  node.addEventListener( eventName, callback );
+function listen(node: Node, eventName: string, callback) {
+  node.addEventListener(eventName, callback);
   return node;
 }
