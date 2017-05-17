@@ -173,7 +173,7 @@ function attributes(attr, node: HTMLElement | SVGElement) {
     }
 
     if (isFunction( value )) {
-      if (key.startsWith('on')) {
+      if ( key.substr(0,2) == 'on' ) {
         const name = key.slice(2).toLowerCase();
         listen( node, name, value );
       }
