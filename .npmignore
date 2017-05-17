@@ -5,3 +5,4 @@ tsconfig.json
 yarn.lock
 rollup.config.js
 .gitignore
+.travis.yml
