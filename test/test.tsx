@@ -68,7 +68,7 @@ describe('jsx-dom', function () {
 			const node = <div class={[
 				(Math.PI < 3) && 'Hell is freezing over',
 				([].length && 'should be 0'),
-				'rest'
+				'rest',
 			]} />;
 
 			expect(node.className).to.equal('0 rest');
