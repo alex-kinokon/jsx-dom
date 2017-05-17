@@ -2118,7 +2118,7 @@ declare namespace JSX {
     srcSet?: string;
     start?: number;
     step?: number | string;
-    style?: CSSProperties;
+    style?: string | CSSProperties;
     summary?: string;
     tabIndex?: number;
     target?: string;

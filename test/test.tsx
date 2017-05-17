@@ -88,6 +88,18 @@ describe('jsx-dom', function () {
 		});
 	});
 
+	describe('styles', function () {
+		it('supports style object', function () {
+			expect((<div style={{ display: 'none' }} />).style.display).to.equal('none');
+		});
+
+		it('supports style string', function () {
+			const el = <div style="display: none; margin: 1px;" />;
+			expect(el.style.display).to.equal('none');
+			expect(el.style.margin).to.equal('1px');
+		});
+	});
+
 	it('supports event listeners', function (done) {
 		const button = <button onClick={() => done()} /> as HTMLButtonElement;
 		button.click();
