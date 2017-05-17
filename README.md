@@ -1,4 +1,6 @@
 # jsx-dom
+[![dependency status](https://david-dm.org/alexlur/jsx-dom/status.svg)](https://david-dm.org/alexlur/jsx-dom#info=dependencies)  [![devDependency status](https://david-dm.org/alexlur/jsx-dom/dev-status.svg)](https://david-dm.org/alexlur/jsx-dom#info=devDependencies) [![build status](https://travis-ci.org/alexlur/jsx-dom.svg?branch=master)](https://travis-ci.org/alexlur/jsx-dom) [![npm version](https://badge.fury.io/js/jsx-dom.svg)](https://badge.fury.io/js/jsx-dom)
+
 Use JSX for creating DOM elements.
 
 ## Installation
