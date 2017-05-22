@@ -3,6 +3,9 @@ import { createElement } from './index';
 /**
  * Create factory function.
  */
+function f<K extends keyof HTMLElementTagNameMap>(tag: K): (attr, ...children) => HTMLElementTagNameMap[K];
+function f(tag: string);
+
 function f(tag: keyof HTMLElementTagNameMap | string) {
 	return function create(attr, ...children): Element {
 		return createElement(tag, attr, children);

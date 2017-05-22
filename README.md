@@ -59,11 +59,34 @@ Note that `false`, `true`, `null`, `undefined` will be ignored per [React docume
 2. Attributes starts with `on` and has a function value will be treated as an event listener and thus attached to the node.
 3. `innerHTML`, `innerText` and `textContent` are accepted.
 
-### SVG and Namespacing
-If you need to specify a namespace for your DOM element, pass a string attribute `namespaceURI`, except
-the following SVG elements which are supported out of the box:
+### SVG and Namespaces
+A custom build with a list of commonly used SVG tags is included.
 
+```jsx
+// Use 'jsx-dom/svg';
+import { createElement } from 'jsx-dom/svg';
+// Or if you prefer Common JS
+const { createElement } = require('jsx-dom/svg.cjs');
+
+document.body.appendChild(
+  <svg width="150" height="100" viewBox="0 0 3 2" class="flag italy">
+    <rect width="1" height="2" x="0" fill="#008d46" />
+    <rect width="1" height="2" x="1" fill="#ffffff" />
+    <rect width="1" height="2" x="2" fill="#d2232c" />
+  </svg>
+);
+```
+
+Below is a list of SVG tags included.
 > svg, animate, circle, clipPath, defs, desc, ellipse, feBlend, feColorMatrix, feComponentTransfer, feComposite, feConvolveMatrix, feDiffuseLighting, feDisplacementMap, feDistantLight, feFlood, feFuncA, feFuncB, feFuncG, feFuncR, feGaussianBlur, feImage, feMerge, feMergeNode, feMorphology, feOffset, fePointLight, feSpecularLighting, feSpotLight, feTile, feTurbulence, filter, foreignObject, g, image, line, linearGradient, marker, mask, metadata, path, pattern, polygon, polyline, radialGradient, rect, stop, switch, symbol, text, textPath, tspan, use, view
+
+If you need to create an SVG element that is not in the list, or you want to specify a custom namespace, use the attribute `namespaceURI`.
+
+```jsx
+import { createElement, SVGNamespace } from 'jsx-dom';
+
+<a namespaceURI={SVGNamespace}>I am an SVG element!</a>
+```
 
 ## Goodies
 Two extra functions and one constant are provided by this package:
