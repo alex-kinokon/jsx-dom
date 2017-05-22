@@ -1,2 +1,4 @@
 node_modules
-dist/*.js
+*.cjs.js
+svg.js
+index.js

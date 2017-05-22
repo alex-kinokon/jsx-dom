@@ -1,5 +1,6 @@
 const { JSDOM } = require('jsdom');
-import jsx = require('../dist/index.cjs');
+import jsx = require('../index.cjs');
+import svg = require('../svg.cjs');
 import { expect } from 'chai';
 import 'mocha';
 
@@ -128,6 +129,7 @@ describe('jsx-dom', function () {
 		});
 
 		it('supports SVG elements', function () {
+			const jsx = svg;
 			const supportedElements = [
 				<svg />, <animate />, <circle />, <clipPath />, <defs />, <desc />, <ellipse />,
 				<feBlend />, <feColorMatrix />, <feComponentTransfer />, <feComposite />,
@@ -141,7 +143,9 @@ describe('jsx-dom', function () {
 				<view />
 			];
 
-			supportedElements.forEach(one => expect(one.namespaceURI).to.equal(namespace));
+			supportedElements.forEach(one =>
+				expect(one.namespaceURI, `Tag: ${one.tagName}`).to.equal(namespace)
+			);
 		});
 
 		it('supports SVG namespace', function () {

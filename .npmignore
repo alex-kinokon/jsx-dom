@@ -3,6 +3,6 @@ test
 node_modules
 tsconfig.json
 yarn.lock
-rollup.config.js
+Cakefile
 .gitignore
 .travis.yml
