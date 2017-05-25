@@ -1,5 +1,6 @@
 import { __assign } from 'tslib';
-import * as dom from '../../jsx-dom/src/index';
+import * as dom from './index';
+export { DOM, SVGNamespace, stopPropagation, preventDefault } from './index';
 
 const svg = __assign(Object.create(null), {
   svg: 0,
