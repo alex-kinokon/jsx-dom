@@ -69,11 +69,14 @@ import { createElement } from 'jsx-dom/svg';
 const { createElement } = require('jsx-dom/svg.cjs');
 
 document.body.appendChild(
-  <svg width="150" height="100" viewBox="0 0 3 2" class="flag italy">
-    <rect width="1" height="2" x="0" fill="#008d46" />
-    <rect width="1" height="2" x="1" fill="#ffffff" />
-    <rect width="1" height="2" x="2" fill="#d2232c" />
-  </svg>
+  <div class="flag" style={{ display: 'flex' }}>
+    <h1>Flag of Italy</h1>
+    <svg width="150" height="100" viewBox="0 0 3 2" class="flag italy">
+      <rect width="1" height="2" x="0" fill="#008d46" />
+      <rect width="1" height="2" x="1" fill="#ffffff" />
+      <rect width="1" height="2" x="2" fill="#d2232c" />
+    </svg>
+  </div>
 );
 ```
 
