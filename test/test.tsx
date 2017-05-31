@@ -87,6 +87,21 @@ describe('jsx-dom', function () {
 			expect((<div data-key="value" />).dataset.key).to.equal('value');
 			expect((<div dataset={{ key: 0 }} />).getAttribute('data-key')).to.equal('0');
 		});
+
+		it('supports ref store function', function () {
+			let button = null;
+			const div = <div><button ref={ e => button = e }/></div>;
+			expect(button).not.to.equal(null);
+			expect(div.children[0]).to.equal(button);
+		});
+
+		it('supports ref in functional components', function () {
+			let button = null;
+			const Button = () => <button/>;
+			const div = <div><Button ref={ e => button = e }/></div>;
+			expect(button).not.to.equal(null);
+			expect(div.children[0]).to.equal(button);
+		});
 	});
 
 	describe('styles', function () {
@@ -101,24 +116,11 @@ describe('jsx-dom', function () {
 		});
 	});
 
-	it('supports event listeners', function (done) {
-		const button = <button onClick={() => done()} /> as HTMLButtonElement;
-		button.click();
-	});
-
-	it('supports ref store function', function () {
-		let button = null;
-		const div = <div><button ref={ e => button = e }/></div>;
-		expect(button).not.to.equal(null);
-		expect(div.children[0]).to.equal(button);
-	});
-	
-	it('supports ref in functional components', function () {
-		let button = null;
-		const Button = () => <button/>;
-		const div = <div><Button ref={ e => button = e }/></div>;
-		expect(button).not.to.equal(null);
-		expect(div.children[0]).to.equal(button);
+	describe('events', function () {
+		it('supports event listeners', function (done) {
+			const button = <button onClick={() => done()} /> as HTMLButtonElement;
+			button.click();
+		});
 	});
 
 	describe('SVG', function () {
@@ -150,6 +152,31 @@ describe('jsx-dom', function () {
 
 		it('supports SVG namespace', function () {
 			expect((<a namespaceURI={namespace} />).namespaceURI).to.equal(namespace);
+		});
+	});
+
+	describe('DOM shortcut', function () {
+		it('exports a DOM object', () => {
+			expect(jsx.DOM).to.be.an('object');
+		});
+
+		it('exported DOM object creates correct elements', () => {
+			for (const tag of [
+				'a', 'blockquote', 'button', 'div', 'em',
+				'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'img',
+				'input', 'li', 'link', 'ol', 'p', 'script', 'span', 'strong',
+				'table', 'thead', 'td', 'th', 'tr', 'ul',
+			]) {
+				expect(jsx.DOM[tag]().tagName).to.equal(tag.toUpperCase());
+			}
+		});
+
+		it('attr is optional', () => {
+			const el = (jsx.DOM as any).h3('Hello World') as HTMLHeadingElement;
+			expect(el.childNodes).to.have.lengthOf(1);
+			expect(el.childElementCount).to.equal(0);
+			expect(el.firstChild.nodeType).to.equal(3);
+			expect(el.textContent).to.equal('Hello World');
 		});
 	});
 });

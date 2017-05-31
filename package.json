@@ -1,6 +1,6 @@
 {
   "name": "jsx-dom",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "JSX to document.createElement.",
   "main": "index.cjs.js",
   "jsnext:main": "index.js",
@@ -24,7 +24,7 @@
     "@types/mocha": "^2.2.41",
     "@types/node": "^7.0.22",
     "babel-core": "^6.24.1",
-    "chai": "^3.5.0",
+    "chai": "^4.0.0",
     "coffeescript": "1.12.6",
     "jsdom": "^11.0.0",
     "mocha": "^3.4.2",
