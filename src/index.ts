@@ -1,6 +1,7 @@
 import { __assign } from 'tslib';
 
 import {
+  keys,
   isArrayLike,
   isBoolean,
   isElement,
@@ -37,7 +38,7 @@ function className(value: any): string {
   if (Array.isArray( value )) {
     return value.filter( isVisibleChild ).join(' ');
   } else if (isObject( value )) {
-    return Object.keys( value ).filter( k => value[k] ).join(' ');
+    return keys( value ).filter( k => value[k] ).join(' ');
   } else {
     return '' + value;
   }
@@ -86,7 +87,7 @@ function appendChildren(children, node: Node) {
 }
 
 function attributes(attr, node: HTMLElement | SVGElement) {
-  for (const key of Object.keys(attr)) {
+  for (const key of keys(attr)) {
     const value = attr[key];
 
     switch (key) {
