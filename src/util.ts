@@ -1,3 +1,5 @@
+export const keys: <T>(obj: T) => Array<keyof T> = Object.keys;
+
 export function isBoolean(val): val is boolean {
 	return typeof val === 'boolean';
 }

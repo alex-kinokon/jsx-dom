@@ -1,42 +1,56 @@
 import { createElement } from './index';
+import { isElement, isString, keys } from './util';
 
 /**
  * Create factory function.
  */
-function f<K extends keyof HTMLElementTagNameMap>(tag: K): (attr, ...children) => HTMLElementTagNameMap[K];
-function f(tag: string);
+type TagMap = HTMLElementTagNameMap;
 
-function f(tag: keyof HTMLElementTagNameMap | string) {
+function f<K extends keyof TagMap>(tag: K): (attr, ...children) => TagMap[K];
+function f(tag: string): (attr, ...children) => HTMLElement;
+
+function f(tag: keyof TagMap | string) {
 	return function create(attr, ...children): Element {
+		if (isElement(attr) || isString(attr)) {
+			children.unshift(attr);
+			attr = {};
+		}
 		return createElement(tag, attr, children);
 	};
 }
 
-export const DOM = {
-	a: f('a'),
-	blockquote: f('blockquote'),
-	button: f('button'),
-	div: f('div'),
-	em: f('em'),
-	h1: f('h1'),
-	h2: f('h2'),
-	h3: f('h3'),
-	h4: f('h4'),
-	h5: f('h5'),
-	h6: f('h6'),
-	hr: f('hr'),
-	img: f('img'),
-	input: f('input'),
-	li: f('li'),
-	link: f('link'),
-	ol: f('ol'),
-	p: f('p'),
-	script: f('script'),
-	span: f('span'),
-	strong: f('strong'),
-	table: f('table'),
-	td: f('td'),
-	th: f('th'),
-	tr: f('tr'),
-	ul: f('ul'),
-};
+export const DOM = ((obj: any) => {
+	for (const key of keys(obj)) {
+		obj[key] = f(key);
+	}
+	return obj;
+})({
+	a: 0,
+	blockquote: 0,
+	button: 0,
+	div: 0,
+	em: 0,
+	form: 0,
+	h1: 0,
+	h2: 0,
+	h3: 0,
+	h4: 0,
+	h5: 0,
+	h6: 0,
+	hr: 0,
+	img: 0,
+	input: 0,
+	li: 0,
+	link: 0,
+	ol: 0,
+	p: 0,
+	script: 0,
+	span: 0,
+	strong: 0,
+	table: 0,
+	thead: 0,
+	td: 0,
+	th: 0,
+	tr: 0,
+	ul: 0,
+});
