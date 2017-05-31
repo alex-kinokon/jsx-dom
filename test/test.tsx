@@ -1,31 +1,8 @@
-const { JSDOM } = require('jsdom');
 import jsx = require('../index.cjs');
 import svg = require('../svg.cjs');
 import { expect } from 'chai';
 import 'mocha';
-
-// Set up jsdom
-const dom = new JSDOM('');
-(global as any).window = dom.window;
-(global as any).document = dom.window.document;
-
-// Monkey patch jsdom to support dataset.
-function toPropKey(prop: PropertyKey) {
-	return 'data-' + `${prop}`.toLowerCase();
-}
-Object.defineProperty((window as any).Element.prototype, 'dataset', {
-	get() {
-		return new Proxy(this, {
-			get(target, prop) {
-				return target.getAttribute(toPropKey(prop));
-			},
-			set(target, prop, value) {
-				target.setAttribute(toPropKey(prop), value);
-				return true;
-			}
-		});
-	}
-});
+import './pretest';
 
 describe('jsx-dom', function () {
 
@@ -53,13 +30,13 @@ describe('jsx-dom', function () {
 		});
 
 		it('accepts an array as valid input for class', function () {
-			expect((<div class={["le", "devoir"]} />).className).to.equal('le devoir');
+			expect((<div class={["first", "second"]} />).className).to.equal('first second');
 		});
 
 		it('accepts an object literal as a valid input', function () {
 			const node = <div class={{
 				included: true,
-				excluded: false
+				excluded: false,
 			}} />;
 
 			expect(node.className).to.equal('included');
