@@ -62,7 +62,7 @@ declare namespace JSX {
   export type Child = Node | string | number;
   export type Children = Child | Child[];
 
-  type NativeElement = HTMLElement | SVGElement;
+  type NativeElement = HTMLElement;
 
   interface IntrinsicAttributes {
     ref?: (instance: Element) => void;
@@ -92,7 +92,7 @@ declare namespace JSX {
   type AnimationEventHandler = EventHandler<AnimationEvent>;
   type TransitionEventHandler = EventHandler<TransitionEvent>;
 
-  type ClassName = string | (boolean | string | number)[] | {
+  type ClassName = string | (boolean | string | number | string[])[] | {
     [key: string]: boolean
   }
 
