@@ -92,7 +92,8 @@ declare namespace JSX {
   type AnimationEventHandler = EventHandler<AnimationEvent>;
   type TransitionEventHandler = EventHandler<TransitionEvent>;
 
-  type ClassName = string | (boolean | string | number | string[])[] | {
+  type ClassNameBase = boolean | string | number | void | null;
+  type ClassName = string | (ClassNameBase | ClassNameBase[])[] | {
     [key: string]: boolean
   }
 

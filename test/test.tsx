@@ -34,7 +34,7 @@ describe('jsx-dom', function () {
 		});
 
 		it('expects a recursive array as valid input for classes', function () {
-			expect((<div class={["first", ["second", "third"]]} />).className).to.equal('first second third');
+			expect((<div class={["first", ["second", false, "third"]]} />).className).to.equal('first second third');
 		});
 
 		it('accepts an object literal as a valid input', function () {
