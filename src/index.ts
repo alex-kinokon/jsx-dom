@@ -36,11 +36,13 @@ function isVisibleChild(value: any) {
  */
 function className(value: any): string {
   if (Array.isArray( value )) {
-    return value.filter( isVisibleChild ).join(' ');
+    return value.map( className ).filter( Boolean ).join(' ');
   } else if (isObject( value )) {
     return keys( value ).filter( k => value[k] ).join(' ');
-  } else {
+  } else if (isVisibleChild(value)) {
     return '' + value;
+  } else {
+    return '';
   }
 }
 
