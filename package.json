@@ -1,6 +1,6 @@
 {
   "name": "jsx-dom",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "description": "JSX to document.createElement.",
   "main": "index.cjs.js",
   "jsnext:main": "index.js",
