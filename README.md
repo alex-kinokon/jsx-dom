@@ -46,18 +46,36 @@ import * as React from 'jsx-dom';
 `jsx-dom` is based on the React JSX syntax with a few additions:
 
 ### Class
-1. `class` is supported as an attribute as well as `className`
-2. `class` can take an object with the format `{ [key: string]: boolean }`. Keys with a truthy value will be added to the classList.
-2. `class` can also take an array of values: 
-Note that `false`, `true`, `null`, `undefined` will be ignored per [React documentations](https://facebook.github.io/react/docs/jsx-in-depth.html#booleans-null-and-undefined-are-ignored), and everything else will be used. As an example: `<div class={[ condition && "class" ]} />`;
+1. `class` is supported as an attribute as well as `className`.
+2. `class` can take:
+
+   * a string
+   * an object with the format `{ [key: string]: boolean }`. Keys with a truthy value will be added to the classList
+   * an array of values where falsy values (see below) are filtered out
+   * an array of any combination of the above
+
+Note that `false`, `true`, `null`, `undefined` will be ignored per [React documentations](https://facebook.github.io/react/docs/jsx-in-depth.html#booleans-null-and-undefined-are-ignored), and everything else will be used. For example,
+
+```jsx
+<div class="greeting" />
+<div class={[ condition && "class" ]} />
+<div class={{ hidden: isHidden, 'has-item': this.array.length > 0 }} />
+<div class={[ classArray1, classArray2, ['nested'] ]} />
+```
 
 ### Style
 1. `style` accepts both strings and objects.
 
+```jsx
+<div style="background: transparent;" />
+<div style={{ background: 'transparent', fontFamily: 'serif' }} />
+```
+
 ### Other Attributes
 1. `dataset` accepts an object.
-2. Attributes starts with `on` and has a function value will be treated as an event listener and thus attached to the node.
+2. Attributes starts with `on` and has a function value will be treated as an event listener and attached to the node with `addEventListener`.
 3. `innerHTML`, `innerText` and `textContent` are accepted.
+4. `ref` accepts a callback `(node: Element) => void` that allows access to the node after being created. This is useful when you have a nested node tree and need to access a node inside without creating an intermediary variable.
 
 ### SVG and Namespaces
 A custom build with a list of commonly used SVG tags is included.
