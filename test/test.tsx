@@ -83,6 +83,13 @@ describe('jsx-dom', function () {
 			expect(button).not.to.equal(null);
 			expect(div.children[0]).to.equal(button);
 		});
+
+		it('supports spellCheck attribute', function () {
+			expect((<input spellCheck={true} />).spellcheck).to.equal(true);
+			expect((<input spellCheck={false} />).spellcheck).to.equal(false);
+			expect((<textarea spellCheck={true} />).spellcheck).to.equal(true);
+			expect((<textarea spellCheck={false} />).spellcheck).to.equal(false);
+		});
 	});
 
 	describe('styles', function () {

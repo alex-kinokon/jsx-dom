@@ -1,3 +1,6 @@
+# 5.1.2
+- Adds support for `spellCheck`.
+
 # 5.1.0
 - Nested arrays are now supported as a className input.
 

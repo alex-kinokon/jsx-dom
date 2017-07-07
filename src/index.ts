@@ -107,6 +107,8 @@ function attributes(attr, node: HTMLElement | SVGElement) {
       case 'textContent':
         node[key] = value;
         continue;
+      case 'spellCheck': 
+        (node as HTMLInputElement).spellcheck = value;
       case 'class':
       case 'className':
         node.setAttribute('class', className( value ));
