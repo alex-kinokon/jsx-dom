@@ -21,7 +21,7 @@ You need to tell your transpiler to use the name `createElement`. If you prefer 
 
 ```js
 "plugins": [
-  [ "transform-react-jsx", { "pragma": "createElement" } ]
+  ["transform-react-jsx", {"pragma": "createElement"}]
 ]
 ```
 
