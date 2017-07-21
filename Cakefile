@@ -8,37 +8,38 @@ transformBundle = (code) ->
 		babelrc: false
 		comments: false
 		minified: false
-
 	code: transformed.code
 	map: transformed.map
 
 task 'build-slim', 'Build jsx-dom without SVG', ->
-	rollup
-		entry: './src/index.ts',
-		plugins: [
-			ts(),
-			{ transformBundle },
-		]
-	.then (bundle) ->
-		cjs = bundle.generate format: 'cjs'
-		es = bundle.generate format: 'es'
+	try
+		bundle = await rollup
+			entry: './src/index.ts',
+			plugins: [
+				ts(),
+				{ transformBundle },
+			]
+		cjs = await bundle.generate format: 'cjs'
+		es = await bundle.generate format: 'es'
 		fs.writeFileSync './index.cjs.js', cjs.code
 		fs.writeFileSync './index.js', es.code
-	.catch console.error
+	catch e
+		console.error e
 
 task 'build-svg', 'Build jsx-dom with SVG', ->
-	rollup
-		entry: './src/svg.ts',
-		plugins: [
-			ts(),
-			{ transformBundle },
-		]
-	.then (bundle) ->
-		cjs = bundle.generate format: 'cjs'
-		es = bundle.generate format: 'es'
+	try
+		bundle = await rollup
+			entry: './src/svg.ts',
+			plugins: [
+				ts(),
+				{ transformBundle },
+			]
+		cjs = await bundle.generate format: 'cjs'
+		es = await bundle.generate format: 'es'
 		fs.writeFileSync './svg.cjs.js', cjs.code
 		fs.writeFileSync './svg.js', es.code
-	.catch console.error
+	catch e
+		console.error e
 
 task 'build', 'Build everything', ->
 	invoke 'build-slim'
