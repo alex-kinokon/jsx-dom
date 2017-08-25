@@ -14,7 +14,7 @@ transformBundle = (code) ->
 task 'build-slim', 'Build jsx-dom without SVG', ->
 	try
 		bundle = await rollup
-			entry: './src/index.ts',
+			input: './src/index.ts',
 			plugins: [
 				ts(),
 				{ transformBundle },
@@ -29,7 +29,7 @@ task 'build-slim', 'Build jsx-dom without SVG', ->
 task 'build-svg', 'Build jsx-dom with SVG', ->
 	try
 		bundle = await rollup
-			entry: './src/svg.ts',
+			input: './src/svg.ts',
 			plugins: [
 				ts(),
 				{ transformBundle },
