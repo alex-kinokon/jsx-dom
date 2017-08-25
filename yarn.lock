@@ -347,9 +347,9 @@ co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
 
-coffeescript@^2:
-  version "2.0.0-beta3"
-  resolved "https://registry.yarnpkg.com/coffeescript/-/coffeescript-2.0.0-beta3.tgz#5bce739c6c69a5c8e8bb5fb967a16db0cca5c04f"
+coffeescript@^2.0.0-beta3:
+  version "2.0.0-beta4"
+  resolved "https://registry.yarnpkg.com/coffeescript/-/coffeescript-2.0.0-beta4.tgz#1beb4650d10eb7c9e528f5bfa3b6c7085691e24c"
 
 color-convert@^1.0.0:
   version "1.9.0"
@@ -1170,11 +1170,9 @@ rollup-pluginutils@^2.0.1:
     estree-walker "^0.3.0"
     micromatch "^2.3.11"
 
-rollup@^0.45.2:
-  version "0.45.2"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.45.2.tgz#63a284c2b31234656f24e9e9717fabb6a7f0fa43"
-  dependencies:
-    source-map-support "^0.4.0"
+rollup@^0.48.2:
+  version "0.48.2"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.48.2.tgz#dd9214eaf78d98a7771bf5583123cc80a0b5d6dc"
 
 safe-buffer@^5.0.1:
   version "5.1.1"
