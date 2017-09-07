@@ -19,6 +19,7 @@ function f(tag: keyof TagMap | string) {
 	};
 }
 
+/** @type {any} */
 export const DOM = ((obj: any) => {
 	for (const key of keys(obj)) {
 		obj[key] = f(key);
