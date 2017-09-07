@@ -79,12 +79,8 @@ function appendChild(child, node: Node) {
 }
 
 function appendChildren(children, node: Node) {
-  if (isElement(children) || isString(children)) {
-    appendChild(children, node);
-  } else {
-    for (const child of children) {
-      appendChild(child, node);
-    }
+  for (const child of children) {
+    appendChild(child, node);
   }
   return node;
 }
