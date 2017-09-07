@@ -143,9 +143,14 @@ describe('jsx-dom', function () {
 		});
 	});
 
-	describe('DOM shortcut', function () {
+	describe('public API', function () {
 		it('exports a DOM object', () => {
 			expect(jsx.DOM).to.be.an('object');
+		});
+
+		it('exports `createElement` as well as `h`', () => {
+			expect(jsx.h).to.equal(jsx.createElement);
+			expect(jsx.h('div').outerHTML).to.equal('<div></div>');
 		});
 
 		it('exported DOM object creates correct elements', () => {

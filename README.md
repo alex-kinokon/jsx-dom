@@ -10,18 +10,20 @@ npm install --save jsx-dom
 
 ## Usage
 ```jsx
-import { createElement } from 'jsx-dom';
+import { h } from 'jsx-dom';
 
 document.body.appendChild(
   <div id="greeting" class="alert">Hello World</div>
 );
 ```
 
-You need to tell your transpiler to use the name `createElement`. If you prefer not to, skip to the next section for instructions. For Babel users, specify within your `.babelrc`:
+**Note:** If you are coming from a previous version and are using `createElement` instead of `h`, no change is necessary as both of them will continue to work.
+
+You need to tell your transpiler to use the name `h`. If you prefer not to, skip to the next section for instructions. For Babel users, specify within your `.babelrc`:
 
 ```js
 "plugins": [
-  ["transform-react-jsx", {"pragma": "createElement"}]
+  ["transform-react-jsx", {"pragma": "h"}]
 ]
 ```
 
@@ -30,7 +32,7 @@ Or if you prefer to work with TypeScript:
 ```js
 // In tsconfig.json:
 "jsx": "react",
-"jsxFactory": "createElement",
+"jsxFactory": "h",
 ```
 
 ### Usage without `.babelrc` or `tsconfig` options
@@ -82,9 +84,9 @@ A custom build with a list of commonly used SVG tags is included.
 
 ```jsx
 // Use 'jsx-dom/svg';
-import { createElement } from 'jsx-dom/svg';
+import { h } from 'jsx-dom/svg';
 // Or if you prefer Common JS
-const { createElement } = require('jsx-dom/svg.cjs');
+const { h } = require('jsx-dom/svg.cjs');
 
 document.body.appendChild(
   <div class="flag" style={{ display: 'flex' }}>
@@ -104,7 +106,7 @@ Below is a list of SVG tags included.
 If you need to create an SVG element that is not in the list, or you want to specify a custom namespace, use the attribute `namespaceURI`.
 
 ```jsx
-import { createElement, SVGNamespace } from 'jsx-dom';
+import { h, SVGNamespace } from 'jsx-dom';
 
 <a namespaceURI={SVGNamespace}>I am an SVG element!</a>
 ```
