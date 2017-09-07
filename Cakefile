@@ -6,7 +6,7 @@ babel = require 'babel-core'
 transformBundle = (code) ->
 	transformed = babel.transform code,
 		babelrc: false
-		comments: false
+		comments: true
 		minified: false
 	code: transformed.code
 	map: transformed.map
