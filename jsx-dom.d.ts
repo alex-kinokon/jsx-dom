@@ -4,11 +4,13 @@
  */
 
 declare module "jsx-dom" {
-  export function createElement<Tag extends keyof HTMLElementTagNameMap>(
+  type TagMap = HTMLElementTagNameMap;  
+
+  export function createElement<Tag extends keyof TagMap>(
     tagName: Tag,
     props?: any,
     ...children: JSX.Child[]
-  ): HTMLElementTagNameMap[Tag];
+  ): TagMap[Tag];
 
   export function createElement(
     tagName: string,
@@ -17,10 +19,12 @@ declare module "jsx-dom" {
   ): HTMLElement;
 
   export function createElement<Result extends Element, Props>(
-    factory: (props: Props & { children: JSX.Child[] }) => Result,
+    factory: (props: Props & { children: JSX.Child[] }) => Result | Result[],
     props?: Props & { ref?: (instance: Result) => void; children?: any },
     ...children: JSX.Child[]
   ): Result;
+
+  export const h: typeof createElement;
 
   type ElementFactory<T extends Element> = (props?: JSX.HTMLProps<T>, ...children: JSX.Child[]) => T;
 
