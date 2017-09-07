@@ -46,6 +46,7 @@ function className(value: any): string {
   }
 }
 
+export { createElement as h };
 export function createElement(tag, attr, ...children) {
   attr = attr || {};
   let node: HTMLElement | SVGElement;

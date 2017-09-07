@@ -1,3 +1,9 @@
+# 5.1.4
+- Exports `h` variable as an alias for `createElement` for hyperscript users.
+
+# 5.1.3
+- Fixes an issue with `spellCheck` attribute.
+
 # 5.1.2
 - Adds support for `spellCheck`.
 
