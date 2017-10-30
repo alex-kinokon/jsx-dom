@@ -4,5 +4,7 @@ node_modules
 tsconfig.json
 yarn.lock
 Cakefile
+coverage
+.nyc_output
 .gitignore
 .travis.yml
