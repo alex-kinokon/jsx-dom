@@ -11,14 +11,18 @@ transformBundle = (code) ->
 	code: transformed.code
 	map: transformed.map
 
+rollupPluginExternal = ['tslib']
+rollupPlugins = -> [
+  ts(),
+  { transformBundle }
+]
+
 task 'build-slim', 'Build jsx-dom without SVG', ->
 	try
 		bundle = await rollup
-			input: './src/index.ts',
-			plugins: [
-				ts(),
-				{ transformBundle },
-			]
+			input: './src/index.ts'
+			external: rollupPluginExternal
+			plugins: rollupPlugins()
 		cjs = await bundle.generate format: 'cjs'
 		es = await bundle.generate format: 'es'
 		fs.writeFileSync './index.cjs.js', cjs.code
@@ -29,11 +33,9 @@ task 'build-slim', 'Build jsx-dom without SVG', ->
 task 'build-svg', 'Build jsx-dom with SVG', ->
 	try
 		bundle = await rollup
-			input: './src/svg.ts',
-			plugins: [
-				ts(),
-				{ transformBundle },
-			]
+			input: './src/svg.ts'
+			external: rollupPluginExternal
+			plugins: rollupPlugins()
 		cjs = await bundle.generate format: 'cjs'
 		es = await bundle.generate format: 'es'
 		fs.writeFileSync './svg.cjs.js', cjs.code

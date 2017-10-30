@@ -8,7 +8,7 @@ import {
   isNumber,
   isString,
   isObject,
-  isFunction
+  isFunction,
 } from './util';
 
 export { DOM } from './shortcut';
@@ -35,10 +35,10 @@ function isVisibleChild(value: any) {
  * `value` can be a string, an array or a `Dictionary<boolean>`.
  */
 function className(value: any): string {
-  if (Array.isArray( value )) {
-    return value.map( className ).filter( Boolean ).join(' ');
-  } else if (isObject( value )) {
-    return keys( value ).filter( k => value[k] ).join(' ');
+  if (Array.isArray(value)) {
+    return value.map(className).filter(Boolean).join(' ');
+  } else if (isObject(value)) {
+    return keys(value).filter(k => value[k]).join(' ');
   } else if (isVisibleChild(value)) {
     return '' + value;
   } else {
@@ -50,13 +50,13 @@ export { createElement as h };
 export function createElement(tag, attr, ...children) {
   attr = attr || {};
   let node: HTMLElement | SVGElement;
-  if (isString( tag )) {
-    node = attr.namespaceURI ? document.createElementNS( attr.namespaceURI, tag )
+  if (isString(tag)) {
+    node = attr.namespaceURI ? document.createElementNS(attr.namespaceURI, tag)
       // : isProbablySVG(tag) ? document.createElementNS( SVGNamespace, tag )
-      : document.createElement( tag );
-    attributes( attr, node );
-    appendChildren( children, node );
-  } else if (isFunction( tag )) {
+      : document.createElement(tag);
+    attributes(attr, node);
+    appendChildren(children, node);
+  } else if (isFunction(tag)) {
     // Custom elements.
     node = tag({ ...attr, children });
   }
@@ -68,13 +68,13 @@ export function createElement(tag, attr, ...children) {
 
 function appendChild(child, node: Node) {
   if (isArrayLike(child)) {
-    appendChildren( child, node );
+    appendChildren(child, node);
   } else if (isString(child) || isNumber(child)) {
-    node.appendChild( document.createTextNode( child as any ) );
+    node.appendChild(document.createTextNode(child as any));
   } else if (child === null) {
-    node.appendChild( document.createComment('') );
+    node.appendChild(document.createComment(''));
   } else if (isElement(child)) {
-    node.appendChild( child );
+    node.appendChild(child);
   }
 }
 
@@ -92,24 +92,24 @@ function attributes(attr, node: HTMLElement | SVGElement) {
     switch (key) {
       case 'style':
         if (isObject(value)) {
-          __assign( node[key], value );
+          __assign(node[key], value);
           continue;
         }
         break;
       case 'dataset':
-        __assign( node[key], value );
+        __assign(node[key], value);
         continue;
       case 'innerHTML':
       case 'innerText':
       case 'textContent':
         node[key] = value;
         continue;
-      case 'spellCheck': 
+      case 'spellCheck':
         (node as HTMLInputElement).spellcheck = value;
         continue;
       case 'class':
       case 'className':
-        node.setAttribute('class', className( value ));
+        node.setAttribute('class', className(value));
         continue;
       case 'ref':
       case 'namespaceURI':
@@ -117,15 +117,15 @@ function attributes(attr, node: HTMLElement | SVGElement) {
     }
 
     if (isFunction(value)) {
-      if (key.substr(0, 2) === 'on') {
+      if (key[0] === 'o' && key[1] === 'n') {
         const name = key.slice(2).toLowerCase();
-        listen( node, name, value );
+        listen(node, name, value);
       }
     } else if (node) {
       if (value === true) {
-        node.setAttribute( key, '' );
-      } else if ( value !== false && value != null ) {
-        node.setAttribute( key, value );
+        node.setAttribute(key, '');
+      } else if (value !== false && value != null) {
+        node.setAttribute(key, value);
       }
     }
   }
