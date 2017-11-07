@@ -91,6 +91,14 @@ describe('jsx-dom', () => {
 			expect((<div dataset={{ key: 0 }} />).getAttribute('data-key')).to.equal('0');
 		});
 
+		it('suppresses null / undefined dataset', () => {
+			expect({ ... (
+				<div dataset={{ key: '', value: null, data: undefined }} />
+			).dataset }).to.deep.equal({
+				key: '',
+			});
+		});
+
 		it('supports innerHTML, innerText and textContent', () => {
 			expect((<div innerHTML="<div></div><div></div>" />).querySelectorAll('div').length).to.equal(2);
 			expect((<div innerText="<img>" />).querySelectorAll('img')).to.be.empty;
