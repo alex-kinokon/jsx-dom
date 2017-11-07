@@ -1,3 +1,6 @@
+# 5.1.6
+- Fixes a bug where `null`y value gets passed to dataset.
+
 # 5.1.4
 - Exports `h` variable as an alias for `createElement` for hyperscript users.
 

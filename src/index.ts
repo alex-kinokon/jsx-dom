@@ -1,5 +1,3 @@
-import { __assign } from 'tslib';
-
 import {
   keys,
   isArrayLike,
@@ -92,12 +90,21 @@ function attributes(attr, node: HTMLElement | SVGElement) {
     switch (key) {
       case 'style':
         if (isObject(value)) {
-          __assign(node[key], value);
+          for (const styleKey of keys(value)) {
+            node.style[styleKey] = value[styleKey];
+          }
           continue;
         }
         break;
       case 'dataset':
-        __assign(node[key], value);
+        if (isObject(value)) {
+          for (const dataKey of keys(value)) {
+            const dataValue = value[dataKey]
+            if (dataValue != null) {
+              (node as HTMLElement).dataset[dataKey] = dataValue;
+            }
+          }
+        }
         continue;
       case 'innerHTML':
       case 'innerText':
