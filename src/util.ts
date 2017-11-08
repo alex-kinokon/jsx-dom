@@ -17,7 +17,7 @@ export function isNumber(val): val is number {
 }
 
 export function isObject(val) {
-	return val && (typeof val === 'object' || isFunction(val));
+	return typeof val === 'object' ? val !== null : isFunction(val);
 }
 
 export function isFunction(val): val is Function {
