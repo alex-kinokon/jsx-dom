@@ -74,7 +74,7 @@ Note that `false`, `true`, `null`, `undefined` will be ignored per [React docume
 ```
 
 ### Other Attributes
-1. `dataset` accepts an object.
+1. `dataset` accepts an object, where keys with a `null` or `undefined` value will be ignored.
 2. Attributes starts with `on` and has a function value will be treated as an event listener and attached to the node with `addEventListener`.
 3. `innerHTML`, `innerText` and `textContent` are accepted.
 4. `ref` accepts a callback `(node: Element) => void` that allows access to the node after being created. This is useful when you have a nested node tree and need to access a node inside without creating an intermediary variable.

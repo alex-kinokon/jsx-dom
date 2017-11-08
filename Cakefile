@@ -1,6 +1,8 @@
 fs = require 'fs'
 ts = require '@alexlur/rollup-plugin-typescript'
 babel = require 'babel-core'
+replace = require 'rollup-plugin-replace'
+prettier = require 'rollup-plugin-prettier'
 { rollup } = require 'rollup'
 
 transformBundle = (code) ->
@@ -8,40 +10,38 @@ transformBundle = (code) ->
 		babelrc: false
 		comments: true
 		minified: false
+		plugins: [
+			'minify-constant-folding'
+			'minify-guarded-expressions'
+			'minify-dead-code-elimination'
+		]
 	code: transformed.code
 	map: transformed.map
 
 rollupPluginExternal = ['tslib']
-rollupPlugins = -> [
-  ts(),
-  { transformBundle }
-]
 
-task 'build-slim', 'Build jsx-dom without SVG', ->
+build = (name, inject) ->
 	try
 		bundle = await rollup
 			input: './src/index.ts'
 			external: rollupPluginExternal
-			plugins: rollupPlugins()
-		cjs = await bundle.generate format: 'cjs'
-		es = await bundle.generate format: 'es'
-		fs.writeFileSync './index.cjs.js', cjs.code
-		fs.writeFileSync './index.js', es.code
+			plugins: [
+				ts(),
+				replace(inject),
+				{ transformBundle },
+				prettier(tabWidth: 2)
+			]
+		await bundle.write(format: 'cjs', file: "./#{name}.cjs.js")
+		await bundle.write(format: 'es', file: "./#{name}.js")
 	catch e
+		console.trace()
 		console.error e
 
+task 'build-slim', 'Build jsx-dom without SVG', ->
+	build('index', __SVG__: false)
+
 task 'build-svg', 'Build jsx-dom with SVG', ->
-	try
-		bundle = await rollup
-			input: './src/svg.ts'
-			external: rollupPluginExternal
-			plugins: rollupPlugins()
-		cjs = await bundle.generate format: 'cjs'
-		es = await bundle.generate format: 'es'
-		fs.writeFileSync './svg.cjs.js', cjs.code
-		fs.writeFileSync './svg.js', es.code
-	catch e
-		console.error e
+	build('svg', __SVG__: true)
 
 task 'build', 'Build everything', ->
 	invoke 'build-slim'
