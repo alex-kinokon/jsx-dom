@@ -201,36 +201,9 @@ describe('jsx-dom', () => {
   });
 
   describe('public API', () => {
-    it('exports a DOM object', () => {
-      expect(jsx.DOM).to.be.an('object');
-    });
-
     it('exports `createElement` as well as `h`', () => {
       expect(jsx.h).to.equal(jsx.createElement);
       expect(jsx.h('div').outerHTML).to.equal('<div></div>');
-    });
-
-    it('exported DOM object creates correct elements', () => {
-      for (const tag of [
-        'a', 'blockquote', 'button', 'div', 'em',
-        'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'img',
-        'input', 'li', 'link', 'ol', 'p', 'script', 'span', 'strong',
-        'table', 'thead', 'td', 'th', 'tr', 'ul',
-      ]) {
-        expect(jsx.DOM[tag]().tagName).to.equal(tag.toUpperCase());
-      }
-    });
-
-    it('exported DOM object supports spreaded childNodes', () => {
-      expect(jsx.DOM.div('Hello ', 'world', '!').textContent).to.equal('Hello world!');
-    });
-
-    it('attr is optional', () => {
-      const el = (jsx.DOM as any).h3('Hello World') as HTMLHeadingElement;
-      expect(el.childNodes).to.have.lengthOf(1);
-      expect(el.childElementCount).to.equal(0);
-      expect(el.firstChild.nodeType).to.equal(3);
-      expect(el.textContent).to.equal('Hello World');
     });
   });
 });

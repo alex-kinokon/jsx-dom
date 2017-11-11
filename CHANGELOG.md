@@ -1,3 +1,9 @@
+# 6.0.0
+- Deprecates undocumented `DOM` shortcut functions.
+
+# 5.2.0
+- Fixes a bug with xlink attributes for SVG elements.
+
 # 5.1.6
 - Fixes a bug where `null`y value gets passed to dataset.
 
@@ -14,9 +20,8 @@
 - Nested arrays are now supported as a className input.
 
 # 5.0.2
-- Attribute is now optional for `DOM` shortcut functions.
+- ~~Attribute is now optional for `DOM` shortcut functions.~~
 - Added more tests.
 
 # 5.0.0
-
 - **Breaking Change:** SVG support is now migrated to a dedicated file.

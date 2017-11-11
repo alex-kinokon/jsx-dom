@@ -3,10 +3,9 @@ import { __assign } from 'tslib';
 
 declare const __SVG__: boolean;
 
-export { DOM } from './shortcut';
 export const SVGNamespace = 'http://www.w3.org/2000/svg';
-const XLinkNamespace = __SVG__ && 'http://www.w3.org/1999/xlink';
-const XMLNamespace = __SVG__ && 'http://www.w3.org/XML/1998/namespace';
+const XLinkNamespace = 'http://www.w3.org/1999/xlink';
+const XMLNamespace = 'http://www.w3.org/XML/1998/namespace';
 
 export function preventDefault(event: Event) {
   event.preventDefault();
@@ -39,7 +38,7 @@ function className(value: any): string {
   }
 }
 
-const svg = __SVG__ && {
+const svg = {
   animate: 0,
   circle: 0,
   clipPath: 0,
@@ -139,9 +138,9 @@ function appendChildren(children, node: Node) {
   return node;
 }
 
-const normalizeAttribute = __SVG__ && ((s: string) => {
+function normalizeAttribute(s: string) {
   return s.replace(/[A-Z\d]/g, match => ':' + match.toLowerCase());
-});
+}
 
 function attribute(key: string, value: any, node: HTMLElement | SVGElement) {
   if (__SVG__) {
