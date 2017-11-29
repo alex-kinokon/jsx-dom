@@ -19,43 +19,14 @@ declare module "jsx-dom" {
   ): HTMLElement;
 
   export function createElement<Result extends Element, Props>(
-    factory: (props: Props & { children: JSX.Child[] }) => Result | Result[],
+    factory: (props: Props & { children: JSX.Child[] }) => Result | DocumentFragment | Result[],
     props?: Props & { ref?: (instance: Result) => void; children?: any },
     ...children: JSX.Child[]
   ): Result;
 
   export const h: typeof createElement;
 
-  type ElementFactory<T extends Element> = (props?: JSX.HTMLProps<T>, ...children: JSX.Child[]) => T;
-
-  const DOM: {
-    a: ElementFactory<HTMLAnchorElement>,
-    blockquote: ElementFactory<HTMLQuoteElement>,
-    button: ElementFactory<HTMLButtonElement>,
-    div: ElementFactory<HTMLDivElement>,
-    em: ElementFactory<HTMLElement>,
-    h1: ElementFactory<HTMLHeadingElement>,
-    h2: ElementFactory<HTMLHeadingElement>,
-    h3: ElementFactory<HTMLHeadingElement>,
-    h4: ElementFactory<HTMLHeadingElement>,
-    h5: ElementFactory<HTMLHeadingElement>,
-    h6: ElementFactory<HTMLHeadingElement>,
-    hr: ElementFactory<HTMLHRElement>,
-    img: ElementFactory<HTMLImageElement>,
-    input: ElementFactory<HTMLInputElement>,
-    li: ElementFactory<HTMLLIElement>,
-    link: ElementFactory<HTMLLinkElement>,
-    ol: ElementFactory<HTMLOListElement>,
-    p: ElementFactory<HTMLParagraphElement>,
-    script: ElementFactory<HTMLScriptElement>,
-    span: ElementFactory<HTMLSpanElement>,
-    strong: ElementFactory<HTMLElement>,
-    table: ElementFactory<HTMLTableElement>,
-    td: ElementFactory<HTMLTableDataCellElement>,
-    th: ElementFactory<HTMLTableHeaderCellElement>,
-    tr: ElementFactory<HTMLTableRowElement>,
-    ul: ElementFactory<HTMLUListElement>,
-  }
+  export function Fragment(props: { children: JSX.Child[] }): DocumentFragment;
 
   // Utility functions
   export function stopPropagation(event: Event): Event;
