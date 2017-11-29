@@ -1,0 +1,12 @@
+{
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "editor.rulers": [
+    100
+  ],
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/dist": true,
+    "**/*.map": true
+  }
+}
