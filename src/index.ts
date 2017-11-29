@@ -95,6 +95,12 @@ const svg = {
   view: 0,
 };
 
+export function Fragment(attr: { children: JSX.Child[] }) {
+  const fragment = document.createDocumentFragment();
+  appendChildren(attr.children, fragment);
+  return fragment;
+}
+
 export { createElement as h };
 export function createElement(tag, attr, ...children) {
   attr = attr || {};
