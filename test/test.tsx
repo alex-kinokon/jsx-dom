@@ -1,4 +1,4 @@
-import jsx = require('../index.cjs');
+import React = require('../index.cjs');
 import svg = require('../svg.cjs');
 import { expect } from 'chai';
 import 'mocha';
@@ -148,10 +148,24 @@ describe('jsx-dom', () => {
     });
   });
 
+  describe('fragment', () => {
+    it('supports fragments', () => {
+      const frag = (
+        <>
+          {[2]}
+          <span>Bonjour</span>
+        </>
+      );
+      const nodes = frag.childNodes;
+      expect(nodes[0].nodeType === Node.TEXT_NODE && nodes[0].textContent === '2');
+      expect(nodes[1].nodeName === 'SPAN' && nodes[1].textContent === 'Bonjour');
+    });
+  });
+
   describe('SVG', () => {
     // tslint:disable-next-line:no-shadowed-variable
-    const jsx = svg;
-    const namespace = jsx.SVGNamespace;
+    const React = svg;
+    const namespace = React.SVGNamespace;
 
     it('exports the correct SVG namespace URI', () => {
       expect(namespace).to.equal('http://www.w3.org/2000/svg');
@@ -197,13 +211,6 @@ describe('jsx-dom', () => {
       checkXML(<use xmlBase="value" />, 'xml:base');
       checkXML(<use xmlLang="value" />, 'xml:lang');
       checkXML(<use xmlSpace="value" />, 'xml:space');
-    });
-  });
-
-  describe('public API', () => {
-    it('exports `createElement` as well as `h`', () => {
-      expect(jsx.h).to.equal(jsx.createElement);
-      expect(jsx.h('div').outerHTML).to.equal('<div></div>');
     });
   });
 });

@@ -10,7 +10,6 @@
     "sourceMap": false,
     "allowJs": true,
     "jsx": "react",
-    "jsxFactory": "jsx.createElement",
     "lib": [
       "dom", "es2015"
     ]
