@@ -14,7 +14,7 @@ function toPropKey(prop: PropertyKey) {
 Object.defineProperties((window as any).Element.prototype, {
   innerText: {
     get() {  return this.textContent; },
-    set(value: string) { this.textContent = value; }
+    set(value: string) { this.textContent = value; },
   },
   dataset: {
     get() {
@@ -25,8 +25,8 @@ Object.defineProperties((window as any).Element.prototype, {
         set(target, prop, value) {
           target.setAttribute(toPropKey(prop), value);
           return true;
-        }
+        },
       });
-    }
+    },
   },
 });
