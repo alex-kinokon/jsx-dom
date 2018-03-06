@@ -92,7 +92,7 @@ describe('jsx-dom', () => {
     });
 
     it('suppresses null / undefined dataset', () => {
-      expect({ ... (
+      expect({ ...(
         <div dataset={{ key: '', value: null, data: undefined }} />
       ).dataset }).to.deep.equal({
         key: '',
