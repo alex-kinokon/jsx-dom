@@ -1,5 +1,10 @@
 # jsx-dom
-[![dependency status](https://david-dm.org/glixlur/jsx-dom/status.svg)](https://david-dm.org/glixlur/jsx-dom#info=dependencies)  [![devDependency status](https://david-dm.org/glixlur/jsx-dom/dev-status.svg)](https://david-dm.org/glixlur/jsx-dom#info=devDependencies) [![build status](https://travis-ci.org/glixlur/jsx-dom.svg?branch=master)](https://travis-ci.org/glixlur/jsx-dom) [![npm version](https://badge.fury.io/js/jsx-dom.svg)](https://badge.fury.io/js/jsx-dom)
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![build status](https://travis-ci.org/glixlur/jsx-dom.svg?branch=master)](https://travis-ci.org/glixlur/jsx-dom)
+[![dependency status](https://david-dm.org/glixlur/jsx-dom/status.svg)](https://david-dm.org/glixlur/jsx-dom#info=dependencies)
+[![devDependency status](https://david-dm.org/glixlur/jsx-dom/dev-status.svg)](https://david-dm.org/glixlur/jsx-dom#info=devDependencies)
+[![npm version](https://badge.fury.io/js/jsx-dom.svg)](https://badge.fury.io/js/jsx-dom)
+![current status](https://img.shields.io/badge/looking%20for-a%20job-blue.svg)
 
 Use JSX for creating DOM elements.
 

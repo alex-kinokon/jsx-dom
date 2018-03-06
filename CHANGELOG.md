@@ -1,3 +1,6 @@
+# 6.1.0
+- Adds JSX.Fragment support.
+
 # 6.0.0
 - Deprecates undocumented `DOM` shortcut functions.
 
