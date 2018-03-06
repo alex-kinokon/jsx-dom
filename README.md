@@ -17,9 +17,9 @@ document.body.appendChild(
 );
 ```
 
-**Note:** If you are coming from a previous version and are using `createElement` instead of `h`, no change is necessary as both of them will continue to work.
+**Note:** If you need JSX.Fragment support in TypeScript, you must `import` the entire library as `React` namespace because of TypeScript restrictions.
 
-You need to tell your transpiler to use the name `h`. If you prefer not to, skip to the next section for instructions. For Babel users, specify within your `.babelrc`:
+You need to tell your transpiler to use the name `h`. If you prefer not to, or you need to use JSX.Fragment, skip to the next section for instructions. For Babel users, specify within your `.babelrc`:
 
 ```js
 "plugins": [
@@ -120,3 +120,8 @@ Two extra functions and one constant are provided by this package:
 
 ## Browser Support
 `jsx-dom` requires `Object.keys` and `Object.create` support. This means IE9 or later.
+
+## Known Issues
+
+`<div />`, and other tags, are inferred as a general `JSX.Element` in TypeScript instead of 
+`HTMLDivElement` (or the equivalents). This is a known bug and its fix depends on [TypeScript#21699](https://github.com/Microsoft/TypeScript/issues/21699).
