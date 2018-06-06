@@ -24,6 +24,8 @@ declare module "jsx-dom" {
     ...children: JSX.Child[]
   ): Result;
 
+  export function createRef<T extends Element = Element>(): JSX.Ref<T>;
+
   export const h: typeof createElement;
 
   export function Fragment(props: { children: JSX.Child[] }): DocumentFragment;
@@ -47,6 +49,10 @@ declare namespace JSX {
   type Element = NativeElement & {
     dataset: DOMStringMap;
   };
+
+  interface Ref<T> {
+    current: null | T;
+  }
 
   //
   // Event Handler Types
@@ -1811,7 +1817,7 @@ declare namespace JSX {
     innerText?: string;
     textContent?: string;
     namespaceURI?: string;
-    ref?: (e: T) => void;
+    ref?: ((e: T) => void) | Ref<T>;
 
     // Clipboard Events
     onCopy?: ClipboardEventHandler;

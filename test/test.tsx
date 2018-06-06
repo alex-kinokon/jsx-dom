@@ -113,6 +113,19 @@ describe('jsx-dom', () => {
       expect(div.children[0]).to.equal(button);
     });
 
+    it('supports React style createRef.', () => {
+      const ref = React.createRef();
+      expect(ref).to.have.property('current', null);
+
+      const div = <div><button ref={ ref }/></div>;
+      expect(ref).not.to.equal(null);
+      expect(div.children[0]).to.equal(ref.current);
+
+      <input ref={ ref } />;
+      expect(ref).not.to.equal(null);
+      expect(ref.current).to.have.property('tagName', 'INPUT');
+    });
+
     it('supports ref in functional components', () => {
       let button = null;
       const Button = () => <button/>;
