@@ -1,5 +1,8 @@
 import * as _ from './util';
 import { __assign } from 'tslib';
+import { isRef } from './ref';
+
+export { createRef } from './ref';
 
 declare const __SVG__: boolean;
 
@@ -119,7 +122,10 @@ export function createElement(tag, attr, ...children) {
     // Custom elements.
     node = tag({ ...attr, children });
   }
-  if (_.isFunction(attr.ref)) {
+
+  if (isRef(attr.ref)) {
+    attr.ref.current = node;
+  } else if (_.isFunction(attr.ref)) {
     attr.ref(node);
   }
   return node;

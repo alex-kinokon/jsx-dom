@@ -22,9 +22,9 @@ document.body.appendChild(
 );
 ```
 
-**Note:** If you need JSX.Fragment support in TypeScript, you must `import` the entire library as `React` namespace because of TypeScript restrictions.
+**Note:** If you need `JSX.Fragment` support, you must `import` the entire library as `React` namespace.
 
-You need to tell your transpiler to use the name `h`. If you prefer not to, or you need to use JSX.Fragment, skip to the next section for instructions. For Babel users, specify within your `.babelrc`:
+Optionally, we recommend you to tell your transpiler to use the name `h` because it is shorter. If you prefer not to, or you need to use JSX.Fragment, [skip to the next section for instructions](#wildcard-import). For Babel users, specify within your `.babelrc`:
 
 ```js
 "plugins": [
@@ -40,10 +40,9 @@ Or if you prefer to work with TypeScript:
 "jsxFactory": "h",
 ```
 
-### Usage without `.babelrc` or `tsconfig` options
+### <a name="wildcard-import"></a>Usage without `.babelrc` or `tsconfig` options
 
-If you don’t want to configure your transpiler to use `jsx-dom`, simply import it using 
-the React namespace:
+Simply import it using the `React` namespace:
 
 ```js
 import * as React from 'jsx-dom';
@@ -80,9 +79,38 @@ Note that `false`, `true`, `null`, `undefined` will be ignored per [React docume
 
 ### Other Attributes
 1. `dataset` accepts an object, where keys with a `null` or `undefined` value will be ignored.
+```jsx
+<div dataset={{ user: "guest", isLoggedIn: false }} />
+```
+
 2. Attributes starts with `on` and has a function value will be treated as an event listener and attached to the node with `addEventListener`.
+```jsx
+<div onClick={ e => e.preventDefault() } />
+```
+
 3. `innerHTML`, `innerText` and `textContent` are accepted.
-4. `ref` accepts a callback `(node: Element) => void` that allows access to the node after being created. This is useful when you have a nested node tree and need to access a node inside without creating an intermediary variable.
+
+4. `ref` accepts either 1) a callback `(node: Element) => void` that allows access to the node after being created, or 2) a [React style `ref` object](https://reactjs.org/docs/react-api.html#reactcreateref). This is useful when you have a nested node tree and need to access a node inside without creating an intermediary variable.
+
+```jsx
+// Callback
+<input ref={ node => $(node).typehead({ hint: true }) } />
+
+// React.createRef
+import { createRef, h } from 'jsx-dom';
+
+const textbox = createRef();
+render(
+  <div>
+    <label>Username:</label>
+    <input ref={ textbox } />
+  </div>
+);
+
+window.onerror = () => {
+  textbox.current.focus();
+};
+```
 
 ### SVG and Namespaces
 A custom build with a list of commonly used SVG tags is included.
