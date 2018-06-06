@@ -8,7 +8,7 @@ const dom = new JSDOM('');
 
 // Monkey patch jsdom to support dataset.
 function toPropKey(prop: PropertyKey) {
-  return 'data-' + `${prop}`.toLowerCase();
+  return 'data-' + `${prop as string}`.toLowerCase();
 }
 
 Object.defineProperties((window as any).Element.prototype, {
