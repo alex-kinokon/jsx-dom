@@ -1,6 +1,6 @@
 fs = require 'fs'
-ts = require '@alexlur/rollup-plugin-typescript'
-babel = require 'babel-core'
+ts = require 'rollup-typescript'
+babel = require '@babel/core'
 replace = require 'rollup-plugin-replace'
 prettier = require 'rollup-plugin-prettier'
 { rollup } = require 'rollup'
@@ -31,8 +31,8 @@ build = (name, inject) ->
 				{ transformBundle },
 				prettier(tabWidth: 2)
 			]
-		await bundle.write(format: 'cjs', file: "./#{name}.cjs.js")
-		await bundle.write(format: 'es', file: "./#{name}.js")
+		await bundle.write(format: 'cjs', file: "lib/#{name}.cjs.js")
+		await bundle.write(format: 'es', file: "lib/#{name}.js")
 	catch e
 		console.trace()
 		console.error e
@@ -48,7 +48,7 @@ task 'build', 'Build everything', ->
 	invoke 'build-svg'
 
 task 'clean', 'Remove built files', ->
-	fs.unlinkSync './index.cjs.js'
-	fs.unlinkSync './index.js'
-	fs.unlinkSync './svg.cjs.js'
-	fs.unlinkSync './svg.js'
+	fs.unlinkSync 'lib/index.cjs.js'
+	fs.unlinkSync 'lib/index.js'
+	fs.unlinkSync 'lib/svg.cjs.js'
+	fs.unlinkSync 'lib/svg.js'
