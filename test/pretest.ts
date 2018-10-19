@@ -16,6 +16,7 @@ Object.defineProperties((window as any).Element.prototype, {
     get() {  return this.textContent; },
     set(value: string) { this.textContent = value; },
   },
+  // tslint:disable-next-line:object-literal-sort-keys
   dataset: {
     get() {
       return new Proxy(this, {

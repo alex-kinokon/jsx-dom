@@ -4,7 +4,7 @@
 [![dependency status](https://david-dm.org/glixlur/jsx-dom/status.svg)](https://david-dm.org/glixlur/jsx-dom#info=dependencies)
 [![devDependency status](https://david-dm.org/glixlur/jsx-dom/dev-status.svg)](https://david-dm.org/glixlur/jsx-dom#info=devDependencies)
 [![npm version](https://badge.fury.io/js/jsx-dom.svg)](https://badge.fury.io/js/jsx-dom)
-![current status](https://img.shields.io/badge/looking%20for-a%20job-blue.svg)
+![big mood](https://img.shields.io/badge/kirito-eugeo-blue.svg)
 
 Use JSX for creating DOM elements.
 
