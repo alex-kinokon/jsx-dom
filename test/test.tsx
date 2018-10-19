@@ -1,5 +1,5 @@
-import React = require('../index.cjs');
-import svg = require('../svg.cjs');
+import React = require('../lib/index.cjs');
+import svg = require('../lib/svg.cjs');
 import { expect } from 'chai';
 import 'mocha';
 import './pretest';

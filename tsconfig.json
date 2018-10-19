@@ -11,7 +11,12 @@
     "allowJs": true,
     "jsx": "react",
     "lib": [
-      "dom", "es2015"
-    ]
-  }
+      "dom",
+      "es2015"
+    ],
+  },
+  "exclude": [
+    "node_modules",
+    "coverage"
+  ]
 }
