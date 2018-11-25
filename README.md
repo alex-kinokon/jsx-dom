@@ -14,38 +14,14 @@ npm install --save jsx-dom
 ```
 
 ## Usage
+**Note:** If you previously use `h` as pragma, there is nothing you need to change.
+
 ```jsx
-import { h } from 'jsx-dom';
+import * as React from 'jsx-dom';
 
 document.body.appendChild(
   <div id="greeting" class="alert">Hello World</div>
 );
-```
-
-**Note:** If you need `JSX.Fragment` support, you must `import` the entire library as `React` namespace.
-
-Optionally, we recommend you to tell your transpiler to use the name `h` because it is shorter. If you prefer not to, or you need to use JSX.Fragment, [skip to the next section for instructions](#wildcard-import). For Babel users, specify within your `.babelrc`:
-
-```js
-"plugins": [
-  ["transform-react-jsx", {"pragma": "h"}]
-]
-```
-
-Or if you prefer to work with TypeScript:
-
-```js
-// In tsconfig.json:
-"jsx": "react",
-"jsxFactory": "h",
-```
-
-### <a name="wildcard-import"></a>Usage without `.babelrc` or `tsconfig` options
-
-Simply import it using the `React` namespace:
-
-```js
-import * as React from 'jsx-dom';
 ```
 
 ## Syntax
@@ -97,9 +73,9 @@ Note that `false`, `true`, `null`, `undefined` will be ignored per [React docume
 <input ref={ node => $(node).typehead({ hint: true }) } />
 
 // React.createRef
-import { createRef, h } from 'jsx-dom';
+import * as React from 'jsx-dom';
 
-const textbox = createRef();
+const textbox = React.createRef();
 render(
   <div>
     <label>Username:</label>
@@ -117,9 +93,9 @@ A custom build with a list of commonly used SVG tags is included.
 
 ```jsx
 // Use 'jsx-dom/svg';
-import { h } from 'jsx-dom/svg';
+import * as React from 'jsx-dom/svg';
 // Or if you prefer Common JS
-const { h } = require('jsx-dom/svg.cjs');
+const React = require('jsx-dom/svg.cjs');
 
 document.body.appendChild(
   <div class="flag" style={{ display: 'flex' }}>
@@ -139,9 +115,9 @@ Below is a list of SVG tags included.
 If you need to create an SVG element that is not in the list, or you want to specify a custom namespace, use the attribute `namespaceURI`.
 
 ```jsx
-import { h, SVGNamespace } from 'jsx-dom';
+import * as React from 'jsx-dom';
 
-<a namespaceURI={SVGNamespace}>I am an SVG element!</a>
+<a namespaceURI={ React.SVGNamespace }>I am an SVG element!</a>
 ```
 
 ## Goodies
