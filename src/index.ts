@@ -178,6 +178,9 @@ function attribute(key: string, value: any, node: HTMLElement | SVGElement) {
   }
 
   switch (key) {
+    case 'htmlFor':
+      node.setAttribute('for', value);
+      return;
     case 'dataset':
       for (const dataKey of _.keys(value || {})) {
         const dataValue = value[dataKey];
