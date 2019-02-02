@@ -36,7 +36,7 @@ declare module "jsx-dom" {
 }
 
 declare namespace JSX {
-  export type Child = Node | string | number;
+  export type Child = Node | Node[] | string | number;
   export type Children = Child | Child[];
 
   type NativeElement = HTMLElement;
