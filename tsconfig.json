@@ -8,7 +8,6 @@
     "noUnusedParameters": true,
     "removeComments": false,
     "sourceMap": false,
-    "allowJs": true,
     "jsx": "react",
     "lib": [
       "dom",
