@@ -19,9 +19,21 @@ npm install --save jsx-dom
 ```jsx
 import * as React from 'jsx-dom';
 
+// DOM Elements.
 document.body.appendChild(
   <div id="greeting" class="alert">Hello World</div>
 );
+
+// Functional components
+// `defaultProps` and `props.children` are supported natively and work as you expected.
+function Hello(props) {
+  return <div>Hello {props.firstName}, {props.lastName}!</div>;
+}
+
+document.body.appendChild(
+  <Hello firstName="Johny" lastName="Appleseed" />
+);
+
 ```
 
 ## Syntax
@@ -87,6 +99,10 @@ window.onerror = () => {
   textbox.current.focus();
 };
 ```
+
+### Functional components
+You can write functional components and receive passed `props` in the same way in React. Unlike
+React, `props.children` is guaranteed to be an array.
 
 ### SVG and Namespaces
 A custom build with a list of commonly used SVG tags is included.

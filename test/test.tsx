@@ -134,6 +134,13 @@ describe('jsx-dom', () => {
       expect(div.children[0]).to.equal(button);
     });
 
+    it('supports defaultProps in functional components', () => {
+      const Button = (props) => <div className={props.className} />;
+      Button.defaultProps = { className: "defaultClass" };
+      const button = <Button />;
+      expect(button.className).to.equal("defaultClass");
+    })
+
     it('supports spellCheck attribute', () => {
       expect((<input spellCheck={true} />).spellcheck).to.equal(true);
       expect((<input spellCheck={false} />).spellcheck).to.equal(false);

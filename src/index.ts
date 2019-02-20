@@ -120,6 +120,10 @@ export function createElement(tag, attr, ...children) {
     appendChildren(children, node);
   } else if (_.isFunction(tag)) {
     // Custom elements.
+    if (_.isObject(tag.defaultProps)) {
+      attr = { ...tag.defaultProps, ...attr };
+    }
+
     node = tag({ ...attr, children });
   }
 
