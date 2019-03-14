@@ -1,3 +1,6 @@
+# 6.3.0
+- Adds `defaultProps` support to functional componants.
+
 # 6.1.0
 - Adds JSX.Fragment support.
 

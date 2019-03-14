@@ -1,6 +1,6 @@
 {
   "name": "jsx-dom",
-  "version": "6.3.0",
+  "version": "6.3.1",
   "description": "JSX to document.createElement.",
   "main": "lib/index.cjs.js",
   "jsnext:main": "lib/index.js",
@@ -12,43 +12,43 @@
     "test": "nyc --reporter=html mocha test/test.tsx --require test/register"
   },
   "keywords": [
-    "jsx"
+    "jsx",
+    "dom"
   ],
-  "typings": "jsx-dom.d.ts",
-  "author": "@alexlur",
+  "typings": "index.d.ts",
+  "author": "@glixlur",
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "@babel/core": "^7.3.3",
-    "@types/babel__core": "^7.0.5",
+    "@babel/core": "^7.3.4",
+    "@types/babel__core": "^7.1.0",
     "@types/chai": "^4.1.7",
-    "@types/jsdom": "^12.2.2",
+    "@types/jsdom": "^12.2.3",
     "@types/mocha": "^5.2.6",
-    "@types/node": "^11.9.4",
-    "@types/prop-types": "^15.5.9",
+    "@types/node": "^11.11.3",
+    "@types/prop-types": "^15.7.0",
     "babel-preset-minify": "^0.5.0",
     "chai": "^4.2.0",
     "coffeescript": "^2.3.2",
     "fs-extra": "^7.0.1",
-    "jsdom": "^13.2.0",
-    "mocha": "^6.0.0",
+    "jsdom": "^14.0.0",
+    "mocha": "^6.0.2",
     "nyc": "^13.3.0",
-    "rollup": "^1.2.2",
+    "rollup": "^1.6.0",
     "rollup-plugin-prettier": "^0.6.0",
     "rollup-plugin-replace": "^2.1.0",
     "rollup-typescript": "^1.2.0",
-    "ts-node": "^8.0.2",
-    "typescript": "^3.3.3"
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.3333"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alexlur/jsx-dom.git"
+    "url": "git+https://github.com/glixlur/jsx-dom.git"
   },
   "bugs": {
-    "url": "https://github.com/alexlur/jsx-dom/issues"
+    "url": "https://github.com/glixlur/jsx-dom/issues"
   },
-  "homepage": "https://github.com/alexlur/jsx-dom#readme",
+  "homepage": "https://github.com/glixlur/jsx-dom#readme",
   "dependencies": {
-    "csstype": "^2.6.2",
     "tslib": "^1.9.3"
   }
 }
