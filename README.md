@@ -11,6 +11,7 @@ Use JSX for creating DOM elements.
 ## Installation
 ```bash
 npm install --save jsx-dom
+yarn install jsx-dom
 ```
 
 ## Usage
@@ -110,8 +111,6 @@ A custom build with a list of commonly used SVG tags is included.
 ```jsx
 // Use 'jsx-dom/svg';
 import * as React from 'jsx-dom/svg';
-// Or if you prefer Common JS
-const React = require('jsx-dom/svg.cjs');
 
 document.body.appendChild(
   <div class="flag" style={{ display: 'flex' }}>
