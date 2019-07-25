@@ -19,26 +19,26 @@
   "author": "@glixlur",
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "@babel/core": "^7.4.5",
+    "@babel/core": "^7.5.5",
     "@types/babel__core": "^7.1.2",
     "@types/chai": "^4.1.7",
-    "@types/jsdom": "^12.2.3",
+    "@types/jsdom": "^12.2.4",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^12.0.5",
+    "@types/node": "^12.6.8",
     "@types/prop-types": "^15.7.1",
     "babel-preset-minify": "^0.5.0",
     "chai": "^4.2.0",
     "coffeescript": "^2.4.1",
-    "fs-extra": "^8.0.1",
+    "fs-extra": "^8.1.0",
     "jsdom": "^15.1.1",
-    "mocha": "^6.1.4",
+    "mocha": "^6.2.0",
     "nyc": "^14.1.1",
-    "rollup": "^1.14.2",
+    "rollup": "^1.17.0",
     "rollup-plugin-prettier": "^0.6.0",
     "rollup-plugin-replace": "^2.2.0",
     "rollup-typescript": "^1.2.0",
-    "ts-node": "^8.2.0",
-    "typescript": "^3.5.1"
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
   },
   "repository": {
     "type": "git",
@@ -49,6 +49,6 @@
   },
   "homepage": "https://github.com/glixlur/jsx-dom#readme",
   "dependencies": {
-    "tslib": "^1.9.3"
+    "tslib": "^1.10.0"
   }
 }
