@@ -1,3 +1,6 @@
+# 6.4.0
+- **Now requires `Object.assign` polyfill for old browsers.**
+
 # 6.3.0
 - Adds `defaultProps` support to functional componants.
 
