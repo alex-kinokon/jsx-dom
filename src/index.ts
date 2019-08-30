@@ -1,14 +1,14 @@
-import * as _ from './util';
-import { __assign } from 'tslib';
-import { isRef } from './ref';
+import * as _ from "./util"
+import { __assign } from "tslib"
+import { isRef } from "./ref"
 
-export { createRef } from './ref';
+export { createRef } from "./ref"
 
 declare const __SVG__: boolean;
 
-export const SVGNamespace = 'http://www.w3.org/2000/svg';
-const XLinkNamespace = 'http://www.w3.org/1999/xlink';
-const XMLNamespace = 'http://www.w3.org/XML/1998/namespace';
+export const SVGNamespace = "http://www.w3.org/2000/svg"
+const XLinkNamespace = "http://www.w3.org/1999/xlink"
+const XMLNamespace = "http://www.w3.org/XML/1998/namespace"
 
 export function preventDefault(event: Event) {
   event.preventDefault();
@@ -21,7 +21,7 @@ export function stopPropagation(event: Event) {
 
 // https://facebook.github.io/react/docs/jsx-in-depth.html#booleans-null-and-undefined-are-ignored
 // Emulate JSX Expression logic to ignore certain type of children or className.
-function isVisibleChild(value: any) {
+function isVisibleChild(value: any): boolean {
   return !_.isBoolean(value) && value != null;
 }
 
@@ -31,13 +31,13 @@ function isVisibleChild(value: any) {
  */
 function className(value: any): string {
   if (Array.isArray(value)) {
-    return value.map(className).filter(Boolean).join(' ');
+    return value.map(className).filter(Boolean).join(" ");
   } else if (_.isObject(value)) {
-    return _.keys(value).filter(k => value[k]).join(' ');
+    return _.keys(value).filter(k => value[k]).join(" ");
   } else if (isVisibleChild(value)) {
-    return '' + value;
+    return "" + value;
   } else {
-    return '';
+    return "";
   }
 }
 
@@ -141,7 +141,7 @@ function appendChild(child, node: Node) {
   } else if (_.isString(child) || _.isNumber(child)) {
     node.appendChild(document.createTextNode(child as any));
   } else if (child === null) {
-    node.appendChild(document.createComment(''));
+    node.appendChild(document.createComment(""));
   } else if (_.isElement(child)) {
     node.appendChild(child);
   }
@@ -155,80 +155,80 @@ function appendChildren(children, node: Node) {
 }
 
 function normalizeAttribute(s: string) {
-  return s.replace(/[A-Z\d]/g, match => ':' + match.toLowerCase());
+  return s.replace(/[A-Z\d]/g, match => ":" + match.toLowerCase());
 }
 
 function attribute(key: string, value: any, node: HTMLElement | SVGElement) {
   if (__SVG__) {
     switch (key) {
-      case 'xlinkActuate':
-      case 'xlinkArcrole':
-      case 'xlinkHref':
-      case 'xlinkRole':
-      case 'xlinkShow':
-      case 'xlinkTitle':
-      case 'xlinkType':
+      case "xlinkActuate":
+      case "xlinkArcrole":
+      case "xlinkHref":
+      case "xlinkRole":
+      case "xlinkShow":
+      case "xlinkTitle":
+      case "xlinkType":
         node.setAttributeNS(XLinkNamespace, normalizeAttribute(key), value);
         return;
-      case 'xmlnsXlink':
+      case "xmlnsXlink":
         node.setAttribute(normalizeAttribute(key), value);
         return;
-      case 'xmlBase':
-      case 'xmlLang':
-      case 'xmlSpace':
+      case "xmlBase":
+      case "xmlLang":
+      case "xmlSpace":
         node.setAttributeNS(XMLNamespace, normalizeAttribute(key), value);
         return;
     }
   }
 
   switch (key) {
-    case 'htmlFor':
-      node.setAttribute('for', value);
+    case "htmlFor":
+      node.setAttribute("for", value);
       return;
-    case 'dataset':
-      for (const dataKey of _.keys(value || {})) {
+    case "dataset":
+      for (const dataKey of _.keys<object>(value || {})) {
         const dataValue = value[dataKey];
         if (dataValue != null) {
           (node as HTMLElement).dataset[dataKey] = dataValue;
         }
       }
       return;
-    case 'innerHTML':
-    case 'innerText':
-    case 'textContent':
+    case "innerHTML":
+    case "innerText":
+    case "textContent":
       node[key] = value;
       return;
-    case 'spellCheck':
+    case "spellCheck":
       (node as HTMLInputElement).spellcheck = value;
       return;
-    case 'class':
-    case 'className':
-      node.setAttribute('class', className(value));
+    case "class":
+    case "className":
+      node.setAttribute("class", className(value));
       return;
-    case 'ref':
-    case 'namespaceURI':
+    case "ref":
+    case "namespaceURI":
       return;
-    case 'style':
+    case "style":
       if (_.isObject(value)) {
-        __assign(node.style, value);
+        Object.assign(node.style, value);
         return;
       }
       // fallthrough
   }
 
   if (_.isFunction(value)) {
-    if (key[0] === 'o' && key[1] === 'n') {
+    if (key[0] === "o" && key[1] === "n") {
       const name = key.slice(2).toLowerCase();
       listen(node, name, value);
     }
   } else if (value === true) {
-    node.setAttribute(key, '');
+    node.setAttribute(key, "");
   } else if (value !== false && value != null) {
     node.setAttribute(key, value);
   }
 }
 
-function attributes(attr, node: HTMLElement | SVGElement) {
+function attributes(attr: object, node: HTMLElement | SVGElement) {
   for (const key of _.keys(attr)) {
     attribute(key, attr[key], node);
   }

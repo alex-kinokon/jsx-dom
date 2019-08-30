@@ -1,9 +1,8 @@
 {
   "name": "jsx-dom",
-  "version": "6.3.1",
+  "version": "6.4.0",
   "description": "JSX to document.createElement.",
   "main": "lib/index.cjs.js",
-  "jsnext:main": "lib/index.js",
   "module": "lib/index.js",
   "scripts": {
     "build": "cake build",
@@ -16,7 +15,7 @@
     "dom"
   ],
   "typings": "index.d.ts",
-  "author": "@glixlur",
+  "author": "proteria",
   "license": "BSD-3-Clause",
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -33,11 +32,15 @@
     "jsdom": "^15.1.1",
     "mocha": "^6.2.0",
     "nyc": "^14.1.1",
+    "prettier": "^1.18.2",
     "rollup": "^1.20.3",
     "rollup-plugin-prettier": "^0.6.0",
     "rollup-plugin-replace": "^2.2.0",
     "rollup-typescript": "^1.2.0",
     "ts-node": "^8.3.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.6.2"
   },
   "repository": {
@@ -48,7 +51,11 @@
     "url": "https://github.com/glixlur/jsx-dom/issues"
   },
   "homepage": "https://github.com/glixlur/jsx-dom#readme",
-  "dependencies": {
-    "tslib": "^1.10.0"
+  "prettier": {
+    "tabWidth": 2,
+    "printWidth": 85,
+    "semi": false,
+    "singleQuote": false,
+    "trailingComma": "es5"
   }
 }
