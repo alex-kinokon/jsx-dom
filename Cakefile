@@ -8,28 +8,31 @@ prettier = require('rollup-plugin-prettier')
 renderChunk = (code) ->
   transformed = babel.transform code,
     babelrc: false
-    comments: true
+    comments: false
     minified: false
     plugins: [
       'minify-constant-folding'
       'minify-guarded-expressions'
       'minify-dead-code-elimination'
+      ({ types: t }) ->
+        visitor:
+          VariableDeclarator: ({ node }) ->
+            if node.id.name is '__assign'
+              node.init = t.memberExpression(t.identifier('Object'), t.identifier('assign'))
+            return
     ]
   code: transformed.code
   map: transformed.map
-
-rollupPluginExternal = ['tslib']
 
 build = (name, inject) ->
   try
     bundle = await rollup
       input: './src/index.ts'
-      external: rollupPluginExternal
       plugins: [
         ts(),
         replace(inject),
         { renderChunk },
-        prettier(tabWidth: 2)
+        prettier(tabWidth: 2, parser: 'babel'),
       ]
     await bundle.write(format: 'cjs', file: "lib/#{name}.cjs.js")
     await bundle.write(format: 'es', file: "lib/#{name}.js")

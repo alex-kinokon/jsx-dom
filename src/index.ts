@@ -1,5 +1,4 @@
 import * as _ from "./util"
-import { __assign } from "tslib"
 import { isRef } from "./ref"
 
 export { createRef } from "./ref"
