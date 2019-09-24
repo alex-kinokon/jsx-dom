@@ -3,6 +3,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
+    "importHelpers": true,
     "noImplicitAny": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -12,7 +13,7 @@
     "lib": [
       "dom",
       "es2015"
-    ],
+    ]
   },
   "exclude": [
     "node_modules",

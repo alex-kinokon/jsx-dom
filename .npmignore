@@ -2,9 +2,12 @@ src
 test
 node_modules
 tsconfig.json
+tslint.json
 yarn.lock
 Cakefile
 coverage
 .nyc_output
 .gitignore
 .travis.yml
+.vscode
+drafts
