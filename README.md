@@ -143,7 +143,7 @@ Two extra functions and one constant are provided by this package:
 3. `SVGNamespace` is the `namespaceURI` string for SVG Elements.
 
 ## Browser Support
-`jsx-dom` requires `Object.keys` and `Object.create` support. This means IE9 or later.
+There is no support for Internet Explorer.
 
 ## Known Issues
 
