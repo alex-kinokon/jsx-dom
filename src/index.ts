@@ -1,5 +1,5 @@
-import * as _ from "./util"
 import { isRef } from "./ref"
+import { isString, isArrayLike, isBoolean, isObject, isFunction, isElement, isNumber, keys } from "./util"
 
 export { createRef } from "./ref"
 
@@ -21,7 +21,7 @@ export function stopPropagation(event: Event) {
 // https://facebook.github.io/react/docs/jsx-in-depth.html#booleans-null-and-undefined-are-ignored
 // Emulate JSX Expression logic to ignore certain type of children or className.
 function isVisibleChild(value: any): boolean {
-  return !_.isBoolean(value) && value != null;
+  return !isBoolean(value) && value != null;
 }
 
 /**
@@ -31,8 +31,8 @@ function isVisibleChild(value: any): boolean {
 function className(value: any): string {
   if (Array.isArray(value)) {
     return value.map(className).filter(Boolean).join(" ");
-  } else if (_.isObject(value)) {
-    return _.keys(value).filter(k => value[k]).join(" ");
+  } else if (isObject(value)) {
+    return keys(value).filter(k => value[k]).join(" ");
   } else if (isVisibleChild(value)) {
     return "" + value;
   } else {
@@ -111,15 +111,15 @@ export function createElement(tag, attr, ...children) {
   }
 
   let node: HTMLElement | SVGElement;
-  if (_.isString(tag)) {
+  if (isString(tag)) {
     node = attr.namespaceURI
       ? document.createElementNS(attr.namespaceURI, tag)
       : document.createElement(tag);
     attributes(attr, node);
     appendChildren(children, node);
-  } else if (_.isFunction(tag)) {
+  } else if (isFunction(tag)) {
     // Custom elements.
-    if (_.isObject(tag.defaultProps)) {
+    if (isObject(tag.defaultProps)) {
       attr = { ...tag.defaultProps, ...attr };
     }
 
@@ -128,20 +128,20 @@ export function createElement(tag, attr, ...children) {
 
   if (isRef(attr.ref)) {
     attr.ref.current = node;
-  } else if (_.isFunction(attr.ref)) {
+  } else if (isFunction(attr.ref)) {
     attr.ref(node);
   }
   return node;
 }
 
 function appendChild(child, node: Node) {
-  if (_.isArrayLike(child)) {
+  if (isArrayLike(child)) {
     appendChildren(child, node);
-  } else if (_.isString(child) || _.isNumber(child)) {
+  } else if (isString(child) || isNumber(child)) {
     node.appendChild(document.createTextNode(child as any));
   } else if (child === null) {
     node.appendChild(document.createComment(""));
-  } else if (_.isElement(child)) {
+  } else if (isElement(child)) {
     node.appendChild(child);
   }
 }
@@ -185,7 +185,7 @@ function attribute(key: string, value: any, node: HTMLElement | SVGElement) {
       node.setAttribute("for", value);
       return;
     case "dataset":
-      for (const dataKey of _.keys<object>(value || {})) {
+      for (const dataKey of keys<object>(value || {})) {
         const dataValue = value[dataKey];
         if (dataValue != null) {
           (node as HTMLElement).dataset[dataKey] = dataValue;
@@ -208,17 +208,17 @@ function attribute(key: string, value: any, node: HTMLElement | SVGElement) {
     case "namespaceURI":
       return;
     case "style":
-      if (_.isObject(value)) {
+      if (isObject(value)) {
         Object.assign(node.style, value);
         return;
       }
       // fallthrough
   }
 
-  if (_.isFunction(value)) {
+  if (isFunction(value)) {
     if (key[0] === "o" && key[1] === "n") {
       const name = key.slice(2).toLowerCase();
-      listen(node, name, value);
+      node.addEventListener(name, value);
     }
   } else if (value === true) {
     node.setAttribute(key, "");
@@ -228,13 +228,9 @@ function attribute(key: string, value: any, node: HTMLElement | SVGElement) {
 }
 
 function attributes(attr: object, node: HTMLElement | SVGElement) {
-  for (const key of _.keys(attr)) {
+  for (const key of keys(attr)) {
     attribute(key, attr[key], node);
   }
   return node;
 }
 
-function listen(node: Node, eventName: string, callback) {
-  node.addEventListener(eventName, callback);
-  return node;
-}
