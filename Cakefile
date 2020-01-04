@@ -1,7 +1,7 @@
 fs = require('fs-extra')
 ts = require('rollup-typescript')
 babel = require('@babel/core')
-replace = require('rollup-plugin-replace')
+replace = require('@rollup/plugin-replace')
 prettier = require('rollup-plugin-prettier')
 { rollup } = require('rollup')
 
