@@ -4,9 +4,7 @@
   "description": "JSX to document.createElement.",
   "main": "lib/index.cjs.js",
   "module": "lib/index.js",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
+  "publishConfig": {},
   "scripts": {
     "build": "cake build",
     "pretest": "npm run build",
