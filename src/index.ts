@@ -128,13 +128,17 @@ export function createElement(tag, attr, ...children) {
     attr = { ...attr, namespaceURI: SVGNamespace }
   }
 
+  if (attr.children != null && !children.length) {
+    children = attr.children
+  }
+
   let node: HTMLElement | SVGElement
   if (isString(tag)) {
     node = attr.namespaceURI
       ? document.createElementNS(attr.namespaceURI, tag)
       : document.createElement(tag)
     attributes(attr, node)
-    appendChildren(children, node)
+    appendChild(children, node)
   } else if (isFunction(tag)) {
     // Custom elements.
     if (isObject(tag.defaultProps)) {

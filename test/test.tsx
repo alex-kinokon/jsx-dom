@@ -59,6 +59,17 @@ describe("jsx-dom", () => {
     it("supports string as childNode", () => {
       expect((<div>{"text"}</div>).textContent).to.equal("text")
     })
+
+    it("supports passing `children` explicitly", () => {
+      expect((<div children="internal" />).textContent).to.equal("internal")
+      expect((<div children={["internal", 20]} />).textContent).to.equal(
+        "internal20"
+      )
+    })
+
+    it("will not override JSX childNodes with `children` attribute", () => {
+      expect((<div children="i">override</div>).textContent).to.equal("override")
+    })
   })
 
   describe("className", () => {
