@@ -8,5 +8,6 @@
     "**/bower_components": true,
     "**/dist": true,
     "**/*.map": true
-  }
+  },
+  "editor.formatOnSave": true
 }
