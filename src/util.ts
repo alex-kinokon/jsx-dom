@@ -13,20 +13,22 @@ export function isString(val): val is string {
 }
 
 export function isNumber(val): val is number {
-  return typeof val === "number";
+  return typeof val === "number"
 }
 
 export function isObject(val) {
-  return typeof val === "object" ? val !== null : isFunction(val);
+  return typeof val === "object" ? val !== null : isFunction(val)
 }
 
 // tslint:disable-next-line:ban-types
 export function isFunction(val): val is Function {
-  return typeof val === "function";
+  return typeof val === "function"
 }
 
 export function isArrayLike(obj): obj is ArrayLike<any> {
-  return isObject( obj )
-    && typeof obj.length === "number"
-    && typeof obj.nodeType !== "number"
+  return (
+    isObject(obj) &&
+    typeof obj.length === "number" &&
+    typeof obj.nodeType !== "number"
+  )
 }
