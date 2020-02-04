@@ -1,8 +1,11 @@
+# 6.4.5
+- Adds `React.createFactory` support.
+
 # 6.4.0
 - **Now requires `Object.assign` polyfill for old browsers.**
 
 # 6.3.0
-- Adds `defaultProps` support to functional componants.
+- Adds `defaultProps` support to functional components.
 
 # 6.1.0
 - Adds JSX.Fragment support.
