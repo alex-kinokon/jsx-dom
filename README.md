@@ -1,5 +1,5 @@
 # jsx-dom
-
+<!-- prettier-ignore -->
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![build status](https://travis-ci.org/proteriax/jsx-dom.svg?branch=master)](https://travis-ci.org/proteriax/jsx-dom)
 [![dependency status](https://david-dm.org/proteriax/jsx-dom/status.svg)](https://david-dm.org/proteriax/jsx-dom#info=dependencies)
@@ -102,7 +102,7 @@ Passing `children` as an explicit attribute, when there is no other JSX child no
 
 ```jsx
 // Callback
-;<input ref={node => $(node).typehead({ hint: true })} />
+<input ref={node => $(node).typehead({ hint: true })} />
 
 // React.createRef
 import * as React from "jsx-dom"
@@ -153,7 +153,7 @@ If you need to create an SVG element that is not in the list, or you want to spe
 
 ```jsx
 import * as React from "jsx-dom"
-;<a namespaceURI={React.SVGNamespace}>I am an SVG element!</a>
+<a namespaceURI={React.SVGNamespace}>I am an SVG element!</a>
 ```
 
 ## Goodies
