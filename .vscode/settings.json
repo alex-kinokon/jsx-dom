@@ -9,5 +9,5 @@
     "**/dist": true,
     "**/*.map": true
   },
-  "editor.formatOnSave": true
+  "editor.formatOnSave": false
 }
