@@ -1,5 +1,5 @@
-import React = require("../lib/index.cjs")
-import svg = require("../lib/svg.cjs")
+const React = require("../lib/index.cjs")
+const svg = require("../lib/svg.cjs")
 
 import { expect } from "chai"
 import "mocha"
@@ -18,7 +18,7 @@ describe("jsx-dom", () => {
       const Div = React.createFactory("div")
       expect((<Div>div tag</Div>).tagName).to.equal("DIV")
 
-      function CustomComponent(props): any {
+      function CustomComponent(props: any): any {
         if (!new.target) return new (CustomComponent as any)(props)
       }
       expect(<CustomComponent />).to.be.instanceOf(CustomComponent)
@@ -186,7 +186,7 @@ describe("jsx-dom", () => {
     })
 
     it("supports defaultProps in functional components", () => {
-      const Button = props => <div className={props.className} />
+      const Button = (props: any) => <div className={props.className} />
       Button.defaultProps = { className: "defaultClass" }
       const button = <Button />
       expect(button.className).to.equal("defaultClass")

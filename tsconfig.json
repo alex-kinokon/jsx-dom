@@ -4,7 +4,7 @@
     "moduleResolution": "node",
     "target": "es5",
     "importHelpers": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": false,
