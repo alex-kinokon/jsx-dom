@@ -17,7 +17,7 @@ yarn install jsx-dom
 
 ## Usage
 
-**Note:** If you previously use `h` as pragma, there is nothing you need to change.
+**Note:** Using HyperScript? `h` pragma is also supported.
 
 ```jsx
 import * as React from "jsx-dom"
@@ -30,13 +30,16 @@ document.body.appendChild(
 )
 
 // Functional components
-// `defaultProps` and `props.children` are supported natively and work as you expected.
+// `defaultProps` and `props.children` are supported natively and work as you expect.
 function Hello(props) {
   return (
     <div>
       Hello {props.firstName}, {props.lastName}!
     </div>
   )
+}
+Hello.defaultProps = {
+  firstName: "John"
 }
 
 document.body.appendChild(<Hello firstName="Johnny" lastName="Appleseed" />)
@@ -71,7 +74,7 @@ Note that `false`, `true`, `null`, `undefined` will be ignored per [React docume
 
 ```jsx
 <div style="background: transparent;" />
-<div style={{ background: 'transparent', fontFamily: 'serif' }} />
+<div style={{ background: "transparent", fontFamily: "serif" }} />
 ```
 
 ### Children
@@ -162,7 +165,8 @@ Two extra functions and one constant are provided by this package:
 
 1. `preventDefault(event: Event): Event`
 2. `stopPropagation(event: Event): Event`
-3. `SVGNamespace` is the `namespaceURI` string for SVG Elements.
+3. `createFactory(component: string | (props) => JSX.Element)`
+4. `SVGNamespace` is the `namespaceURI` string for SVG Elements.
 
 ## Browser Support
 
