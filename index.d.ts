@@ -95,6 +95,7 @@ declare namespace JSX {
 
   type ClassNameBase = boolean | string | number | void | null
   type ClassName =
+    | false
     | string
     | (ClassNameBase | ClassNameBase[])[]
     | {
