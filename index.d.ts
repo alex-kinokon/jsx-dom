@@ -46,7 +46,9 @@ declare module "jsx-dom" {
 
   export function createRef<T extends Element = Element>(): JSX.Ref<T>
 
-  export const h: typeof createElement
+  export { createElement as h }
+
+  export const SVGNamespace: string
 
   export function Fragment(props: { children: JSX.Child[] }): DocumentFragment
 
