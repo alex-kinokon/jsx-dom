@@ -161,16 +161,18 @@ import * as React from "jsx-dom"
 
 ## Goodies
 
-Two extra functions and one constant are provided by this package:
+Three extra functions and one constant are provided by this package:
 
 1. `preventDefault(event: Event): Event`
 2. `stopPropagation(event: Event): Event`
 3. `createFactory(component: string | (props) => JSX.Element)`
 4. `SVGNamespace` is the `namespaceURI` string for SVG Elements.
+5. `import { HTML } from "jsx-dom"` contains short type aliases for HTML elements
 
 ## Browser Support
 
-There is no support for Internet Explorer.
+There is no support for Internet Explorer, although it will very likely work if you bring your own
+polyfill.
 
 ## Known Issues
 
