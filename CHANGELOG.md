@@ -1,3 +1,7 @@
+# 6.4.8
+- Assigns event listener directly instead of `addEventListener`.
+- Exports `HTML` helper type alias namespace.
+
 # 6.4.5
 - Adds `React.createFactory` support.
 
