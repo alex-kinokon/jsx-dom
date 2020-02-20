@@ -55,6 +55,35 @@ declare module "jsx-dom" {
   // Utility functions
   export function stopPropagation(event: Event): Event
   export function preventDefault(event: Event): Event
+
+  export namespace HTML {
+    export type Anchor = HTMLAnchorElement
+    export type Audio = HTMLAudioElement
+    export type Body = HTMLBodyElement
+    export type Button = HTMLButtonElement
+    export type Canvas = HTMLCanvasElement
+    export type Div = HTMLDivElement
+    export type Head = HTMLHeadElement
+    export type Heading = HTMLHeadingElement
+    export type Input = HTMLInputElement
+    export type LI = HTMLLIElement
+    export type Link = HTMLLinkElement
+    export type Meta = HTMLMetaElement
+    export type Object = HTMLObjectElement
+    export type OList = HTMLOListElement
+    export type Option = HTMLOptionElement
+    export type Paragraph = HTMLParagraphElement
+    export type Pre = HTMLPreElement
+    export type Script = HTMLScriptElement
+    export type Select = HTMLSelectElement
+    export type Span = HTMLSpanElement
+    export type Style = HTMLStyleElement
+    export type Table = HTMLTableElement
+    export type TableCell = HTMLTableCellElement
+    export type TableHeadCell = HTMLTableHeaderCellElement
+    export type UList = HTMLUListElement
+    export type Video = HTMLVideoElement
+  }
 }
 
 declare namespace JSX {
@@ -89,6 +118,7 @@ declare namespace JSX {
   type ChangeEventHandler = EventHandler<Event>
   type KeyboardEventHandler = EventHandler<KeyboardEvent>
   type MouseEventHandler = EventHandler<MouseEvent>
+  type PointerEventHandler = EventHandler<PointerEvent>
   type TouchEventHandler = EventHandler<TouchEvent>
   type UIEventHandler = EventHandler<UIEvent>
   type WheelEventHandler = EventHandler<WheelEvent>
@@ -2036,6 +2066,7 @@ declare namespace JSX {
     onMouseOverCapture?: MouseEventHandler
     onMouseUp?: MouseEventHandler
     onMouseUpCapture?: MouseEventHandler
+    onPointerDown?: PointerEventHandler
 
     // Selection Events
     onSelect?: EventHandler

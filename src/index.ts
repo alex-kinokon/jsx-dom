@@ -122,7 +122,7 @@ export function Fragment(attr: { children: JSX.Child[] }) {
 }
 
 export { createElement as h }
-export function createElement(tag, attr, ...children) {
+export function createElement(tag: any, attr: any, ...children: any[]) {
   attr = attr || {}
   if (__SVG__ && !attr.namespaceURI && svg[tag] === 0) {
     attr = { ...attr, namespaceURI: SVGNamespace }
@@ -168,7 +168,7 @@ function appendChild(child, node: Node) {
   }
 }
 
-function appendChildren(children, node: Node) {
+function appendChildren(children: any[], node: Node) {
   for (const child of children) {
     appendChild(child, node)
   }

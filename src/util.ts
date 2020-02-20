@@ -1,31 +1,31 @@
 export const keys: <T>(obj: T) => Array<keyof T> = Object.keys as any
 
-export function isBoolean(val): val is boolean {
+export function isBoolean(val: any): val is boolean {
   return typeof val === "boolean"
 }
 
-export function isElement(val): val is Element {
+export function isElement(val: any): val is Element {
   return val && typeof val.nodeType === "number"
 }
 
-export function isString(val): val is string {
+export function isString(val: any): val is string {
   return typeof val === "string"
 }
 
-export function isNumber(val): val is number {
+export function isNumber(val: any): val is number {
   return typeof val === "number"
 }
 
-export function isObject(val) {
+export function isObject(val: any) {
   return typeof val === "object" ? val !== null : isFunction(val)
 }
 
 // tslint:disable-next-line:ban-types
-export function isFunction(val): val is Function {
+export function isFunction(val: any): val is Function {
   return typeof val === "function"
 }
 
-export function isArrayLike(obj): obj is ArrayLike<any> {
+export function isArrayLike(obj: any): obj is ArrayLike<any> {
   return (
     isObject(obj) &&
     typeof obj.length === "number" &&
