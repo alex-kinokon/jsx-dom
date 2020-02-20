@@ -239,8 +239,7 @@ function attribute(key: string, value: any, node: HTMLElement | SVGElement) {
 
   if (isFunction(value)) {
     if (key[0] === "o" && key[1] === "n") {
-      const name = key.slice(2).toLowerCase()
-      node.addEventListener(name, value)
+      node[key.toLowerCase()] = value
     }
   } else if (value === true) {
     node.setAttribute(key, "")

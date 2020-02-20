@@ -93,7 +93,7 @@ Passing `children` as an explicit attribute, when there is no other JSX child no
 <div dataset={{ user: "guest", isLoggedIn: false }} />
 ```
 
-2. Attributes starts with `on` and has a function value will be treated as an event listener and attached to the node with `addEventListener`.
+2. Attributes starts with `on` and has a function value will be treated as an event listener and attached to the node by setting the property directly (e.g. `node.onclick = ...`).
 
 ```jsx
 <div onClick={e => e.preventDefault()} />
