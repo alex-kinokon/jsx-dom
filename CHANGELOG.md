@@ -1,4 +1,7 @@
-# 6.4.8
+# 6.4.10
+- Adds support for `import React from "jsx-dom"`.
+
+# 6.4.9
 - Assigns event listener directly instead of `addEventListener`.
 - Exports `HTML` helper type alias namespace.
 
