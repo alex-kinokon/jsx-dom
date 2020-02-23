@@ -46,11 +46,18 @@ declare module "jsx-dom" {
 
   export function createRef<T extends Element = Element>(): JSX.Ref<T>
 
+  export function className(value: any): string
+
   export { createElement as h }
 
-  export const SVGNamespace: string
+  export const SVGNamespace: "http://www.w3.org/2000/svg"
 
   export function Fragment(props: { children: JSX.Child[] }): DocumentFragment
+
+  const defaultExport: {
+    createElement: typeof createElement
+  }
+  export default defaultExport
 
   // Utility functions
   export function stopPropagation(event: Event): Event
@@ -2071,6 +2078,7 @@ declare namespace JSX {
 
     // Selection Events
     onSelect?: EventHandler
+    onSelectStart?: EventHandler
     onSelectCapture?: EventHandler
 
     // Touch Events

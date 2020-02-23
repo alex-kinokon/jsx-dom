@@ -18,6 +18,10 @@ export const SVGNamespace = "http://www.w3.org/2000/svg"
 const XLinkNamespace = "http://www.w3.org/1999/xlink"
 const XMLNamespace = "http://www.w3.org/XML/1998/namespace"
 
+export default {
+  createElement,
+}
+
 export function preventDefault(event: Event) {
   event.preventDefault()
   return event
@@ -37,7 +41,7 @@ function isVisibleChild(value: any): boolean {
  * Convert a `value` to a className string.
  * `value` can be a string, an array or a `Dictionary<boolean>`.
  */
-function className(value: any): string {
+export function className(value: any): string {
   if (Array.isArray(value)) {
     return value
       .map(className)
