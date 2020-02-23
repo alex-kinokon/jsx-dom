@@ -108,7 +108,7 @@ Passing `children` as an explicit attribute, when there is no other JSX child no
 <input ref={node => $(node).typehead({ hint: true })} />
 
 // React.createRef
-import * as React from "jsx-dom"
+import React, { createRef } from "jsx-dom"
 
 const textbox = React.createRef()
 render(
@@ -134,7 +134,7 @@ A custom build with a list of commonly used SVG tags is included.
 
 ```jsx
 // Use 'jsx-dom/svg';
-import * as React from "jsx-dom/svg"
+import React from "jsx-dom/svg"
 
 document.body.appendChild(
   <div class="flag" style={{ display: "flex" }}>
@@ -155,8 +155,8 @@ Below is a list of SVG tags included.
 If you need to create an SVG element that is not in the list, or you want to specify a custom namespace, use the attribute `namespaceURI`.
 
 ```jsx
-import * as React from "jsx-dom"
-<a namespaceURI={React.SVGNamespace}>I am an SVG element!</a>
+import React, { SVGNamespace } from "jsx-dom"
+<a namespaceURI={ SVGNamespace }>I am an SVG element!</a>
 ```
 
 ## Goodies
@@ -167,7 +167,8 @@ Three extra functions and one constant are provided by this package:
 2. `stopPropagation(event: Event): Event`
 3. `createFactory(component: string | (props) => JSX.Element)`
 4. `SVGNamespace` is the `namespaceURI` string for SVG Elements.
-5. `import { HTML } from "jsx-dom"` contains short type aliases for HTML elements
+5. `className` function.
+6. `import { HTML } from "jsx-dom"` contains short type aliases for HTML elements
 
 ## Browser Support
 
