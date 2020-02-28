@@ -2039,6 +2039,7 @@ declare namespace JSX {
     onWaitingCapture?: EventHandler
 
     // MouseEvents
+    onAuxClick?: MouseEventHandler
     onClick?: MouseEventHandler
     onClickCapture?: MouseEventHandler
     onContextMenu?: MouseEventHandler
@@ -2075,6 +2076,7 @@ declare namespace JSX {
     onMouseUpCapture?: MouseEventHandler
     onPointerDown?: PointerEventHandler
     onPointerEnter?: PointerEventHandler
+    onPointerLeave?: PointerEventHandler
 
     // Selection Events
     onSelect?: EventHandler
