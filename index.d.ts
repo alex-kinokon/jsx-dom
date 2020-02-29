@@ -72,6 +72,7 @@ declare module "jsx-dom" {
     export type Div = HTMLDivElement
     export type Head = HTMLHeadElement
     export type Heading = HTMLHeadingElement
+    export type Image = HTMLImageElement
     export type Input = HTMLInputElement
     export type LI = HTMLLIElement
     export type Link = HTMLLinkElement
