@@ -65,32 +65,82 @@ declare module "jsx-dom" {
 
   export namespace HTML {
     export type Anchor = HTMLAnchorElement
+    export type Area = HTMLAreaElement
     export type Audio = HTMLAudioElement
+    export type Base = HTMLBaseElement
     export type Body = HTMLBodyElement
+    export type BR = HTMLBRElement
     export type Button = HTMLButtonElement
     export type Canvas = HTMLCanvasElement
+    export type Data = HTMLDataElement
+    export type DataList = HTMLDataListElement
+    export type Details = HTMLDetailsElement
+    export type Dialog = HTMLDialogElement
+    export type Directory = HTMLDirectoryElement
     export type Div = HTMLDivElement
+    export type DList = HTMLDListElement
+    export type Embed = HTMLEmbedElement
+    export type FieldSet = HTMLFieldSetElement
+    export type Font = HTMLFontElement
+    export type Form = HTMLFormElement
+    export type Frame = HTMLFrameElement
+    export type FrameSet = HTMLFrameSetElement
     export type Head = HTMLHeadElement
     export type Heading = HTMLHeadingElement
+    export type HR = HTMLHRElement
+    export type HtmlElement = HTMLHtmlElement
+    export type IFrame = HTMLIFrameElement
     export type Image = HTMLImageElement
     export type Input = HTMLInputElement
+    export type Label = HTMLLabelElement
+    export type Legend = HTMLLegendElement
     export type LI = HTMLLIElement
     export type Link = HTMLLinkElement
+    export type Map = HTMLMapElement
+    export type Marquee = HTMLMarqueeElement
+    export type MediaElement = HTMLMediaElement
+    export type Menu = HTMLMenuElement
     export type Meta = HTMLMetaElement
+    export type Meter = HTMLMeterElement
+    export type Mod = HTMLModElement
     export type Object = HTMLObjectElement
     export type OList = HTMLOListElement
+    export type OptGroup = HTMLOptGroupElement
     export type Option = HTMLOptionElement
+    export type Output = HTMLOutputElement
     export type Paragraph = HTMLParagraphElement
+    export type Param = HTMLParamElement
+    export type Picture = HTMLPictureElement
     export type Pre = HTMLPreElement
+    export type Progress = HTMLProgressElement
+    export type Quote = HTMLQuoteElement
     export type Script = HTMLScriptElement
     export type Select = HTMLSelectElement
+    export type Slot = HTMLSlotElement
+    export type Source = HTMLSourceElement
     export type Span = HTMLSpanElement
     export type Style = HTMLStyleElement
     export type Table = HTMLTableElement
+    export type TableCaption = HTMLTableCaptionElement
     export type TableCell = HTMLTableCellElement
-    export type TableHeadCell = HTMLTableHeaderCellElement
+    export type TableCol = HTMLTableColElement
+    export type TableDataCell = HTMLTableDataCellElement
+    export type TableHeaderCell = HTMLTableHeaderCellElement
+    export type TableRow = HTMLTableRowElement
+    export type TableSection = HTMLTableSectionElement
+    export type Template = HTMLTemplateElement
+    export type TextArea = HTMLTextAreaElement
+    export type Time = HTMLTimeElement
+    export type Title = HTMLTitleElement
+    export type Track = HTMLTrackElement
     export type UList = HTMLUListElement
+    export type Unknown = HTMLUnknownElement
     export type Video = HTMLVideoElement
+  }
+
+  export namespace SVG {
+    export type Rect = SVGRectElement
+    export type Foreign = SVGForeignObjectElement
   }
 }
 
