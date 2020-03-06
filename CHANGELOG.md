@@ -1,3 +1,9 @@
+# 6.4.12
+- Fix: default import for `import React from "jsx-dom/svg"`.
+
+# 6.4.11
+- Expands `HTML` type alias namespace. No runtime code changed.
+
 # 6.4.10
 - Adds support for `import React from "jsx-dom"`.
 
