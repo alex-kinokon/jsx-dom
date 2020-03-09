@@ -2,10 +2,12 @@ import { JSDOM } from "jsdom"
 
 // Set up jsdom
 const dom = new JSDOM("")
+const window: any = dom.window
 Object.assign(global, {
-  window: dom.window,
-  document: dom.window.document,
-  Node: (dom.window as any).Node,
+  window,
+  document: window.document,
+  Node: window.Node,
+  Text: window.Text,
 })
 
 // Monkey patch jsdom to support dataset.
