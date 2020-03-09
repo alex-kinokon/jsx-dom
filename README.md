@@ -1,4 +1,5 @@
 # jsx-dom
+
 <!-- prettier-ignore -->
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![build status](https://travis-ci.org/proteriax/jsx-dom.svg?branch=master)](https://travis-ci.org/proteriax/jsx-dom)
@@ -39,7 +40,7 @@ function Hello(props) {
   )
 }
 Hello.defaultProps = {
-  firstName: "John"
+  firstName: "John",
 }
 
 document.body.appendChild(<Hello firstName="Johnny" lastName="Appleseed" />)
@@ -64,8 +65,8 @@ Note that `false`, `true`, `null`, `undefined` will be ignored per [React docume
 ```jsx
 <div class="greeting" />
 <div class={[ condition && "class" ]} />
-<div class={{ hidden: isHidden, 'has-item': this.array.length > 0 }} />
-<div class={[ classArray1, classArray2, ['nested'] ]} />
+<div class={{ hidden: isHidden, "has-item": !!array.length }} />
+<div class={[ classArray1, classArray2, ["nested"] ]} />
 ```
 
 ### Style
@@ -156,7 +157,8 @@ If you need to create an SVG element that is not in the list, or you want to spe
 
 ```jsx
 import React, { SVGNamespace } from "jsx-dom"
-<a namespaceURI={ SVGNamespace }>I am an SVG element!</a>
+
+const anchor = <a namespaceURI={SVGNamespace}>I am an SVG element!</a>
 ```
 
 ## Goodies
@@ -170,7 +172,10 @@ Three extra functions and one constant are provided by this package:
 5. `className` function.
 6. `import { HTML } from "jsx-dom"` contains short type aliases for HTML elements
 
-## Hook(s)!
+## `useText`
+
+While this is technically not a hook in a React sense, it functions like one and
+facilitates simple DOM text changes.
 
 ```jsx
 import React, { useText } from "jsx-dom"
@@ -178,11 +183,7 @@ import React, { useText } from "jsx-dom"
 function Component() {
   const [text, setText] = useText("Downloading")
   fetch("./api").then(() => setText("Done!"))
-  return (
-    <div>
-      Status: {text}
-    </div>
-  )
+  return <div>Status: {text}</div>
 }
 ```
 
