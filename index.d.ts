@@ -54,6 +54,10 @@ declare module "jsx-dom" {
 
   export function Fragment(props: { children: JSX.Child[] }): DocumentFragment
 
+  export function useText(
+    initialValue?: string
+  ): readonly [Text, (value: string) => void]
+
   const defaultExport: {
     createElement: typeof createElement
   }

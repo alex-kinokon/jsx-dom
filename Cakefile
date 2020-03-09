@@ -34,8 +34,8 @@ build = (name, inject) ->
         { renderChunk },
         prettier(tabWidth: 2, parser: 'babel'),
       ]
-    await bundle.write(format: 'cjs', file: "lib/#{name}.cjs.js")
-    await bundle.write(format: 'es', file: "lib/#{name}.js")
+    await bundle.write(format: 'cjs', file: "lib/#{name}.cjs.js", exports: "named")
+    await bundle.write(format: 'es', file: "lib/#{name}.js", exports: "named")
   catch e
     console.trace()
     console.error(e)
