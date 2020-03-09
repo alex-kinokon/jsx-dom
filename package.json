@@ -1,6 +1,6 @@
 {
   "name": "jsx-dom",
-  "version": "6.4.12",
+  "version": "6.4.13",
   "description": "JSX to document.createElement.",
   "main": "lib/index.cjs.js",
   "module": "lib/index.js",
@@ -36,7 +36,7 @@
     "mocha": "^7.1.0",
     "nyc": "^15.0.0",
     "prettier": "^1.19.1",
-    "rollup": "^1.32.0",
+    "rollup": "^2.0.2",
     "rollup-plugin-prettier": "^0.6.0",
     "rollup-typescript": "^1.2.1",
     "ts-node": "^8.6.2",

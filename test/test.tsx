@@ -219,6 +219,18 @@ describe("jsx-dom", () => {
     })
   })
 
+  describe("hooks", () => {
+    it("supports hooks", () => {
+      const [text, setText] = React.useText("Initial value")
+      const div = <div>{text}</div>
+      expect(div.children).to.include(text)
+      expect(div.textContent).to.equal("Initial value")
+      setText("Second iteration")
+      expect(text.textContent).to.equal("Second iteration")
+      expect(div.textContent).to.equal("Second iteration")
+    })
+  })
+
   describe("fragment", () => {
     it("supports fragments", () => {
       const frag = (

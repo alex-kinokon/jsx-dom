@@ -170,6 +170,22 @@ Three extra functions and one constant are provided by this package:
 5. `className` function.
 6. `import { HTML } from "jsx-dom"` contains short type aliases for HTML elements
 
+## Hook(s)!
+
+```jsx
+import React, { useText } from "jsx-dom"
+
+function Component() {
+  const [text, setText] = useText("Downloading")
+  fetch("./api").then(() => setText("Done!"))
+  return (
+    <div>
+      Status: {text}
+    </div>
+  )
+}
+```
+
 ## Browser Support
 
 There is no support for Internet Explorer, although it will very likely work if you bring your own

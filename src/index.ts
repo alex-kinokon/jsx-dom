@@ -11,6 +11,7 @@ import {
 } from "./util"
 
 export { createRef } from "./ref"
+export { useText } from "./hooks"
 
 declare const __SVG__: boolean
 
