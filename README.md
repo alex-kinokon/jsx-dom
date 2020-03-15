@@ -1,13 +1,12 @@
 # jsx-dom
 
-<!-- prettier-ignore -->
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![build status](https://travis-ci.org/proteriax/jsx-dom.svg?branch=master)](https://travis-ci.org/proteriax/jsx-dom)
 [![dependency status](https://david-dm.org/proteriax/jsx-dom/status.svg)](https://david-dm.org/proteriax/jsx-dom#info=dependencies)
 [![devDependency status](https://david-dm.org/proteriax/jsx-dom/dev-status.svg)](https://david-dm.org/proteriax/jsx-dom#info=devDependencies)
 [![npm version](https://badge.fury.io/js/jsx-dom.svg)](https://badge.fury.io/js/jsx-dom)
 
-Use JSX for creating DOM elements.
+Use JSX for creating DOM elements. With ES Module support.
 
 ## Installation
 
@@ -161,17 +160,6 @@ import React, { SVGNamespace } from "jsx-dom"
 const anchor = <a namespaceURI={SVGNamespace}>I am an SVG element!</a>
 ```
 
-## Goodies
-
-Three extra functions and one constant are provided by this package:
-
-1. `preventDefault(event: Event): Event`
-2. `stopPropagation(event: Event): Event`
-3. `createFactory(component: string | (props) => JSX.Element)`
-4. `SVGNamespace` is the `namespaceURI` string for SVG Elements.
-5. `className` function.
-6. `import { HTML } from "jsx-dom"` contains short type aliases for HTML elements
-
 ## `useText`
 
 While this is technically not a hook in a React sense, it functions like one and
@@ -185,6 +173,42 @@ function Component() {
   fetch("./api").then(() => setText("Done!"))
   return <div>Status: {text}</div>
 }
+```
+
+## Goodies
+
+Three extra functions and one constant are provided by this package:
+
+```ts
+declare module "jsx-dom" {
+  export function preventDefault(event: Event): Event
+  export function stopPropagation(event: Event): Event
+  /** `namespaceURI` string for SVG Elements. */
+  export const SVGNamespace: string
+  export function className(value: any): string
+
+  /** Short type aliases for HTML elements */
+  export namespace HTML {
+    type Button = HTMLButtonElement
+    type Div = HTMLDivElement
+    ...
+  }
+}
+```
+
+## API
+The following functions are included for compatibility with React API:
+
+```ts
+function createFactory(component: string): (props: object) => JSX.Element
+``` 
+
+The following functions **will** ignore `deps`, and are only useful if you are
+migrating from/to React.
+
+```ts
+function useMemo<T>(fn: () => T, deps: any[]): T
+function useCallback<T extends Function>(fn: T, deps: any[]): T
 ```
 
 ## Browser Support

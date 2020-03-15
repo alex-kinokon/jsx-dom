@@ -1,38 +1,32 @@
 fs = require('fs-extra')
-ts = require('rollup-typescript')
-babel = require('@babel/core')
+babel = require('rollup-plugin-babel')
 replace = require('@rollup/plugin-replace')
 prettier = require('rollup-plugin-prettier')
+node = require('@rollup/plugin-node-resolve')
 { rollup } = require('rollup')
 
-renderChunk = (code) ->
-  transformed = babel.transform code,
-    babelrc: false
-    comments: false
-    minified: false
-    plugins: [
-      'minify-constant-folding'
-      'minify-guarded-expressions'
-      'minify-dead-code-elimination'
-      ({ types: t }) ->
-        visitor:
-          VariableDeclarator: ({ node }) ->
-            if node.id.name is '__assign'
-              node.init = t.memberExpression(t.identifier('Object'), t.identifier('assign'))
-            return
-    ]
-  code: transformed.code
-  map: transformed.map
+extensions = ['.ts', '.js']
 
 build = (name, inject) ->
   try
     bundle = await rollup
       input: './src/index.ts'
       plugins: [
-        ts(),
         replace(inject),
-        { renderChunk },
+        babel(
+          extensions: extensions
+          comments: false
+          minified: false
+          plugins: [
+            '@babel/plugin-transform-typescript'
+            ['@babel/plugin-proposal-object-rest-spread', loose: true, useBuiltIns: true]
+            'minify-constant-folding'
+            'minify-guarded-expressions'
+            'minify-dead-code-elimination'
+          ]
+        )
         prettier(tabWidth: 2, parser: 'babel'),
+        node({extensions})
       ]
     await bundle.write(format: 'cjs', file: "lib/#{name}.cjs.js", exports: "named")
     await bundle.write(format: 'es', file: "lib/#{name}.js", exports: "named")

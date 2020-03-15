@@ -1,7 +1,9 @@
 export function useText(initialValue?: string) {
   const text = new Text()
   Object.defineProperty(text, "toString", {
-    value() { return this.textContent }
+    value() {
+      return this.textContent
+    },
   })
   function setText(value: string) {
     text.textContent = value
@@ -11,3 +13,5 @@ export function useText(initialValue?: string) {
   }
   return [text, setText] as const
 }
+
+export { identity as useCallback } from "./util"
