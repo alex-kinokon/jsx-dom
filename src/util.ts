@@ -1,5 +1,9 @@
 export const keys: <T>(obj: T) => Array<keyof T> = Object.keys as any
 
+export function identity<T>(value: T) {
+  return value
+}
+
 export function isBoolean(val: any): val is boolean {
   return typeof val === "boolean"
 }
@@ -26,9 +30,5 @@ export function isFunction(val: any): val is Function {
 }
 
 export function isArrayLike(obj: any): obj is ArrayLike<any> {
-  return (
-    isObject(obj) &&
-    typeof obj.length === "number" &&
-    typeof obj.nodeType !== "number"
-  )
+  return isObject(obj) && typeof obj.length === "number" && typeof obj.nodeType !== "number"
 }

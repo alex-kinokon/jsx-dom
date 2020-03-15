@@ -1,15 +1,16 @@
-const React = require("../lib/index.cjs")
-const svg = require("../lib/svg.cjs")
+const React: typeof import("..") = require("../lib/index.cjs")
 
+import { HTML } from ".."
 import { expect } from "chai"
 import "mocha"
-import "./pretest"
+
+function as<T = any>(value: any): T {
+  return value
+}
 
 describe("jsx-dom", () => {
   it("creates a <div> element", () => {
-    expect((<div id="hello">world</div>).outerHTML).to.equal(
-      '<div id="hello">world</div>'
-    )
+    expect((<div id="hello">world</div>).outerHTML).to.equal('<div id="hello">world</div>')
   })
 
   describe("supports publicly declared APIs", () => {
@@ -30,7 +31,7 @@ describe("jsx-dom", () => {
       expect(props.a).to.equal(1)
       expect(props.b).to.equal(2)
       expect(props.c).to.equal(3)
-      expect((props as any).children).to.be.empty
+      expect(as(props).children).to.be.empty
       return <div>{props.a + props.b + props.c}</div>
     }
 
@@ -44,9 +45,7 @@ describe("jsx-dom", () => {
 
     it("supports deep nested childNodes", () => {
       expect((<div>{[2, 3]}</div>).textContent).to.equal("23")
-      expect((<div>{[2, [2, "3", null, false, [4]]]}</div>).textContent).to.equal(
-        "2234"
-      )
+      expect((<div>{[2, [2, "3", null, false, [4]]]}</div>).textContent).to.equal("2234")
     })
 
     it("supports DOM elements as childNode", () => {
@@ -62,12 +61,11 @@ describe("jsx-dom", () => {
 
     it("supports passing `children` explicitly", () => {
       expect((<div children="internal" />).textContent).to.equal("internal")
-      expect((<div children={["internal", 20]} />).textContent).to.equal(
-        "internal20"
-      )
+      expect((<div children={["internal", 20]} />).textContent).to.equal("internal20")
     })
 
     it("will not override JSX childNodes with `children` attribute", () => {
+      // Suppress ts(2710)
       expect((<div children="i">override</div>).textContent).to.equal("override")
     })
   })
@@ -79,15 +77,13 @@ describe("jsx-dom", () => {
     })
 
     it("accepts an array as valid input for class", () => {
-      expect((<div class={["first", "second"]} />).className).to.equal(
-        "first second"
-      )
+      expect((<div class={["first", "second"]} />).className).to.equal("first second")
     })
 
     it("expects a recursive array as valid input for classes", () => {
-      expect(
-        (<div class={["first", ["second", false, "third"]]} />).className
-      ).to.equal("first second third")
+      expect((<div class={["first", ["second", false, "third"]]} />).className).to.equal(
+        "first second third"
+      )
     })
 
     it("accepts an object literal as a valid input", () => {
@@ -105,13 +101,7 @@ describe("jsx-dom", () => {
 
     it("filters out falsy values, but not 0, from the class array", () => {
       const node = (
-        <div
-          class={[
-            Math.PI < 3 && "Hell is freezing over",
-            [].length && "should be 0",
-            "rest",
-          ]}
-        />
+        <div class={[Math.PI < 3 && "PI < 3?", [].length && "should be 0", "rest"]} />
       )
 
       expect(node.className).to.equal("0 rest")
@@ -126,7 +116,7 @@ describe("jsx-dom", () => {
 
     it("supports dataset", () => {
       expect((<div data-key="value" />).dataset.key).to.equal("value")
-      expect((<div dataset={{ key: 0 }} />).getAttribute("data-key")).to.equal("0")
+      expect((<div dataset={{ key: "0" }} />).getAttribute("data-key")).to.equal("0")
     })
 
     it("suppresses null / undefined dataset", () => {
@@ -168,14 +158,14 @@ describe("jsx-dom", () => {
       )
       expect(ref).not.to.equal(null)
       expect(div.children[0]).to.equal(ref.current)
-      ;<input ref={ref} />
+      as(<input ref={ref} />)
       expect(ref).not.to.equal(null)
       expect(ref.current).to.have.property("tagName", "INPUT")
     })
 
     it("supports ref in functional components", () => {
       let button = null
-      const Button = () => <button />
+      const Button = ({ ref }) => <button ref={ref} />
       const div = (
         <div>
           <Button ref={e => (button = e)} />
@@ -193,10 +183,10 @@ describe("jsx-dom", () => {
     })
 
     it("supports spellCheck attribute", () => {
-      expect((<input spellCheck={true} />).spellcheck).to.equal(true)
-      expect((<input spellCheck={false} />).spellcheck).to.equal(false)
-      expect((<textarea spellCheck={true} />).spellcheck).to.equal(true)
-      expect((<textarea spellCheck={false} />).spellcheck).to.equal(false)
+      expect(as<HTML.Input>(<input spellCheck={true} />).spellcheck).to.equal(true)
+      expect(as<HTML.Input>(<input spellCheck={false} />).spellcheck).to.equal(false)
+      expect(as<HTML.TextArea>(<textarea spellCheck={true} />).spellcheck).to.equal(true)
+      expect(as<HTML.TextArea>(<textarea spellCheck={false} />).spellcheck).to.equal(false)
     })
   })
 
@@ -231,6 +221,20 @@ describe("jsx-dom", () => {
     })
   })
 
+  describe("forwardRef", () => {
+    // const FancyButton = React.forwardRef((props, ref) => (
+    const FancyButton = props => (
+      <button ref={props.ref} className="FancyButton">
+        {props.children}
+      </button>
+    )
+
+    // You can now get a ref directly to the DOM button:
+    const ref = React.createRef()
+    as(<FancyButton ref={ref}>Click me!</FancyButton>)
+    expect(ref.current).to.be.instanceOf(HTMLButtonElement)
+  })
+
   describe("fragment", () => {
     it("supports fragments", () => {
       const frag = (
@@ -242,105 +246,6 @@ describe("jsx-dom", () => {
       const nodes = frag.childNodes
       expect(nodes[0].nodeType === Node.TEXT_NODE && nodes[0].textContent === "2")
       expect(nodes[1].nodeName === "SPAN" && nodes[1].textContent === "Bonjour")
-    })
-  })
-
-  describe("SVG", () => {
-    // tslint:disable-next-line:no-shadowed-variable
-    const React = svg
-    const namespace = React.SVGNamespace
-
-    it("exports the correct SVG namespace URI", () => {
-      expect(namespace).to.equal("http://www.w3.org/2000/svg")
-    })
-
-    it("supports SVG elements", () => {
-      const supportedElements = [
-        <svg />,
-        <animate />,
-        <circle />,
-        <clipPath />,
-        <defs />,
-        <desc />,
-        <ellipse />,
-        <feBlend />,
-        <feColorMatrix />,
-        <feComponentTransfer />,
-        <feComposite />,
-        <feConvolveMatrix />,
-        <feDiffuseLighting />,
-        <feDisplacementMap />,
-        <feDistantLight />,
-        <feFlood />,
-        <feFuncA />,
-        <feFuncB />,
-        <feFuncG />,
-        <feFuncR />,
-        <feGaussianBlur />,
-        <feImage />,
-        <feMerge />,
-        <feMergeNode />,
-        <feMorphology />,
-        <feOffset />,
-        <fePointLight />,
-        <feSpecularLighting />,
-        <feSpotLight />,
-        <feTile />,
-        <feTurbulence />,
-        <filter />,
-        <foreignObject />,
-        <g />,
-        <image />,
-        <line />,
-        <linearGradient />,
-        <marker />,
-        <mask />,
-        <metadata />,
-        <path />,
-        <pattern />,
-        <polygon />,
-        <polyline />,
-        <radialGradient />,
-        <rect />,
-        <stop />,
-        <switch />,
-        <symbol />,
-        <text />,
-        <textPath />,
-        <tspan />,
-        <use />,
-        <view />,
-      ]
-
-      supportedElements.forEach(one =>
-        expect(one.namespaceURI, `Tag: ${one.tagName}`).to.equal(namespace)
-      )
-    })
-
-    it("supports SVG namespace", () => {
-      expect((<a namespaceURI={namespace} />).namespaceURI).to.equal(namespace)
-    })
-
-    it("supports xlink and XML attributes", () => {
-      const checkXLink = (node: JSX.Element, attr: string) =>
-        expect(node.getAttributeNS("http://www.w3.org/1999/xlink", attr) === "value")
-
-      const checkXML = (node: JSX.Element, attr: string) =>
-        expect(
-          node.getAttributeNS("http://www.w3.org/XML/1998/namespace", attr) ===
-            "value"
-        )
-
-      checkXLink(<use xlinkHref="value" />, "xlink:href")
-      checkXLink(<use xlinkArcrole="value" />, "xlink:arcrole")
-      checkXLink(<use xlinkHref="value" />, "xlink:href")
-      checkXLink(<use xlinkRole="value" />, "xlink:role")
-      checkXLink(<use xlinkShow="value" />, "xlink:show")
-      checkXLink(<use xlinkTitle="value" />, "xlink:title")
-      checkXLink(<use xlinkType="value" />, "xlink:type")
-      checkXML(<use xmlBase="value" />, "xml:base")
-      checkXML(<use xmlLang="value" />, "xml:lang")
-      checkXML(<use xmlSpace="value" />, "xml:space")
     })
   })
 })

@@ -1,23 +1,16 @@
 {
   "compilerOptions": {
+    "allowJs": false,
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
     "importHelpers": true,
-    "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": false,
     "sourceMap": false,
     "jsx": "react",
-    "lib": [
-      "dom",
-      "es2015"
-    ]
+    "lib": ["dom", "es2015"]
   },
-  "exclude": [
-    "node_modules",
-    "coverage",
-    "drafts"
-  ]
+  "exclude": ["node_modules", "coverage", "drafts"]
 }
