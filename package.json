@@ -1,6 +1,6 @@
 {
   "name": "jsx-dom",
-  "version": "6.4.13",
+  "version": "6.4.14-beta.0",
   "description": "JSX to document.createElement.",
   "main": "lib/index.cjs.js",
   "module": "lib/index.js",
@@ -8,9 +8,10 @@
   "scripts": {
     "build": "cake build",
     "pretest": "npm run build",
+    "postinstall": "patch-package",
     "postpublish": "rm lib/*.js",
     "prepublishOnly": "yarn build && yarn test",
-    "test": "nyc --reporter=html mocha test/test.tsx --require test/register"
+    "test": "nyc --reporter=html mocha test/test-*.tsx --require test/register"
   },
   "keywords": [
     "jsx",
@@ -19,28 +20,35 @@
   "typings": "index.d.ts",
   "author": "proteriax",
   "license": "BSD-3-Clause",
+  "dependencies": {
+    "csstype": "^2.6.9",
+    "tslib": "^1.11.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.8.7",
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@rollup/plugin-node-resolve": "^7.1.1",
     "@rollup/plugin-replace": "^2.3.1",
     "@types/babel__core": "^7.1.6",
-    "@types/chai": "^4.2.10",
+    "@types/chai": "^4.2.11",
     "@types/jsdom": "^16.1.0",
     "@types/mocha": "^7.0.2",
-    "@types/node": "^13.9.0",
+    "@types/node": "^13.9.1",
     "@types/prop-types": "^15.7.3",
     "babel-preset-minify": "^0.5.1",
     "chai": "^4.2.0",
     "coffeescript": "^2.5.1",
     "fs-extra": "^8.1.0",
-    "jsdom": "^16.2.0",
+    "jsdom": "^16.2.1",
     "mocha": "^7.1.0",
     "nyc": "^15.0.0",
+    "patch-package": "^6.2.1",
     "prettier": "^1.19.1",
-    "rollup": "^2.0.2",
+    "rollup": "^2.0.6",
+    "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-prettier": "^0.6.0",
-    "rollup-typescript": "^1.2.1",
     "ts-node": "^8.6.2",
-    "tslib": "^1.11.1",
     "typescript": "^3.8.3"
   },
   "repository": {
@@ -53,7 +61,7 @@
   "homepage": "https://github.com/proteriax/jsx-dom#readme",
   "prettier": {
     "tabWidth": 2,
-    "printWidth": 85,
+    "printWidth": 95,
     "semi": false,
     "singleQuote": false,
     "trailingComma": "es5"

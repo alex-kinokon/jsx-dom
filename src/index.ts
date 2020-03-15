@@ -9,8 +9,8 @@ import {
   isNumber,
   keys,
 } from "./util"
-
-export { createRef } from "./ref"
+export { identity as memo } from "./util"
+export { createRef, useRef } from "./ref"
 export { useText } from "./hooks"
 
 declare const __SVG__: boolean
@@ -120,7 +120,7 @@ export function createFactory(tag: string) {
   return createElement.bind(null, tag)
 }
 
-export function Fragment(attr: { children: JSX.Child[] }) {
+export function Fragment(attr: { children: JSX.Element[] }) {
   const fragment = document.createDocumentFragment()
   appendChildren(attr.children, fragment)
   return fragment
@@ -161,9 +161,9 @@ export function createElement(tag: any, attr: any, ...children: any[]) {
   return node
 }
 
-function appendChild(child, node: Node) {
+function appendChild(child: any[] | string | number | null | Element, node: Node) {
   if (isArrayLike(child)) {
-    appendChildren(child, node)
+    appendChildren(child as any, node)
   } else if (isString(child) || isNumber(child)) {
     node.appendChild(document.createTextNode(child as any))
   } else if (child === null) {
@@ -194,22 +194,22 @@ function attribute(key: string, value: any, node: HTMLElement | SVGElement) {
       case "xlinkShow":
       case "xlinkTitle":
       case "xlinkType":
-        node.setAttributeNS(XLinkNamespace, normalizeAttribute(key), value)
+        attrNS(node, XLinkNamespace, normalizeAttribute(key), value)
         return
       case "xmlnsXlink":
-        node.setAttribute(normalizeAttribute(key), value)
+        attr(node, normalizeAttribute(key), value)
         return
       case "xmlBase":
       case "xmlLang":
       case "xmlSpace":
-        node.setAttributeNS(XMLNamespace, normalizeAttribute(key), value)
+        attrNS(node, XMLNamespace, normalizeAttribute(key), value)
         return
     }
   }
 
   switch (key) {
     case "htmlFor":
-      node.setAttribute("for", value)
+      attr(node, "for", value)
       return
     case "dataset":
       for (const dataKey of keys<object>(value || {})) {
@@ -229,7 +229,7 @@ function attribute(key: string, value: any, node: HTMLElement | SVGElement) {
       return
     case "class":
     case "className":
-      node.setAttribute("class", className(value))
+      attr(node, "class", className(value))
       return
     case "ref":
     case "namespaceURI":
@@ -247,10 +247,18 @@ function attribute(key: string, value: any, node: HTMLElement | SVGElement) {
       node[key.toLowerCase()] = value
     }
   } else if (value === true) {
-    node.setAttribute(key, "")
+    attr(node, key, "")
   } else if (value !== false && value != null) {
-    node.setAttribute(key, value)
+    attr(node, key, value)
   }
+}
+
+function attr(node: Element, key: string, value: string | number) {
+  node.setAttribute(key, value as any)
+}
+
+function attrNS(node: Element, namespace: string, key: string, value: string | number) {
+  node.setAttributeNS(namespace, key, value as any)
 }
 
 function attributes(attr: object, node: HTMLElement | SVGElement) {
