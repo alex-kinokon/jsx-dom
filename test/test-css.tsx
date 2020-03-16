@@ -14,9 +14,10 @@ describe("CSS", () => {
     test("marginBottom")
   })
 
+  const testUnitless = (key: string) =>
+    expect((<div style={{ [key]: 5 }} />).style[key]).to.be.oneOf([5, "5"], key)
+
   it("supports unitless CSS properties", () => {
-    const test = (key: string) =>
-      expect((<div style={{ [key]: 5 }} />).style[key]).to.be.oneOf([5, "5"], key)
     ;[
       "animationIterationCount",
       "borderImageOutset",
@@ -52,6 +53,12 @@ describe("CSS", () => {
       "widows",
       "zIndex",
       "zoom",
-    ].forEach(key => test(key))
+    ].forEach(key => testUnitless(key))
+  })
+
+  it("supports unitless CSS properties with vendor prefixes", () => {
+    // Vendor prefix
+    testUnitless("WebkitFlex")
+    testUnitless("MozFlex")
   })
 })
