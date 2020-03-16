@@ -89,6 +89,6 @@ const prefixes = ["Webkit", "ms", "Moz", "O"]
 // infinite loop, because it iterates over the newly added props too.
 Object.keys(isUnitlessNumber).forEach(prop => {
   prefixes.forEach(prefix => {
-    isUnitlessNumber[prefixKey(prefix, prop)] = 1 // isUnitlessNumber[prop]
+    isUnitlessNumber[prefixKey(prefix, prop)] = 0 // isUnitlessNumber[prop]
   })
 })
