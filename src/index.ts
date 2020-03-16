@@ -237,7 +237,7 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
     case "style":
       if (isObject(value)) {
         forEach(value, (val, key) => {
-          if (isNumber(val) && isUnitlessNumber[key] !== 0) {
+          if (!__MIN_BUILD__ && isNumber(val) && isUnitlessNumber[key] !== 0) {
             ;(node as HTMLElement).style[key] = val + "px"
           } else {
             ;(node as HTMLElement).style[key] = val

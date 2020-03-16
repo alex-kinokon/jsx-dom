@@ -1,4 +1,3 @@
-fs = require('fs-extra')
 babel = require('rollup-plugin-babel')
 replace = require('@rollup/plugin-replace')
 prettier = require('rollup-plugin-prettier')
@@ -34,18 +33,16 @@ build = (name, inject) ->
     console.trace()
     console.error(e)
 
+task 'build-min', 'Build jsx-dom without SVG', ->
+  await build('min', __SVG__: false, __MIN_BUILD__: true)
+
 task 'build-slim', 'Build jsx-dom without SVG', ->
-  await build('index', __SVG__: false)
+  await build('index', __SVG__: false, __MIN_BUILD__: false)
 
 task 'build-svg', 'Build jsx-dom with SVG', ->
-  await build('svg', __SVG__: true)
+  await build('svg', __SVG__: true, __MIN_BUILD__: false)
 
 task 'build', 'Build everything', ->
+  invoke('build-min')
   invoke('build-slim')
   invoke('build-svg')
-
-task 'clean', 'Remove built files', ->
-  await fs.unlink('lib/index.cjs.js')
-  await fs.unlink('lib/index.js')
-  await fs.unlink('lib/svg.cjs.js')
-  await fs.unlink('lib/svg.js')
