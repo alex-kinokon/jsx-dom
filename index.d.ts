@@ -228,7 +228,7 @@ type ReactNode =
 // ----------------------------------------------------------------------
 
 // DOM Elements
-export function createFactory<T extends HTMLElement>(type: keyof ReactHTML): HTMLFactory<T>
+export function createFactory<K extends keyof ReactHTML>(type: K): HTMLFactory<ReactHTML[K]>
 export function createFactory(type: keyof ReactSVG): SVGFactory
 export function createFactory<T extends Element>(type: string): T
 
@@ -1778,7 +1778,6 @@ interface ReactSVG {
 
 declare global {
   namespace JSX {
-    // tslint:disable-next-line:no-empty-interface
     type Element = ReactElement
 
     interface ElementAttributesProperty {
