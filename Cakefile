@@ -9,7 +9,7 @@ extensions = ['.ts', '.js']
 build = (name, inject) ->
   try
     bundle = await rollup
-      input: './src/index.ts'
+      input: './src/module.ts'
       plugins: [
         replace(inject),
         babel(
@@ -22,6 +22,12 @@ build = (name, inject) ->
             'minify-constant-folding'
             'minify-guarded-expressions'
             'minify-dead-code-elimination'
+            ({ types: t }) ->
+              visitor:
+                CallExpression: (path) ->
+                  if t.isIdentifier(path.node.callee, name: 'cast')
+                    path.replaceWith(path.node.arguments[0])
+                  return
           ]
         )
         prettier(tabWidth: 2, parser: 'babel'),

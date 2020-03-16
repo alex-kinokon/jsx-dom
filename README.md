@@ -196,6 +196,24 @@ function Component() {
 }
 ```
 
+## `useClassList`
+
+```jsx
+import React, { useClassList } from "jsx-dom"
+
+function Component() {
+  const cls = useClassList(["main", { ready }])
+  setTimeout(() => {
+    cls.add("long-wait")
+    cls.toggle("ready")
+  }, 2000)
+
+  return (
+    <div class={cls}>Status: {text}</div>
+  )
+}
+```
+
 ## Goodies
 
 Some extra features are provided by this package:
