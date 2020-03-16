@@ -1,3 +1,7 @@
+# 6.5.0
+- Update type definitions with React upstream.
+- Introduce `useText`, `useClassList` API.
+
 # 6.4.12
 - Fix: default import for `import React from "jsx-dom/svg"`.
 

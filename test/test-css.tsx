@@ -1,7 +1,6 @@
 const React: typeof import("..") = require("../lib/index.cjs")
 
 import { expect } from "chai"
-import "mocha"
 import { StandardLonghandProperties } from "csstype"
 
 describe("CSS", () => {
