@@ -32,3 +32,13 @@ export function isFunction(val: any): val is Function {
 export function isArrayLike(obj: any): obj is ArrayLike<any> {
   return isObject(obj) && typeof obj.length === "number" && typeof obj.nodeType !== "number"
 }
+
+export function forEach<V = any>(
+  value: { [key: string]: V },
+  fn: (value: V, key: string) => void
+) {
+  if (!value) return
+  for (const key of keys(value)) {
+    fn(value[key], key as any)
+  }
+}
