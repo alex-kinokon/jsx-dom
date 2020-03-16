@@ -110,7 +110,7 @@ Passing `children` as an explicit attribute, when there is no other JSX child no
 // React.createRef
 import React, { createRef } from "jsx-dom"
 
-const textbox = React.createRef()
+const textbox = createRef()
 render(
   <div>
     <label>Username:</label>
@@ -120,6 +120,21 @@ render(
 
 window.onerror = () => {
   textbox.current.focus()
+}
+
+// React.useRef
+import React, { useRef } from "jsx-dom"
+
+function Component() {
+  const textbox = useRef()
+  const onClick = () => textbox.current.focus()
+
+  return (
+    <div onClick={onClick}>
+      <label>Username:</label>
+      <input ref={textbox} />
+    </div>
+  )
 }
 ```
 
@@ -157,7 +172,9 @@ If you need to create an SVG element that is not in the list, or you want to spe
 ```jsx
 import React, { SVGNamespace } from "jsx-dom"
 
-const anchor = <a namespaceURI={SVGNamespace}>I am an SVG element!</a>
+function Anchor() {
+  return <a namespaceURI={ SVGNamespace }>I am an SVG element!</a>
+}
 ```
 
 ## `useText`
@@ -170,8 +187,12 @@ import React, { useText } from "jsx-dom"
 
 function Component() {
   const [text, setText] = useText("Downloading")
+
   fetch("./api").then(() => setText("Done!"))
-  return <div>Status: {text}</div>
+
+  return (
+    <div>Status: {text}</div>
+  )
 }
 ```
 
@@ -191,17 +212,17 @@ function className(value: any): string
 
 /** Short type aliases for HTML elements */
 namespace HTML {
-  type Anchor = HTMLAnchorElement
-  type Button = HTMLButtonElement
-  type Div = HTMLDivElement
-  ...
+    type Anchor = HTMLAnchorElement
+    type Button = HTMLButtonElement
+    type Div = HTMLDivElement
+    ...
 }
 
 /** Short type aliases for SVG elements */
 namespace SVG {
-  type Anchor = SVGAElement
-  type Animate = SVGAnimateElement
-  ...
+    type Anchor = SVGAElement
+    type Animate = SVGAnimateElement
+    ...
 }
 ```
 
@@ -210,7 +231,8 @@ The following functions are included for compatibility with React API:
 
 ```ts
 function createFactory(component: string): (props: object) => JSX.Element
-``` 
+function useRef<T>(initialValue?: T): RefObject<T>
+```
 
 The following functions **will** ignore `deps`, and are only useful if you are
 migrating from/to React.
@@ -228,4 +250,4 @@ polyfill.
 ## Known Issues
 
 `<div />`, and other tags, are inferred as a general `JSX.Element` in TypeScript instead of
-`HTMLDivElement` (or the equivalents). This is a known bug and its fix depends on [TypeScript#21699](https://github.com/Microsoft/TypeScript/issues/21699).
+`HTMLDivElement` (or the equivalent types). This is a known bug and its fix depends on [TypeScript#21699](https://github.com/Microsoft/TypeScript/issues/21699).
