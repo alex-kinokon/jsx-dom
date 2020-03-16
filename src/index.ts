@@ -8,12 +8,13 @@ import {
   isElement,
   isNumber,
   keys,
+  forEach,
 } from "./util"
+import { isUnitlessNumber } from "./css-props"
+
 export { identity as memo } from "./util"
 export { createRef, useRef } from "./ref"
 export { useText } from "./hooks"
-
-declare const __SVG__: boolean
 
 export const SVGNamespace = "http://www.w3.org/2000/svg"
 const XLinkNamespace = "http://www.w3.org/1999/xlink"
@@ -184,7 +185,7 @@ function normalizeAttribute(s: string) {
   return s.replace(/[A-Z\d]/g, match => ":" + match.toLowerCase())
 }
 
-function attribute(key: string, value: any, node: HTMLElement | SVGElement) {
+function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
   if (__SVG__) {
     switch (key) {
       case "xlinkActuate":
@@ -212,12 +213,11 @@ function attribute(key: string, value: any, node: HTMLElement | SVGElement) {
       attr(node, "for", value)
       return
     case "dataset":
-      for (const dataKey of keys<object>(value || {})) {
-        const dataValue = value[dataKey]
+      forEach(value, (dataValue, dataKey) => {
         if (dataValue != null) {
-          ;(node as HTMLElement).dataset[dataKey] = dataValue
+          node.dataset[dataKey] = dataValue
         }
-      }
+      })
       return
     case "innerHTML":
     case "innerText":
@@ -236,7 +236,13 @@ function attribute(key: string, value: any, node: HTMLElement | SVGElement) {
       return
     case "style":
       if (isObject(value)) {
-        Object.assign(node.style, value)
+        forEach(value, (val, key) => {
+          if (isNumber(val) && isUnitlessNumber[key] !== 0) {
+            ;(node as HTMLElement).style[key] = val + "px"
+          } else {
+            ;(node as HTMLElement).style[key] = val
+          }
+        })
         return
       }
     // fallthrough
