@@ -70,11 +70,11 @@ Note that `false`, `true`, `null`, `undefined` will be ignored per [React docume
 
 ### Style
 
-1. `style` accepts both strings and objects.
+1. `style` accepts both strings and objects. Unitless properties supported by React are also supported.
 
 ```jsx
 <div style="background: transparent;" />
-<div style={{ background: "transparent", fontFamily: "serif" }} />
+<div style={{ background: "transparent", fontFamily: "serif", fontSize: 16 }} />
 ```
 
 ### Children
@@ -232,6 +232,7 @@ The following functions are included for compatibility with React API:
 ```ts
 function createFactory(component: string): (props: object) => JSX.Element
 function useRef<T>(initialValue?: T): RefObject<T>
+function memo<P, T extends (props: P) => JSX.Element>(render: T): T
 ```
 
 The following functions **will** ignore `deps`, and are only useful if you are

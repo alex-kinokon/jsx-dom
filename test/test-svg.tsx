@@ -96,4 +96,19 @@ describe("SVG", () => {
     checkXML(<use xmlLang="value" />, "xml:lang")
     checkXML(<use xmlSpace="value" />, "xml:space")
   })
+
+  it("supports unitless CSS properties", () => {
+    const test = (key: string) =>
+      expect((<div style={{ [key]: 5 }} />).style[key]).to.be.oneOf([5, "5"], key)
+    ;[
+      "fillOpacity",
+      "floodOpacity",
+      "stopOpacity",
+      "strokeDasharray",
+      "strokeDashoffset",
+      "strokeMiterlimit",
+      "strokeOpacity",
+      "strokeWidth",
+    ].forEach(key => test(key))
+  })
 })
