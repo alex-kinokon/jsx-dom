@@ -9,11 +9,22 @@ type Booleanish = boolean | "true" | "false"
 
 export const SVGNamespace: "http://www.w3.org/2000/svg"
 
-export function className(value: ClassName): string
+export function className(value: ClassNames): string
 
 export { createElement as h }
 
 export function useText(initialValue?: string): readonly [Text, (value: string) => void]
+export function useClassList(initialValue?: ClassNames): ClassList
+
+export interface ClassList {
+  (value: Element): void
+  readonly size: number
+  readonly value: string
+  add(...tokens: string[]): void
+  remove(...tokens: string[]): void
+  toggle(token: string, force?: boolean): void
+  contains(token: string): boolean
+}
 
 /** @internal */
 declare const __defaultExport: {
@@ -164,6 +175,8 @@ export namespace SVG {
 type Key = string | number
 
 type ClassName = string | { [key: string]: boolean } | false | null | undefined | ClassName[]
+
+export type ClassNames = ClassName | ClassList
 
 interface RefObject<T> {
   readonly current: T | null
@@ -817,7 +830,7 @@ interface AriaAttributes {
 interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
   // Extension
   namespaceURI?: string
-  class?: ClassName
+  class?: ClassNames
   innerHTML?: string
   innerText?: string
   textContent?: string

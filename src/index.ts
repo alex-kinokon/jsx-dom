@@ -11,27 +11,11 @@ import {
   forEach,
 } from "./util"
 import { isUnitlessNumber } from "./css-props"
-
-export { identity as memo } from "./util"
-export { createRef, useRef } from "./ref"
-export { useText } from "./hooks"
+import { HTML } from ".."
 
 export const SVGNamespace = "http://www.w3.org/2000/svg"
 const XLinkNamespace = "http://www.w3.org/1999/xlink"
 const XMLNamespace = "http://www.w3.org/XML/1998/namespace"
-
-export default {
-  createElement,
-}
-
-export function preventDefault(event: Event) {
-  event.preventDefault()
-  return event
-}
-export function stopPropagation(event: Event) {
-  event.stopPropagation()
-  return event
-}
 
 // https://facebook.github.io/react/docs/jsx-in-depth.html#booleans-null-and-undefined-are-ignored
 // Emulate JSX Expression logic to ignore certain type of children or className.
@@ -225,11 +209,15 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
       node[key] = value
       return
     case "spellCheck":
-      ;(node as HTMLInputElement).spellcheck = value
+      cast<HTML.Input>(node).spellcheck = value
       return
     case "class":
     case "className":
-      attr(node, "class", className(value))
+      if (isFunction(value)) {
+        value(node)
+      } else {
+        attr(node, "class", className(value))
+      }
       return
     case "ref":
     case "namespaceURI":
@@ -238,9 +226,9 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
       if (isObject(value)) {
         forEach(value, (val, key) => {
           if (!__MIN_BUILD__ && isNumber(val) && isUnitlessNumber[key] !== 0) {
-            ;(node as HTMLElement).style[key] = val + "px"
+            cast<HTMLElement>(node).style[key] = val + "px"
           } else {
-            ;(node as HTMLElement).style[key] = val
+            cast<HTMLElement>(node).style[key] = val
           }
         })
         return

@@ -1,3 +1,4 @@
+import { as } from "./util"
 const React: typeof import("..") = require("../lib/svg.cjs")
 
 import { expect } from "chai"

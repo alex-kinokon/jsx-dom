@@ -1,12 +1,8 @@
+import { as } from "./util"
 const React: typeof import("..") = require("../lib/index.cjs")
 
 import { HTML } from ".."
 import { expect } from "chai"
-import "mocha"
-
-function as<T = any>(value: any): T {
-  return value
-}
 
 describe("jsx-dom", () => {
   it("creates a <div> element", () => {
@@ -206,18 +202,6 @@ describe("jsx-dom", () => {
     it("supports event listeners", done => {
       const button = (<button onClick={() => done()} />) as HTMLButtonElement
       button.click()
-    })
-  })
-
-  describe("hooks", () => {
-    it("supports hooks", () => {
-      const [text, setText] = React.useText("Initial value")
-      const div = <div>{text}</div>
-      expect(div.children).to.include(text)
-      expect(div.textContent).to.equal("Initial value")
-      setText("Second iteration")
-      expect(text.textContent).to.equal("Second iteration")
-      expect(div.textContent).to.equal("Second iteration")
     })
   })
 

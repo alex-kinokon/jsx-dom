@@ -12,6 +12,7 @@ Object.assign(global, {
   Node: window.Node,
   Text: window.Text,
   HTMLButtonElement: window.HTMLButtonElement,
+  DOMTokenList: window.DOMTokenList,
 })
 
 Object.defineProperties(window.Element.prototype, {
