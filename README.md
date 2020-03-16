@@ -177,22 +177,31 @@ function Component() {
 
 ## Goodies
 
-Three extra functions and one constant are provided by this package:
+Some extra features are provided by this package:
 
 ```ts
-declare module "jsx-dom" {
-  export function preventDefault(event: Event): Event
-  export function stopPropagation(event: Event): Event
-  /** `namespaceURI` string for SVG Elements. */
-  export const SVGNamespace: string
-  export function className(value: any): string
+function preventDefault(event: Event): Event
 
-  /** Short type aliases for HTML elements */
-  export namespace HTML {
-    type Button = HTMLButtonElement
-    type Div = HTMLDivElement
-    ...
-  }
+function stopPropagation(event: Event): Event
+
+/** `namespaceURI` string for SVG Elements. */
+const SVGNamespace: string
+
+function className(value: any): string
+
+/** Short type aliases for HTML elements */
+namespace HTML {
+  type Anchor = HTMLAnchorElement
+  type Button = HTMLButtonElement
+  type Div = HTMLDivElement
+  ...
+}
+
+/** Short type aliases for SVG elements */
+namespace SVG {
+  type Anchor = SVGAElement
+  type Animate = SVGAnimateElement
+  ...
 }
 ```
 
