@@ -11,5 +11,7 @@
   "editor.formatOnSave": true,
   "[markdown]": {
     "editor.formatOnSave": false
-  }
+  },
+  "telemetry.enableCrashReporter": false,
+  "telemetry.enableTelemetry": false
 }
