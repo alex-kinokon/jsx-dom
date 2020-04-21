@@ -6,6 +6,7 @@ tslint.json
 yarn.lock
 Cakefile
 coverage
+prepublish.sh
 .nyc_output
 .gitignore
 .travis.yml
