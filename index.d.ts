@@ -196,7 +196,7 @@ interface AttrWithRef<T> extends Attributes {
   ref?: Ref<T>
 }
 
-type ReactElement = HTMLElement | SVGElement
+type ReactElement = HTMLElement | SVGElement | DocumentFragment
 
 type DOMFactory<P extends DOMAttributes<T>, T extends Element> = (
   props?: (AttrWithRef<T> & P) | null,
