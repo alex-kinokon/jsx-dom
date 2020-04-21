@@ -252,7 +252,7 @@ function createFactory(component: string): (props: object) => JSX.Element
 function useRef<T>(initialValue?: T): RefObject<T>
 ```
 
-The following functions **will** not have memoization, and are only useful if you are
+The following functions will **not** have memoization, and are only useful if you are
 migrating from/to React.
 
 ```ts
