@@ -1,5 +1,5 @@
 import { as } from "./util"
-const React: typeof import("..") = require("../lib/svg.cjs")
+const React: typeof import("..") = require("../lib/index.cjs")
 
 import { expect } from "chai"
 import "mocha"
@@ -70,7 +70,7 @@ describe("SVG", () => {
       <view />,
     ]
 
-    supportedElements.forEach(one =>
+    supportedElements.forEach((one) =>
       expect(one.namespaceURI, `Tag: ${one.tagName}`).to.equal(namespace)
     )
   })
@@ -110,6 +110,6 @@ describe("SVG", () => {
       "strokeMiterlimit",
       "strokeOpacity",
       "strokeWidth",
-    ].forEach(key => test(key))
+    ].forEach((key) => test(key))
   })
 })

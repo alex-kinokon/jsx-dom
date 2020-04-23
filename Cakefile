@@ -39,16 +39,12 @@ build = (name, inject) ->
     console.trace()
     console.error(e)
 
-task 'build-min', 'Build jsx-dom without SVG', ->
-  await build('min', __SVG__: false, __MIN_BUILD__: true)
+task 'build-min', 'Build min jsx-dom', ->
+  await build('min', __MIN_BUILD__: true)
 
-task 'build-slim', 'Build jsx-dom without SVG', ->
-  await build('index', __SVG__: false, __MIN_BUILD__: false)
-
-task 'build-svg', 'Build jsx-dom with SVG', ->
-  await build('svg', __SVG__: true, __MIN_BUILD__: false)
+task 'build-main', 'Build jsx-dom', ->
+  await build('index', __MIN_BUILD__: false)
 
 task 'build', 'Build everything', ->
   invoke('build-min')
-  invoke('build-slim')
-  invoke('build-svg')
+  invoke('build-main')

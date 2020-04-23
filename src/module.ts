@@ -2,7 +2,7 @@ export { identity as memo } from "./util"
 export * from "./ref"
 export * from "./hooks"
 
-import { createElement } from "./index"
+import { createElement, Fragment } from "./index"
 
 export {
   createFactory,
@@ -15,6 +15,7 @@ export {
 
 export default {
   createElement,
+  Fragment,
 }
 
 export function preventDefault(event: Event) {

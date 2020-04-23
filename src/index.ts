@@ -29,13 +29,10 @@ function isVisibleChild(value: any): boolean {
  */
 export function className(value: any): string {
   if (Array.isArray(value)) {
-    return value
-      .map(className)
-      .filter(Boolean)
-      .join(" ")
+    return value.map(className).filter(Boolean).join(" ")
   } else if (isObject(value)) {
     return keys(value)
-      .filter(k => value[k])
+      .filter((k) => value[k])
       .join(" ")
   } else if (isVisibleChild(value)) {
     return "" + value
@@ -114,7 +111,7 @@ export function Fragment(attr: { children: JSX.Element[] }) {
 export { createElement as h }
 export function createElement(tag: any, attr: any, ...children: any[]) {
   attr = attr || {}
-  if (__SVG__ && !attr.namespaceURI && svg[tag] === 0) {
+  if (!__MIN_BUILD__ && !attr.namespaceURI && svg[tag] === 0) {
     attr = { ...attr, namespaceURI: SVGNamespace }
   }
 
@@ -166,11 +163,11 @@ function appendChildren(children: any[], node: Node) {
 }
 
 function normalizeAttribute(s: string) {
-  return s.replace(/[A-Z\d]/g, match => ":" + match.toLowerCase())
+  return s.replace(/[A-Z\d]/g, (match) => ":" + match.toLowerCase())
 }
 
 function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
-  if (__SVG__) {
+  if (__MIN_BUILD__) {
     switch (key) {
       case "xlinkActuate":
       case "xlinkArcrole":
