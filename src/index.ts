@@ -167,7 +167,7 @@ function normalizeAttribute(s: string) {
 }
 
 function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
-  if (__MIN_BUILD__) {
+  if (!__MIN_BUILD__) {
     switch (key) {
       case "xlinkActuate":
       case "xlinkArcrole":
