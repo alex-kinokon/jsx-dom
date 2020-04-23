@@ -1,6 +1,6 @@
 {
   "name": "jsx-dom",
-  "version": "6.4.14-beta.5",
+  "version": "6.4.14-beta.6",
   "description": "JSX to document.createElement.",
   "main": "lib/index.cjs.js",
   "module": "lib/index.js",
@@ -8,7 +8,8 @@
   "scripts": {
     "build": "cake build",
     "pretest": "yarn build",
-    "prepublishOnly": "./prepublish.sh",
+    "prepublishOnly": "./scripts/prepublish.sh",
+    "postpublish": "./scripts/postpublish.sh",
     "test": "nyc --reporter=html mocha test/test-*.tsx --require test/register"
   },
   "keywords": [
