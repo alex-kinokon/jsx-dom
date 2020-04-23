@@ -55,7 +55,7 @@ export const isUnitlessNumber = {
   strokeWidth: 0,
 }
 
-if (__MIN_BUILD__) {
+if (!__MIN_BUILD__) {
   Object.assign(isUnitlessNumber, {
     // SVG-related properties
     fillOpacity: 0,
