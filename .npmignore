@@ -12,3 +12,6 @@ prepublish.sh
 .travis.yml
 .vscode
 drafts
+scripts
+alias
+.prettierignore
