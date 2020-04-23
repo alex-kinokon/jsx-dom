@@ -1336,6 +1336,10 @@ interface SelectHTMLAttributes<T> extends HTMLAttributes<T> {
   onChange?: ChangeEventHandler<T>
 }
 
+interface SlotHTMLAttributes<T> extends HTMLAttributes<T> {
+  name?: string
+}
+
 interface SourceHTMLAttributes<T> extends HTMLAttributes<T> {
   media?: string
   sizes?: string
@@ -1909,6 +1913,7 @@ declare global {
       script: DetailedHTMLProps<ScriptHTMLAttributes<HTMLScriptElement>, HTMLScriptElement>
       section: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
       select: DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>
+      slot: DetailedHTMLProps<SlotHTMLAttributes<HTMLElement>, HTMLSlotElement>
       small: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
       source: DetailedHTMLProps<SourceHTMLAttributes<HTMLSourceElement>, HTMLSourceElement>
       span: DetailedHTMLProps<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>
