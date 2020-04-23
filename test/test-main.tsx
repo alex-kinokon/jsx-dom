@@ -136,7 +136,7 @@ describe("jsx-dom", () => {
       let button = null
       const div = (
         <div>
-          <button ref={e => (button = e)} />
+          <button ref={(e) => (button = e)} />
         </div>
       )
       expect(button).not.to.equal(null)
@@ -164,7 +164,7 @@ describe("jsx-dom", () => {
       const Button = ({ ref }) => <button ref={ref} />
       const div = (
         <div>
-          <Button ref={e => (button = e)} />
+          <Button ref={(e) => (button = e)} />
         </div>
       )
       expect(button).not.to.equal(null)
@@ -199,7 +199,7 @@ describe("jsx-dom", () => {
   })
 
   describe("events", () => {
-    it("supports event listeners", done => {
+    it("supports event listeners", (done) => {
       const button = (<button onClick={() => done()} />) as HTMLButtonElement
       button.click()
     })
@@ -207,7 +207,7 @@ describe("jsx-dom", () => {
 
   describe("forwardRef", () => {
     // const FancyButton = React.forwardRef((props, ref) => (
-    const FancyButton = props => (
+    const FancyButton = (props) => (
       <button ref={props.ref} className="FancyButton">
         {props.children}
       </button>
