@@ -55,7 +55,7 @@ export const isUnitlessNumber = {
   strokeWidth: 0,
 }
 
-if (!__MIN_BUILD__) {
+if (__FULL_BUILD__) {
   Object.assign(isUnitlessNumber, {
     // SVG-related properties
     fillOpacity: 0,
@@ -85,7 +85,7 @@ function prefixKey(prefix: string, key: string) {
  */
 const prefixes = ["Webkit", "ms", "Moz", "O"]
 
-if (!__MIN_BUILD__) {
+if (__FULL_BUILD__) {
   // Using Object.keys here, or else the vanilla for-in loop makes IE8 go into an
   // infinite loop, because it iterates over the newly added props too.
   Object.keys(isUnitlessNumber).forEach((prop) => {

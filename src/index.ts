@@ -111,7 +111,7 @@ export function Fragment(attr: { children: JSX.Element[] }) {
 export { createElement as h }
 export function createElement(tag: any, attr: any, ...children: any[]) {
   attr = attr || {}
-  if (!__MIN_BUILD__ && !attr.namespaceURI && svg[tag] === 0) {
+  if (__FULL_BUILD__ && !attr.namespaceURI && svg[tag] === 0) {
     attr = { ...attr, namespaceURI: SVGNamespace }
   }
 
@@ -167,7 +167,7 @@ function normalizeAttribute(s: string) {
 }
 
 function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
-  if (!__MIN_BUILD__) {
+  if (__FULL_BUILD__) {
     switch (key) {
       case "xlinkActuate":
       case "xlinkArcrole":
@@ -222,7 +222,7 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
     case "style":
       if (isObject(value)) {
         forEach(value, (val, key) => {
-          if (!__MIN_BUILD__ && isNumber(val) && isUnitlessNumber[key] !== 0) {
+          if (__FULL_BUILD__ && isNumber(val) && isUnitlessNumber[key] !== 0) {
             cast<HTMLElement>(node).style[key] = val + "px"
           } else {
             cast<HTMLElement>(node).style[key] = val

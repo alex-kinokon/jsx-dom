@@ -40,10 +40,10 @@ build = (name, inject) ->
     console.error(e)
 
 task 'build-min', 'Build min jsx-dom', ->
-  await build('min', __MIN_BUILD__: true)
+  await build('min', __FULL_BUILD__: false)
 
 task 'build-main', 'Build jsx-dom', ->
-  await build('index', __MIN_BUILD__: false)
+  await build('index', __FULL_BUILD__: true)
 
 task 'build', 'Build everything', ->
   invoke('build-min')
