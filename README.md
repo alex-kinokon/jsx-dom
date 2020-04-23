@@ -145,11 +145,8 @@ React, `props.children` is guaranteed to be an array.
 
 ### SVG and Namespaces
 
-A custom build with a list of commonly used SVG tags is included.
-
 ```jsx
-// Use 'jsx-dom/svg';
-import React from "jsx-dom/svg"
+import React from "jsx-dom"
 
 document.body.appendChild(
   <div class="flag" style={{ display: "flex" }}>
