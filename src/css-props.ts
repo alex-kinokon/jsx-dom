@@ -55,20 +55,6 @@ export const isUnitlessNumber = {
   strokeWidth: 0,
 }
 
-if (__FULL_BUILD__) {
-  Object.assign(isUnitlessNumber, {
-    // SVG-related properties
-    fillOpacity: 0,
-    floodOpacity: 0,
-    stopOpacity: 0,
-    strokeDasharray: 0,
-    strokeDashoffset: 0,
-    strokeMiterlimit: 0,
-    strokeOpacity: 0,
-    strokeWidth: 0,
-  })
-}
-
 /**
  * @param prefix vendor-specific prefix, eg: Webkit
  * @param key style name, eg: transitionDuration
