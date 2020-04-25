@@ -282,7 +282,7 @@ export function createElement<T extends Element>(
   ...children: ReactNode[]
 ): T
 
-export function Fragment(props: { children?: ReactNode }): DocumentFragment
+export function Fragment(props: { children?: ReactNode }): any // DocumentFragment
 
 interface FunctionComponent<P = {}, T extends Element = Element> {
   (props: PropsWithChildren<P>, context?: any): T | null

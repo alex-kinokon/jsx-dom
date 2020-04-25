@@ -4,6 +4,7 @@
  * This source code is licensed under the MIT license found on
  * https://github.com/facebook/react/blob/b87aabdfe1b7461e7331abb3601d9e6bb27544bc/LICENSE
  */
+import { keys } from "./util"
 
 /**
  * CSS properties which accept numbers but are not in units of "px".
@@ -74,7 +75,7 @@ const prefixes = ["Webkit", "ms", "Moz", "O"]
 if (__FULL_BUILD__) {
   // Using Object.keys here, or else the vanilla for-in loop makes IE8 go into an
   // infinite loop, because it iterates over the newly added props too.
-  Object.keys(isUnitlessNumber).forEach((prop) => {
+  keys(isUnitlessNumber).forEach((prop) => {
     prefixes.forEach((prefix) => {
       isUnitlessNumber[prefixKey(prefix, prop)] = 0 // isUnitlessNumber[prop]
     })

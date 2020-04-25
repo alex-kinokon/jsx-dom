@@ -199,14 +199,14 @@ function Component() {
 import React, { useClassList } from "jsx-dom"
 
 function Component() {
-  const cls = useClassList(["main", { ready }])
+  const cls = useClassList(["main", { ready: false }])
   setTimeout(() => {
     cls.add("long-wait")
     cls.toggle("ready")
   }, 2000)
 
   return (
-    <div class={cls}>Status: {text}</div>
+    <div class={cls}>Status</div>
   )
 }
 ```

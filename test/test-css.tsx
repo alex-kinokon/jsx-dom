@@ -1,7 +1,6 @@
-const React: typeof import("..") = require("../lib/index.cjs")
-
+import { React } from "./register"
 import { expect } from "chai"
-import { StandardLonghandProperties } from "csstype"
+import type { StandardLonghandProperties } from "csstype"
 
 describe("CSS", () => {
   it("supports numeric CSS properties", () => {
@@ -52,7 +51,7 @@ describe("CSS", () => {
       "widows",
       "zIndex",
       "zoom",
-    ].forEach(key => testUnitless(key))
+    ].forEach((key) => testUnitless(key))
   })
 
   it("supports unitless CSS properties with vendor prefixes", () => {
