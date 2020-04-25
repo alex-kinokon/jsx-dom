@@ -10,6 +10,8 @@ export {
   className,
   createElement,
   createElement as h,
+  createElement as jsx,
+  createElement as jsxs,
   SVGNamespace,
 } from "./index"
 
