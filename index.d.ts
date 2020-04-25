@@ -11,7 +11,7 @@ export const SVGNamespace: "http://www.w3.org/2000/svg"
 
 export function className(value: ClassNames): string
 
-export { createElement as h }
+export { createElement as h, createElement as jsx, createElement as jsxs }
 
 export function useText(initialValue?: string): readonly [Text, (value: string) => void]
 export function useClassList(initialValue?: ClassNames): ClassList
@@ -29,6 +29,7 @@ export interface ClassList {
 /** @internal */
 declare const __defaultExport: {
   createElement: typeof createElement
+  Fragment: typeof Fragment
 }
 export default __defaultExport
 
