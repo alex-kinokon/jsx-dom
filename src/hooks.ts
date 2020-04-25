@@ -1,5 +1,5 @@
 import { className } from "./"
-import { ClassNames, ClassList } from "../index"
+import type { ClassNames, ClassList } from "../index"
 
 export { identity as useCallback } from "./util"
 

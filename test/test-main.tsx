@@ -1,6 +1,5 @@
 import { as } from "./util"
-const React: typeof import("..") = require("../lib/index.cjs")
-
+import { React } from "./register"
 import { HTML } from ".."
 import { expect } from "chai"
 
@@ -61,7 +60,7 @@ describe("jsx-dom", () => {
     })
 
     it("will not override JSX childNodes with `children` attribute", () => {
-      // Suppress ts(2710)
+      // @ts-expect-error
       expect((<div children="i">override</div>).textContent).to.equal("override")
     })
   })
@@ -226,6 +225,18 @@ describe("jsx-dom", () => {
           {[2]}
           <span>Bonjour</span>
         </>
+      )
+      const nodes = frag.childNodes
+      expect(nodes[0].nodeType === Node.TEXT_NODE && nodes[0].textContent === "2")
+      expect(nodes[1].nodeName === "SPAN" && nodes[1].textContent === "Bonjour")
+    })
+
+    it("supports fragments with explicit tags", () => {
+      const frag = (
+        <React.Fragment>
+          {[2]}
+          <span>Bonjour</span>
+        </React.Fragment>
       )
       const nodes = frag.childNodes
       expect(nodes[0].nodeType === Node.TEXT_NODE && nodes[0].textContent === "2")
