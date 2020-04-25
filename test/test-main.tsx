@@ -231,7 +231,7 @@ describe("jsx-dom", () => {
       expect(nodes[1].nodeName === "SPAN" && nodes[1].textContent === "Bonjour")
     })
 
-    it("supports fragments with explicit tags", () => {
+    it("supports fragments with explicit tag", () => {
       const frag = (
         <React.Fragment>
           {[2]}
