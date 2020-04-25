@@ -1,16 +1,17 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "importHelpers": true,
+    "jsx": "react",
+    "lib": ["dom", "es2015"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es5",
-    "importHelpers": true,
+    "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": false,
     "sourceMap": false,
-    "jsx": "react",
-    "lib": ["dom", "es2015"]
+    "target": "ES2018"
   },
   "exclude": ["node_modules", "coverage", "drafts", "alias", "lib"]
 }

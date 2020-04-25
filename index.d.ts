@@ -1,7 +1,7 @@
 /**
  * Adapted from React TypeScript definition from DefinitelyTyped 16.9
  * @see https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/react/index.d.ts
- * https://github.com/DefinitelyTyped/DefinitelyTyped/commit/2034c45ba9c4ac8524a58e2c8a84eb449d2af339
+ * https://github.com/DefinitelyTyped/DefinitelyTyped/commit/82f5b794c1086b1b75a394c32d8d0ca3d1565ac3
  */
 import * as CSS from "csstype"
 
@@ -1221,6 +1221,7 @@ interface LinkHTMLAttributes<T> extends HTMLAttributes<T> {
   rel?: string
   sizes?: string
   type?: string
+  charSet?: string
 }
 
 interface MapHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -1239,7 +1240,7 @@ interface MediaHTMLAttributes<T> extends HTMLAttributes<T> {
   loop?: boolean
   mediaGroup?: string
   muted?: boolean
-  playsinline?: boolean
+  playsInline?: boolean
   preload?: string
   src?: string
 }
