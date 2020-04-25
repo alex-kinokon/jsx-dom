@@ -1,5 +1,5 @@
 import { as } from "./util"
-const React: typeof import("..") = require("../lib/index.cjs")
+import { React } from "./register"
 
 import { expect } from "chai"
 import "mocha"

@@ -25,3 +25,7 @@ Object.defineProperties(window.Element.prototype, {
     },
   },
 })
+
+/** @type {typeof import("..")} */
+const React = require("../lib/index.cjs")
+exports.React = React

@@ -1,4 +1,4 @@
 #!/bin/bash
-# yarn build <- included in test
+yarn build
 yarn test
 cp alias/*.js ./

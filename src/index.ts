@@ -11,7 +11,7 @@ import {
   forEach,
 } from "./util"
 import { isUnitlessNumber } from "./css-props"
-import { HTML } from ".."
+import type { HTML } from "../index"
 
 export const SVGNamespace = "http://www.w3.org/2000/svg"
 const XLinkNamespace = "http://www.w3.org/1999/xlink"

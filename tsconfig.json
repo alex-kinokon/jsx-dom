@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "allowJs": false,
+    "allowJs": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
@@ -12,5 +12,5 @@
     "jsx": "react",
     "lib": ["dom", "es2015"]
   },
-  "exclude": ["node_modules", "coverage", "drafts"]
+  "exclude": ["node_modules", "coverage", "drafts", "alias", "lib"]
 }
