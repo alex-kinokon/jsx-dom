@@ -209,6 +209,7 @@ type HTMLFactory<T extends HTMLElement> = DetailedHTMLFactory<AllHTMLAttributes<
 interface DetailedHTMLFactory<P extends HTMLAttributes<T>, T extends HTMLElement>
   extends DOMFactory<P, T> {
   (props?: (AttrWithRef<T> & P) | null, ...children: ReactNode[]): T
+  (...children: ReactNode[]): T
 }
 
 interface SVGFactory extends DOMFactory<SVGAttributes<SVGElement>, SVGElement> {
@@ -216,6 +217,7 @@ interface SVGFactory extends DOMFactory<SVGAttributes<SVGElement>, SVGElement> {
     props?: (AttrWithRef<SVGElement> & SVGAttributes<SVGElement>) | null,
     ...children: ReactNode[]
   ): SVGElement
+  (...children: ReactNode[]): SVGElement
 }
 
 //
@@ -419,7 +421,7 @@ type WheelEventHandler<T = Element> = EventHandler<WheelEvent, T>
 type AnimationEventHandler<T = Element> = EventHandler<AnimationEvent, T>
 type TransitionEventHandler<T = Element> = EventHandler<TransitionEvent, T>
 
-type DetailedHTMLProps<E extends HTMLAttributes<T>, T> = AttrWithRef<T> & E
+export type DetailedHTMLProps<E extends HTMLAttributes<T>, T> = AttrWithRef<T> & E
 
 interface SVGProps<T> extends SVGAttributes<T>, AttrWithRef<T> {}
 
@@ -710,15 +712,7 @@ interface AriaAttributes {
   "aria-grabbed"?: boolean | "false" | "true"
 
   /** Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element. */
-  "aria-haspopup"?:
-    | boolean
-    | "false"
-    | "true"
-    | "menu"
-    | "listbox"
-    | "tree"
-    | "grid"
-    | "dialog"
+  "aria-haspopup"?: boolean | "false" | "true" | "menu" | "listbox" | "tree" | "grid" | "dialog"
   /**
    * Indicates whether the element is exposed to an accessibility API.
    * @see aria-disabled.
@@ -828,7 +822,7 @@ interface AriaAttributes {
   "aria-valuetext"?: string
 }
 
-interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+export interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
   // Extension
   namespaceURI?: string
   class?: ClassNames
@@ -1926,30 +1920,18 @@ declare global {
       sup: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
       table: DetailedHTMLProps<TableHTMLAttributes<HTMLTableElement>, HTMLTableElement>
       template: DetailedHTMLProps<HTMLAttributes<HTMLTemplateElement>, HTMLTemplateElement>
-      tbody: DetailedHTMLProps<
-        HTMLAttributes<HTMLTableSectionElement>,
-        HTMLTableSectionElement
-      >
-      td: DetailedHTMLProps<
-        TdHTMLAttributes<HTMLTableDataCellElement>,
-        HTMLTableDataCellElement
-      >
+      tbody: DetailedHTMLProps<HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement>
+      td: DetailedHTMLProps<TdHTMLAttributes<HTMLTableDataCellElement>, HTMLTableDataCellElement>
       textarea: DetailedHTMLProps<
         TextareaHTMLAttributes<HTMLTextAreaElement>,
         HTMLTextAreaElement
       >
-      tfoot: DetailedHTMLProps<
-        HTMLAttributes<HTMLTableSectionElement>,
-        HTMLTableSectionElement
-      >
+      tfoot: DetailedHTMLProps<HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement>
       th: DetailedHTMLProps<
         ThHTMLAttributes<HTMLTableHeaderCellElement>,
         HTMLTableHeaderCellElement
       >
-      thead: DetailedHTMLProps<
-        HTMLAttributes<HTMLTableSectionElement>,
-        HTMLTableSectionElement
-      >
+      thead: DetailedHTMLProps<HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement>
       time: DetailedHTMLProps<TimeHTMLAttributes<HTMLElement>, HTMLElement>
       title: DetailedHTMLProps<HTMLAttributes<HTMLTitleElement>, HTMLTitleElement>
       tr: DetailedHTMLProps<HTMLAttributes<HTMLTableRowElement>, HTMLTableRowElement>

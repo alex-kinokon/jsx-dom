@@ -1,6 +1,6 @@
 {
   "name": "jsx-dom",
-  "version": "6.4.15",
+  "version": "6.4.16",
   "description": "JSX to document.createElement.",
   "main": "lib/index.cjs.js",
   "module": "lib/index.js",
@@ -58,7 +58,7 @@
   "homepage": "https://github.com/proteriax/jsx-dom#readme",
   "prettier": {
     "tabWidth": 2,
-    "printWidth": 95,
+    "printWidth": 97,
     "semi": false,
     "singleQuote": false,
     "trailingComma": "es5"

@@ -1,4 +1,8 @@
-# 6.5.0
+# 6.4.16
+- Fixes #27
+- Makes `props` an optional parameter in `createElement`.
+
+# 6.4.14
 - Update type definitions with React upstream.
 - Introduce `useText`, `useClassList` API.
 
