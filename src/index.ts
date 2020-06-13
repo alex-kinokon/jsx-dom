@@ -110,6 +110,11 @@ export function Fragment(attr: { children: JSX.Element[] }) {
 
 export { createElement as h }
 export function createElement(tag: any, attr: any, ...children: any[]) {
+  if (isString(attr) || Array.isArray(attr)) {
+    children.unshift(attr)
+    attr = {}
+  }
+
   attr = attr || {}
   if (__FULL_BUILD__ && !attr.namespaceURI && svg[tag] === 0) {
     attr = { ...attr, namespaceURI: SVGNamespace }
