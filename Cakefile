@@ -1,7 +1,7 @@
 babel = require('rollup-plugin-babel')
 replace = require('@rollup/plugin-replace')
 prettier = require('rollup-plugin-prettier')
-node = require('@rollup/plugin-node-resolve')
+node = require('@rollup/plugin-node-resolve').default
 { rollup } = require('rollup')
 
 extensions = ['.ts', '.js']
