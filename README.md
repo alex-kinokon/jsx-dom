@@ -166,6 +166,8 @@ Below is a list of SVG tags included.
 
 If you need to create an SVG element that is not in the list, or you want to specify a custom namespace, use the attribute `namespaceURI`.
 
+If you do not need SVG and CSS property automatic type conversion support, you can import from `jsx-dom/min` for a smaller build.
+
 ```jsx
 import React, { SVGNamespace } from "jsx-dom"
 
