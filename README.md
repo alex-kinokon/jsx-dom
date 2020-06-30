@@ -6,7 +6,7 @@
 [![devDependency status](https://david-dm.org/proteriax/jsx-dom/dev-status.svg)](https://david-dm.org/proteriax/jsx-dom#info=devDependencies)
 [![npm version](https://badge.fury.io/js/jsx-dom.svg)](https://badge.fury.io/js/jsx-dom)
 
-Use JSX for creating DOM elements. With ES Module support.
+Use JSX for creating DOM elements. With ES Module and TypeScript support.
 
 ## Installation
 
@@ -164,8 +164,6 @@ Below is a list of SVG tags included.
 
 > svg, animate, circle, clipPath, defs, desc, ellipse, feBlend, feColorMatrix, feComponentTransfer, feComposite, feConvolveMatrix, feDiffuseLighting, feDisplacementMap, feDistantLight, feFlood, feFuncA, feFuncB, feFuncG, feFuncR, feGaussianBlur, feImage, feMerge, feMergeNode, feMorphology, feOffset, fePointLight, feSpecularLighting, feSpotLight, feTile, feTurbulence, filter, foreignObject, g, image, line, linearGradient, marker, mask, metadata, path, pattern, polygon, polyline, radialGradient, rect, stop, switch, symbol, text, textPath, tspan, use, view
 
-If you need to create an SVG element that is not in the list, or you want to specify a custom namespace, use the attribute `namespaceURI`.
-
 If you do not need SVG and CSS property automatic type conversion support, you can import from `jsx-dom/min` for a smaller build.
 
 ```jsx
@@ -175,6 +173,8 @@ function Anchor() {
   return <a namespaceURI={ SVGNamespace }>I am an SVG element!</a>
 }
 ```
+
+If you need to create an SVG element that is not in the list, or you want to specify a custom namespace, use the attribute `namespaceURI`.
 
 ## `useText`
 
