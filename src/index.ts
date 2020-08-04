@@ -121,7 +121,7 @@ export function createElement(tag: any, attr: any, ...children: any[]) {
   }
 
   if (attr.children != null && !children.length) {
-    ; ({ children, ...attr } = attr)
+    ;({ children, ...attr } = attr)
   }
 
   let node: HTMLElement | SVGElement
