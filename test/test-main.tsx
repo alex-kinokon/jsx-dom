@@ -243,4 +243,19 @@ describe("jsx-dom", () => {
       expect(nodes[1].nodeName === "SPAN" && nodes[1].textContent === "Bonjour")
     })
   })
+
+  describe("templates", () => {
+    it("supports templates", () => {
+      const template = (
+        <template>
+          {[2]}
+          <span>Bonjour</span>
+        </template>
+      ) as HTMLTemplateElement
+
+      const nodes = template.content.childNodes
+      expect(nodes[0].nodeType === Node.TEXT_NODE && nodes[0].textContent === "2")
+      expect(nodes[1].nodeName === "SPAN" && nodes[1].textContent === "Bonjour")
+    })
+  })
 })
