@@ -121,7 +121,7 @@ export function createElement(tag: any, attr: any, ...children: any[]) {
   }
 
   if (attr.children != null && !children.length) {
-    ;({ children, ...attr } = attr)
+    ; ({ children, ...attr } = attr)
   }
 
   let node: HTMLElement | SVGElement
@@ -152,11 +152,11 @@ function appendChild(child: any[] | string | number | null | Element, node: Node
   if (isArrayLike(child)) {
     appendChildren(child as any, node)
   } else if (isString(child) || isNumber(child)) {
-    node.appendChild(document.createTextNode(child as any))
+    appendChildToNode(document.createTextNode(child as any), node)
   } else if (child === null) {
-    node.appendChild(document.createComment(""))
+    appendChildToNode(document.createComment(""), node)
   } else if (isElement(child)) {
-    node.appendChild(child)
+    appendChildToNode(child, node)
   }
 }
 
@@ -165,6 +165,14 @@ function appendChildren(children: any[], node: Node) {
     appendChild(child, node)
   }
   return node
+}
+
+function appendChildToNode(child: Node, node: Node) {
+  if (node instanceof window.HTMLTemplateElement) {
+    node.content.appendChild(child);
+  } else {
+    node.appendChild(child)
+  }
 }
 
 function normalizeAttribute(s: string) {
