@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/bin/sh
 rm svg.js
 rm min.js
