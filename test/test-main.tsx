@@ -95,9 +95,7 @@ describe("jsx-dom", () => {
     })
 
     it("filters out falsy values, but not 0, from the class array", () => {
-      const node = (
-        <div class={[Math.PI < 3 && "PI < 3?", [].length && "should be 0", "rest"]} />
-      )
+      const node = <div class={[Math.PI < 3 && "PI < 3?", [].length && "should be 0", "rest"]} />
 
       expect(node.className).to.equal("0 rest")
     })
@@ -242,6 +240,10 @@ describe("jsx-dom", () => {
       expect(nodes[0].nodeType === Node.TEXT_NODE && nodes[0].textContent === "2")
       expect(nodes[1].nodeName === "SPAN" && nodes[1].textContent === "Bonjour")
     })
+  })
+
+  describe("web component events", () => {
+    customElements.define("web-component", class WebComponent extends HTMLElement {})
   })
 
   describe("templates", () => {

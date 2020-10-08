@@ -169,7 +169,7 @@ function appendChildren(children: any[], node: Node) {
 
 function appendChildToNode(child: Node, node: Node) {
   if (node instanceof window.HTMLTemplateElement) {
-    node.content.appendChild(child);
+    node.content.appendChild(child)
   } else {
     node.appendChild(child)
   }
@@ -248,7 +248,13 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
 
   if (isFunction(value)) {
     if (key[0] === "o" && key[1] === "n") {
-      node[key.toLowerCase()] = value
+      const attribute = key.toLowerCase()
+      // Issue #33
+      if (node[attribute] == null) {
+        node[attribute] = value
+      } else {
+        node.addEventListener(key, value)
+      }
     }
   } else if (value === true) {
     attr(node, key, "")
