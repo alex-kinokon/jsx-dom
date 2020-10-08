@@ -423,7 +423,7 @@ type TransitionEventHandler<T = Element> = EventHandler<TransitionEvent, T>
 
 export type DetailedHTMLProps<E extends HTMLAttributes<T>, T> = AttrWithRef<T> & E
 
-interface SVGProps<T> extends SVGAttributes<T>, AttrWithRef<T> {}
+export interface SVGProps<T> extends SVGAttributes<T>, AttrWithRef<T> {}
 
 interface DOMAttributes<T> {
   children?: ReactNode
@@ -1427,6 +1427,7 @@ interface VideoHTMLAttributes<T> extends MediaHTMLAttributes<T> {
 interface SVGAttributes<T> extends AriaAttributes, DOMAttributes<T> {
   // Attributes which also defined in HTMLAttributes
   // See comment in SVGDOMPropertyConfig.js
+  class?: ClassNames
   className?: string
   color?: string
   height?: number | string
