@@ -6,7 +6,7 @@
 [![devDependency status](https://david-dm.org/proteriax/jsx-dom/dev-status.svg)](https://david-dm.org/proteriax/jsx-dom#info=devDependencies)
 [![npm version](https://badge.fury.io/js/jsx-dom.svg)](https://badge.fury.io/js/jsx-dom)
 
-Use JSX for creating DOM elements. With ES Module and TypeScript support.
+Use JSX for creating DOM elements. Supports ES Module and TypeScript.
 
 ## Installation
 
@@ -17,7 +17,7 @@ yarn install jsx-dom
 
 ## Usage
 
-**Note:** Using HyperScript? `h` pragma is also supported. **Experimental:** If you are using [React Automatic Runtime](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx), simply set `jsxImportSource` to `jsx-dom`.
+**Note:** Using HyperScript? `h` pragma is also supported. <!--**Experimental:** If you are using [React Automatic Runtime](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx), simply set `jsxImportSource` to `jsx-dom`.-->
 
 ```jsx
 import React from "jsx-dom"
@@ -57,7 +57,7 @@ document.body.appendChild(<Hello firstName="Johnny" lastName="Appleseed" />)
    - a string
    - an object with the format `{ [key: string]: boolean }`. Keys with a truthy value will be added to the classList
    - an array of values where falsy values (see below) are filtered out
-   - an array of any combination of the above
+   - an array of any combination of the above, including deeply nested arrays
 
 Note that `false`, `true`, `null`, `undefined` will be ignored per [React documentations](https://facebook.github.io/react/docs/jsx-in-depth.html#booleans-null-and-undefined-are-ignored), and everything else will be used. For example,
 
@@ -65,7 +65,7 @@ Note that `false`, `true`, `null`, `undefined` will be ignored per [React docume
 <div class="greeting" />
 <div class={[ condition && "class" ]} />
 <div class={{ hidden: isHidden, "has-item": !!array.length }} />
-<div class={[ classArray1, classArray2, ["nested"] ]} />
+<div class={[ classArray1, classArray2, ["nested", ["further"]] ]} />
 ```
 
 ### Style
@@ -79,7 +79,7 @@ Note that `false`, `true`, `null`, `undefined` will be ignored per [React docume
 
 ### Children
 
-Passing `children` as an explicit attribute, when there is no other JSX child nodes, is also supported.
+Passing `children` as an explicit attribute, when there is no other JSX child node, is also supported.
 
 ```jsx
 <div children={["Total: ", 20]} />
@@ -176,9 +176,11 @@ function Anchor() {
 
 If you need to create an SVG element that is not in the list, or you want to specify a custom namespace, use the attribute `namespaceURI`.
 
+jsx-dom also includes a few utility functions to facilitate the process of refactoring from or to React.
+
 ## `useText`
 
-While this is technically not a hook in a React sense, it functions like one and
+While this is technically not a hook in the React sense, it functions like one and
 facilitates simple DOM text changes.
 
 ```jsx
@@ -226,7 +228,10 @@ function stopPropagation(event: Event): Event
 const SVGNamespace: string
 
 function className(value: any): string
+```
 
+### Type aliases for convenience
+```ts
 /** Short type aliases for HTML elements */
 namespace HTML {
     type Anchor = HTMLAnchorElement
@@ -267,5 +272,7 @@ polyfill.
 
 ## Known Issues
 
-`<div />`, and other tags, are inferred as a general `JSX.Element` in TypeScript instead of
+* `<div />`, and other tags, are inferred as a general `JSX.Element` in TypeScript instead of
 `HTMLDivElement` (or the equivalent types). This is a known bug and its fix depends on [TypeScript#21699](https://github.com/Microsoft/TypeScript/issues/21699).
+
+* [html](https://github.com/developit/htm) library is [not currently compatible](https://github.com/proteriax/jsx-dom/issues/32) with jsx-dom.
