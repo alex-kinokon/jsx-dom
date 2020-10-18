@@ -249,12 +249,6 @@ export function createFactory(type: keyof ReactSVG): SVGFactory
 export function createFactory<T extends Element>(type: string): T
 
 // DOM Elements
-// TODO: generalize this to everything in `keyof ReactHTML`, not just "input"
-export function createElement(
-  type: "input",
-  props?: (InputHTMLAttributes<HTML.Input> & AttrWithRef<HTML.Input>) | null,
-  ...children: ReactNode[]
-): HTML.Input
 export function createElement<K extends keyof ReactHTML, T extends HTMLElementTagNameMap[K]>(
   type: K,
   props?: (HTMLAttributes<T> & AttrWithRef<T>) | null,
