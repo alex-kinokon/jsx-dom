@@ -255,19 +255,19 @@ export function createElement(
   props?: (InputHTMLAttributes<HTML.Input> & AttrWithRef<HTML.Input>) | null,
   ...children: ReactNode[]
 ): HTML.Input
-export function createElement<P extends HTMLAttributes<T>, T extends HTMLElement>(
-  type: keyof ReactHTML,
-  props?: (AttrWithRef<T> & P) | null,
+export function createElement<K extends keyof ReactHTML, T extends HTMLElementTagNameMap[K]>(
+  type: K,
+  props?: (HTMLAttributes<T> & AttrWithRef<T>) | null,
   ...children: ReactNode[]
 ): T
-export function createElement<P extends SVGAttributes<T>, T extends SVGElement>(
-  type: keyof ReactSVG,
-  props?: (AttrWithRef<T> & P) | null,
+export function createElement<K extends keyof ReactSVG, T extends ReactSVG[K]>(
+  type: K,
+  props?: (SVGAttributes<T> & AttrWithRef<T>) | null,
   ...children: ReactNode[]
 ): SVGElement
-export function createElement<P extends DOMAttributes<T>, T extends Element>(
+export function createElement<T extends Element>(
   type: string,
-  props?: (AttrWithRef<T> & P) | null,
+  props?: (AttrWithRef<T> & DOMAttributes<T>) | null,
   ...children: ReactNode[]
 ): T
 
