@@ -1,0 +1,66 @@
+#!/usr/bin/env node
+/*
+ * decaffeinate suggestions:
+ * DS102: Remove unnecessary code created because of implicit returns
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
+ */
+const { babel } = require("@rollup/plugin-babel")
+const replace = require("@rollup/plugin-replace")
+const prettier = require("rollup-plugin-prettier")
+const node = require("@rollup/plugin-node-resolve").default
+const { rollup } = require("rollup")
+
+const extensions = [".ts", ".js"]
+
+const build = async function (name, inject) {
+  try {
+    const bundle = await rollup({
+      input: "./src/module.ts",
+      plugins: [
+        replace(inject),
+        babel({
+          extensions,
+          comments: false,
+          minified: false,
+          babelHelpers: "bundled",
+          plugins: [
+            "@babel/plugin-transform-typescript",
+            "minify-constant-folding",
+            "minify-guarded-expressions",
+            "minify-dead-code-elimination",
+            function ({ types: t }) {
+              return {
+                visitor: {
+                  CallExpression(path) {
+                    if (t.isIdentifier(path.node.callee, { name: "cast" })) {
+                      path.replaceWith(path.node.arguments[0])
+                    }
+                  },
+                },
+              }
+            },
+          ],
+        }),
+        prettier({ tabWidth: 2, parser: "babel" }),
+        node({ extensions }),
+      ],
+    })
+    await bundle.write({ format: "cjs", file: `lib/${name}.cjs.js`, exports: "named" })
+    return await bundle.write({ format: "es", file: `lib/${name}.js`, exports: "named" })
+  } catch (e) {
+    console.trace()
+    return console.error(e)
+  }
+}
+
+exports["build-min"] = async () => await build("min", { __FULL_BUILD__: false })
+
+exports["build-main"] = async () => await build("index", { __FULL_BUILD__: true })
+
+exports.build = function () {
+  exports["build-min"]()
+  exports["build-main"]()
+}
+
+const args = process.argv.slice(2)
+exports[args[0]]()
