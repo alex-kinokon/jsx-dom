@@ -168,7 +168,10 @@ function appendChildren(children: any[], node: Node) {
 }
 
 function appendChildToNode(child: Node, node: Node) {
-  if (node instanceof window.HTMLTemplateElement) {
+  if (
+    window.HTMLTemplateElement
+    && node instanceof window.HTMLTemplateElement
+  ) {
     node.content.appendChild(child)
   } else {
     node.appendChild(child)
