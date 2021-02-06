@@ -9,6 +9,7 @@ import {
   isNumber,
   keys,
   forEach,
+  isComponentClass,
 } from "./util"
 import { isUnitlessNumber } from "./css-props"
 import type { HTML } from "../index"
@@ -108,6 +109,13 @@ export function Fragment(attr: { children: JSX.Element[] }) {
   return fragment
 }
 
+export function Component(props: any) {
+  this.props = props;
+}
+Component.prototype.render = function () {
+  return null
+}
+
 export { createElement as h }
 export function createElement(tag: any, attr: any, ...children: any[]) {
   if (isString(attr) || Array.isArray(attr)) {
@@ -137,7 +145,9 @@ export function createElement(tag: any, attr: any, ...children: any[]) {
       attr = { ...tag.defaultProps, ...attr }
     }
 
-    node = tag({ ...attr, children })
+    node = isComponentClass(tag)
+      ? new tag({ ...attr, children }).render()
+      : tag({ ...attr, children })
   }
 
   if (isRef(attr.ref)) {

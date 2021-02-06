@@ -33,6 +33,24 @@ describe("jsx-dom", () => {
     expect((<Component a={1} b={2} c={3} />).innerHTML).to.equal("6")
   })
 
+  it("supports class components", () => {
+    class Component extends React.Component<{ a: number; b: number; c: number }> {
+      constructor(props: { a: 1; b: 2; c: 3 }) {
+        super(props);
+      }
+
+      render() {
+        expect(this.props.a).to.equal(1)
+        expect(this.props.b).to.equal(2)
+        expect(this.props.c).to.equal(3)
+        expect(this.props.children).to.be.empty
+        return <div>{this.props.a + this.props.b + this.props.c}</div>
+      }
+    }
+
+    expect((<Component a={1} b={2} c={3} />).innerHTML).to.equal("6")
+  })
+
   describe("childNodes", () => {
     it("ignores `null`", () => {
       expect((<div>{null}</div>).children).to.be.empty

@@ -268,7 +268,7 @@ export function createElement<T extends Element>(
 // Custom components
 
 export function createElement<P extends {}, T extends Element>(
-  type: FunctionComponent<P, T>,
+  type: ComponentType<P, T>,
   props?: (Attributes & P) | null,
   ...children: ReactNode[]
 ): T
@@ -287,7 +287,30 @@ interface FunctionComponent<P = {}, T extends Element = Element> {
   displayName?: string
 }
 
+export interface ComponentClass<P = {}, T extends Element = Element> {
+  new(props: P, context?: any): Component<P, T>;
+  defaultProps?: Partial<P>;
+  displayName?: string;
+}
+
+export class Component<P = {}, T extends Element = Element> {
+  constructor(props: Readonly<P> | P);
+  /**
+   * @deprecated
+   * @see https://reactjs.org/docs/legacy-context.html
+   */
+  constructor(props: P, context: any);
+
+  context: any;
+  readonly props: PropsWithChildren<P>;
+
+  render(): T | null;
+}
+
 type PropsWithChildren<P> = P & { children?: ReactNode }
+
+type ComponentType<P = {}, T extends Element = Element> =
+  ComponentClass<P, T> | FunctionComponent<P, T>;
 
 //
 // React Hooks
