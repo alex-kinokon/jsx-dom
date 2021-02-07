@@ -250,7 +250,7 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
     if (key[0] === "o" && key[1] === "n") {
       const attribute = key.toLowerCase()
       // Issue #33
-      if (node[attribute] == null) {
+      if (node[attribute] === null) {
         node[attribute] = value
       } else {
         node.addEventListener(key, value)
