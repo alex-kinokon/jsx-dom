@@ -17,7 +17,9 @@ yarn install jsx-dom
 
 ## Usage
 
-**Note:** Using HyperScript? `h` pragma is also supported. <!--**Experimental:** If you are using [React Automatic Runtime](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx), simply set `jsxImportSource` to `jsx-dom`.-->
+**Note:** Using HyperScript? `h` pragma is also supported.
+
+**Experimental:** If you are using [React Automatic Runtime](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx), simply set `jsxImportSource` to `jsx-dom` and you can omit the import.
 
 ```jsx
 import React from "jsx-dom"
@@ -190,7 +192,7 @@ If you do not need SVG and CSS property automatic type conversion support, you c
 import React, { SVGNamespace } from "jsx-dom"
 
 function Anchor() {
-  return <a namespaceURI={ SVGNamespace }>I am an SVG element!</a>
+  return <a namespaceURI={SVGNamespace}>I am an SVG element!</a>
 }
 ```
 

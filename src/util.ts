@@ -1,4 +1,4 @@
-import { ComponentClass } from ".."
+import type { ComponentClass } from "../index"
 
 export const keys: <T>(obj: T) => Array<keyof T> = Object.keys as any
 
@@ -31,8 +31,9 @@ export function isFunction(val: any): val is Function {
   return typeof val === "function"
 }
 
-export function isComponentClass(val: Function): val is ComponentClass {
-  return typeof val.prototype?.render === 'function'
+export function isComponentClass(Component: Function): Component is ComponentClass {
+  const prototype = Component.prototype
+  return !!(prototype && prototype.isReactComponent)
 }
 
 export function isArrayLike(obj: any): obj is ArrayLike<any> {

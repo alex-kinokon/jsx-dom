@@ -1,7 +1,7 @@
 /**
- * Adapted from React TypeScript definition from DefinitelyTyped 16.9
+ * Adapted from React TypeScript definition from DefinitelyTyped 17.0
  * @see https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/react/index.d.ts
- * https://github.com/DefinitelyTyped/DefinitelyTyped/commit/82f5b794c1086b1b75a394c32d8d0ca3d1565ac3
+ * https://github.com/DefinitelyTyped/DefinitelyTyped/commit/d498b7c4836191389b758296021f23e500f1fb07
  */
 import * as CSS from "csstype"
 
@@ -267,7 +267,6 @@ export function createElement<T extends Element>(
 ): T
 
 // Custom components
-
 export function createElement<P extends {}, T extends Element>(
   type: ComponentType<P, T>,
   props?: (Attributes & P) | null,
@@ -280,6 +279,8 @@ export function createElement<T extends Element>(
   ...children: ReactNode[]
 ): T
 
+// @TODO: Add typing for `jsx` function.
+
 export function Fragment(props: { children?: ReactNode }): any // DocumentFragment
 
 interface FunctionComponent<P = {}, T extends Element = Element> {
@@ -289,21 +290,22 @@ interface FunctionComponent<P = {}, T extends Element = Element> {
 }
 
 export interface ComponentClass<P = {}, T extends Element = Element> {
-  new(props: P, context?: any): Component<P, T>;
-  defaultProps?: Partial<P>;
-  displayName?: string;
+  new (props: P, context?: any): Component<P, T>
+  defaultProps?: Partial<P>
+  displayName?: string
 }
 
 export class Component<P = {}, T extends Element = Element> {
-  constructor(props: PropsWithChildren<P>);
-  readonly props: PropsWithChildren<P>;
-  render(): T | null;
+  constructor(props: PropsWithChildren<P>)
+  readonly props: PropsWithChildren<P>
+  render(): T | null
 }
 
 type PropsWithChildren<P> = P & { children?: ReactNode }
 
 type ComponentType<P = {}, T extends Element = Element> =
-  ComponentClass<P, T> | FunctionComponent<P, T>;
+  | ComponentClass<P, T>
+  | FunctionComponent<P, T>
 
 //
 // React Hooks
@@ -330,8 +332,7 @@ export function createRef<T = any>(): RefObject<T>
  * @version 16.8.0
  * @see https://reactjs.org/docs/hooks-reference.html#useref
  */
-// TODO (TypeScript 3.0): <T extends unknown>
-export function useRef<T>(initialValue: T): MutableRefObject<T>
+export function useRef<T extends unknown>(initialValue: T): MutableRefObject<T>
 
 // convenience overload for refs given as a ref prop as they typically start with a null value
 /**
@@ -347,8 +348,7 @@ export function useRef<T>(initialValue: T): MutableRefObject<T>
  * @version 16.8.0
  * @see https://reactjs.org/docs/hooks-reference.html#useref
  */
-// TODO (TypeScript 3.0): <T extends unknown>
-export function useRef<T>(initialValue: T | null): RefObject<T>
+export function useRef<T extends unknown>(initialValue: T | null): RefObject<T>
 
 // convenience overload for potentially undefined initialValue / call with 0 arguments
 // has a default to stop it from defaulting to {} instead
@@ -362,8 +362,7 @@ export function useRef<T>(initialValue: T | null): RefObject<T>
  * @version 16.8.0
  * @see https://reactjs.org/docs/hooks-reference.html#useref
  */
-// TODO (TypeScript 3.0): <T extends unknown>
-export function useRef<T = undefined>(): MutableRefObject<T | undefined>
+export function useRef<T = unknown>(): MutableRefObject<T | undefined>
 
 // I made 'inputs' required here and in useMemo as there's no point to memoizing without the memoization key
 // useCallback(X) is identical to just using X, useMemo(() => Y) is identical to just using Y.
@@ -374,8 +373,7 @@ export function useRef<T = undefined>(): MutableRefObject<T | undefined>
  * @version 16.8.0
  * @see https://reactjs.org/docs/hooks-reference.html#usecallback
  */
-// TODO (TypeScript 3.0): <T extends (...args: never[]) => unknown>
-export function useCallback<T extends (...args: any[]) => any>(
+export function useCallback<T extends (...args: never[]) => any>(
   callback: T,
   deps: DependencyList
 ): T
@@ -783,11 +781,23 @@ interface AriaAttributes {
    * @see aria-disabled.
    */
   "aria-readonly"?: boolean | "false" | "true"
+
   /**
    * Indicates what notifications the user agent will trigger when the accessibility tree within a live region is modified.
    * @see aria-atomic.
    */
-  "aria-relevant"?: "additions" | "additions text" | "all" | "removals" | "text"
+  "aria-relevant"?:
+    | "additions"
+    | "additions removals"
+    | "additions text"
+    | "all"
+    | "removals"
+    | "removals additions"
+    | "removals text"
+    | "text"
+    | "text additions"
+    | "text removals"
+
   /** Indicates that user input is required on the element before a form may be submitted. */
   "aria-required"?: boolean | "false" | "true"
   /** Defines a human-readable, author-localized description for the role of an element. */
@@ -1008,11 +1018,22 @@ interface AllHTMLAttributes<T> extends HTMLAttributes<T> {
   target?: string
   type?: string
   useMap?: string
-  value?: string | string[] | number
+  value?: string | readonly string[] | number
   width?: number | string
   wmode?: string
   wrap?: string
 }
+
+type HTMLAttributeReferrerPolicy =
+  | ""
+  | "no-referrer"
+  | "no-referrer-when-downgrade"
+  | "origin"
+  | "origin-when-cross-origin"
+  | "same-origin"
+  | "strict-origin"
+  | "strict-origin-when-cross-origin"
+  | "unsafe-url"
 
 interface AnchorHTMLAttributes<T> extends HTMLAttributes<T> {
   download?: any
@@ -1023,10 +1044,9 @@ interface AnchorHTMLAttributes<T> extends HTMLAttributes<T> {
   rel?: string
   target?: string
   type?: string
-  referrerPolicy?: string
+  referrerPolicy?: HTMLAttributeReferrerPolicy
 }
 
-// tslint:disable-next-line:no-empty-interface
 interface AudioHTMLAttributes<T> extends MediaHTMLAttributes<T> {}
 
 interface AreaHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -1036,6 +1056,7 @@ interface AreaHTMLAttributes<T> extends HTMLAttributes<T> {
   href?: string
   hrefLang?: string
   media?: string
+  referrerPolicy?: HTMLAttributeReferrerPolicy
   rel?: string
   shape?: string
   target?: string
@@ -1061,7 +1082,7 @@ interface ButtonHTMLAttributes<T> extends HTMLAttributes<T> {
   formTarget?: string
   name?: string
   type?: "submit" | "reset" | "button"
-  value?: string | string[] | number
+  value?: string | readonly string[] | number
 }
 
 interface CanvasHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -1079,11 +1100,12 @@ interface ColgroupHTMLAttributes<T> extends HTMLAttributes<T> {
 }
 
 interface DataHTMLAttributes<T> extends HTMLAttributes<T> {
-  value?: string | string[] | number
+  value?: string | readonly string[] | number
 }
 
 interface DetailsHTMLAttributes<T> extends HTMLAttributes<T> {
   open?: boolean
+  onToggle: ReactEventHandler<T>
 }
 
 interface DelHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -1127,13 +1149,18 @@ interface IframeHTMLAttributes<T> extends HTMLAttributes<T> {
   allow?: string
   allowFullScreen?: boolean
   allowTransparency?: boolean
+  /** @deprecated */
   frameBorder?: number | string
   height?: number | string
+  loading?: "eager" | "lazy"
+  /** @deprecated */
   marginHeight?: number
+  /** @deprecated */
   marginWidth?: number
   name?: string
-  referrerPolicy?: string
+  referrerPolicy?: HTMLAttributeReferrerPolicy
   sandbox?: string
+  /** @deprecated */
   scrolling?: string
   seamless?: boolean
   src?: string
@@ -1147,7 +1174,7 @@ interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
   decoding?: "async" | "auto" | "sync"
   height?: number | string
   loading?: "eager" | "lazy"
-  referrerPolicy?: "no-referrer" | "origin" | "unsafe-url"
+  referrerPolicy?: HTMLAttributeReferrerPolicy
   sizes?: string
   src?: string
   srcSet?: string
@@ -1169,6 +1196,7 @@ interface InputHTMLAttributes<T> extends HTMLAttributes<T> {
   checked?: boolean
   crossOrigin?: string
   disabled?: boolean
+  enterKeyHint?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send"
   form?: string
   formAction?: string
   formEncType?: string
@@ -1191,7 +1219,7 @@ interface InputHTMLAttributes<T> extends HTMLAttributes<T> {
   src?: string
   step?: number | string
   type?: string
-  value?: string | string[] | number
+  value?: string | readonly string[] | number
   width?: number | string
 
   onChange?: ChangeEventHandler<T>
@@ -1213,7 +1241,7 @@ interface LabelHTMLAttributes<T> extends HTMLAttributes<T> {
 }
 
 interface LiHTMLAttributes<T> extends HTMLAttributes<T> {
-  value?: string | string[] | number
+  value?: string | readonly string[] | number
 }
 
 interface LinkHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -1223,6 +1251,7 @@ interface LinkHTMLAttributes<T> extends HTMLAttributes<T> {
   hrefLang?: string
   integrity?: string
   media?: string
+  referrerPolicy?: HTMLAttributeReferrerPolicy
   rel?: string
   sizes?: string
   type?: string
@@ -1264,7 +1293,7 @@ interface MeterHTMLAttributes<T> extends HTMLAttributes<T> {
   max?: number | string
   min?: number | string
   optimum?: number
-  value?: string | string[] | number
+  value?: string | readonly string[] | number
 }
 
 interface QuoteHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -1298,7 +1327,7 @@ interface OptionHTMLAttributes<T> extends HTMLAttributes<T> {
   disabled?: boolean
   label?: string
   selected?: boolean
-  value?: string | string[] | number
+  value?: string | readonly string[] | number
 }
 
 interface OutputHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -1309,22 +1338,24 @@ interface OutputHTMLAttributes<T> extends HTMLAttributes<T> {
 
 interface ParamHTMLAttributes<T> extends HTMLAttributes<T> {
   name?: string
-  value?: string | string[] | number
+  value?: string | readonly string[] | number
 }
 
 interface ProgressHTMLAttributes<T> extends HTMLAttributes<T> {
   max?: number | string
-  value?: string | string[] | number
+  value?: string | readonly string[] | number
 }
 
 interface ScriptHTMLAttributes<T> extends HTMLAttributes<T> {
   async?: boolean
+  /** @deprecated */
   charSet?: string
   crossOrigin?: string
   defer?: boolean
   integrity?: string
   noModule?: boolean
   nonce?: string
+  referrerPolicy?: HTMLAttributeReferrerPolicy
   src?: string
   type?: string
 }
@@ -1338,7 +1369,7 @@ interface SelectHTMLAttributes<T> extends HTMLAttributes<T> {
   name?: string
   required?: boolean
   size?: number
-  value?: string | string[] | number
+  value?: string | readonly string[] | number
   onChange?: ChangeEventHandler<T>
 }
 
@@ -1365,6 +1396,7 @@ interface TableHTMLAttributes<T> extends HTMLAttributes<T> {
   cellPadding?: number | string
   cellSpacing?: number | string
   summary?: string
+  width?: number | string
 }
 
 interface TextareaHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -1381,7 +1413,7 @@ interface TextareaHTMLAttributes<T> extends HTMLAttributes<T> {
   readOnly?: boolean
   required?: boolean
   rows?: number
-  value?: string | string[] | number
+  value?: string | readonly string[] | number
   wrap?: string
 
   onChange?: ChangeEventHandler<T>
@@ -1394,6 +1426,8 @@ interface TdHTMLAttributes<T> extends HTMLAttributes<T> {
   rowSpan?: number
   scope?: string
   abbr?: string
+  height?: number | string
+  width?: number | string
   valign?: "top" | "middle" | "bottom" | "baseline"
 }
 
@@ -1424,6 +1458,7 @@ interface VideoHTMLAttributes<T> extends MediaHTMLAttributes<T> {
   poster?: string
   width?: number | string
   disablePictureInPicture?: boolean
+  disableRemotePlayback?: boolean
 }
 
 // this list is "complete" in that it contains every SVG attribute
@@ -1811,9 +1846,7 @@ declare global {
       children: {}
     }
 
-    // tslint:disable-next-line:no-empty-interface
     interface IntrinsicAttributes extends Attributes {}
-    // tslint:disable-next-line:no-empty-interface
     interface IntrinsicClassAttributes<T> extends AttrWithRef<T> {}
 
     interface IntrinsicElements {

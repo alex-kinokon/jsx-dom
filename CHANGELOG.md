@@ -1,3 +1,11 @@
+# 7.0.0
+- Breaking change:
+  - TypeScript 4 is required. This particular release only requires TypeScript 3, but further updates may require TypeScript 4 specific features without a major version bump.
+  - Remove `jsx-dom/svg` alias.
+- Merges #39 - “Fix solution for #33”.
+- Merges #38 - “Added support for Class Components”.
+- Updates type definition with upstream (#d498b7c).
+
 # 6.4.16
 - Fixes #27
 - Makes `props` an optional parameter in `createElement`.
