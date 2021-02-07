@@ -30,6 +30,7 @@ export interface ClassList {
 declare const __defaultExport: {
   createElement: typeof createElement
   Fragment: typeof Fragment
+  Component: typeof Component
 }
 export default __defaultExport
 
