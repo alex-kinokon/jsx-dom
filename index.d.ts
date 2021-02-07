@@ -294,16 +294,8 @@ export interface ComponentClass<P = {}, T extends Element = Element> {
 }
 
 export class Component<P = {}, T extends Element = Element> {
-  constructor(props: Readonly<P> | P);
-  /**
-   * @deprecated
-   * @see https://reactjs.org/docs/legacy-context.html
-   */
-  constructor(props: P, context: any);
-
-  context: any;
+  constructor(props: PropsWithChildren<P>);
   readonly props: PropsWithChildren<P>;
-
   render(): T | null;
 }
 
