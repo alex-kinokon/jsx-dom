@@ -1,0 +1,62 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended"
+  ],
+  "settings": {
+    "react": {
+      "version": "17.0"
+    }
+  },
+  "rules": {
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/triple-slash-reference": "off",
+    "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "^_" }],
+    "arrow-body-style": ["error", "as-needed"],
+    "class-methods-use-this": [
+      "warn",
+      { "exceptMethods": ["toString", "shouldComponentUpdate"] }
+    ],
+    "complexity": ["warn", { "max": 100 }],
+    "curly": ["error", "multi-line", "consistent"],
+    "eqeqeq": ["error", "smart"],
+    "no-async-promise-executor": "off",
+    "no-case-declarations": "off",
+    "no-constant-condition": ["error", { "checkLoops": false }],
+    "no-empty": ["error", { "allowEmptyCatch": true }],
+    "no-inner-declarations": "off",
+    "no-lonely-if": "error",
+    "no-var": "error",
+    "object-shorthand": "error",
+    "one-var": ["error", { "var": "never", "let": "never" }],
+    "prefer-arrow-callback": "error",
+    "prefer-const": ["error", { "destructuring": "all" }],
+    "prefer-object-spread": "error",
+    "prefer-rest-params": "warn",
+    "prefer-spread": "warn",
+    "quote-props": ["error", "as-needed"],
+    "react/display-name": "off",
+    "react/no-children-prop": "off",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "spaced-comment": ["error", "always", { "markers": ["/"] }],
+    "yoda": ["error", "never", { "exceptRange": true }]
+  }
+}

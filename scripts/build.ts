@@ -66,6 +66,7 @@ export async function build() {
     copy("index.d.ts", OUT_DIR),
     copy("README.md", OUT_DIR),
     copy("CHANGELOG.md", OUT_DIR),
+    copy("LICENSE", OUT_DIR),
     $build("min", { __FULL_BUILD__: "false" }),
     $build("index", { __FULL_BUILD__: "true" }),
   ])
