@@ -1,6 +1,5 @@
-import { as } from "./util"
-import { React } from "./register"
-import { HTML } from ".."
+import type { HTML } from "../index"
+import { React, React as lib } from "./register"
 import { expect } from "chai"
 
 describe("jsx-dom", () => {
@@ -10,8 +9,16 @@ describe("jsx-dom", () => {
 
   describe("supports publicly declared APIs", () => {
     it("supports createFactory", () => {
-      expect(React.createFactory).to.be.a("function")
-      const Div = React.createFactory("div")
+      expect(lib.createElement).to.be.a("function")
+      expect(lib.createFactory).to.be.a("function")
+      expect(lib.createRef).to.be.a("function")
+      expect(lib.jsx).to.be.a("function")
+      expect(lib.useCallback).to.be.a("function")
+      expect(lib.useMemo).to.be.a("function")
+      expect(lib.useRef).to.be.a("function")
+      expect(lib.useText).to.be.a("function")
+
+      const Div = lib.createFactory("div")
       expect((<Div>div tag</Div>).tagName).to.equal("DIV")
 
       function CustomComponent(props: any): any {
@@ -26,11 +33,54 @@ describe("jsx-dom", () => {
       expect(props.a).to.equal(1)
       expect(props.b).to.equal(2)
       expect(props.c).to.equal(3)
-      expect(as(props).children).to.be.empty
+      expect(cast(props).children).to.be.empty
       return <div>{props.a + props.b + props.c}</div>
     }
 
     expect((<Component a={1} b={2} c={3} />).innerHTML).to.equal("6")
+  })
+
+  it("supports class components", () => {
+    class Component extends React.Component<{ a: number; b: number; c: number }> {
+      constructor(props: { a: 1; b: 2; c: 3 }) {
+        super(props)
+      }
+
+      render() {
+        expect(this.props.a).to.equal(1)
+        expect(this.props.b).to.equal(2)
+        expect(this.props.c).to.equal(3)
+        expect(this.props.children).to.be.empty
+        return <div>{this.props.a + this.props.b + this.props.c}</div>
+      }
+    }
+
+    expect((<Component a={1} b={2} c={3} />).innerHTML).to.equal("6")
+  })
+
+  it("supports React automatic runtime", () => {
+    expect(
+      lib.jsx("div", {
+        className: "className",
+      }).outerHTML
+    ).to.equal('<div class="className"></div>')
+
+    expect(
+      lib.jsx("div", {
+        className: "className",
+        children: "One child",
+      }).outerHTML
+    ).to.equal('<div class="className">One child</div>')
+
+    expect(
+      lib.jsx("div", {
+        className: "className",
+        children: [
+          "One child",
+          lib.jsx("div", { className: "child", children: "Two children" }),
+        ],
+      }).outerHTML
+    ).to.equal('<div class="className">One child<div class="child">Two children</div></div>')
   })
 
   describe("childNodes", () => {
@@ -136,12 +186,12 @@ describe("jsx-dom", () => {
           <button ref={(e) => (button = e)} />
         </div>
       )
-      expect(button).not.to.equal(null)
+      expect(button).not.to.be.null
       expect(div.children[0]).to.equal(button)
     })
 
     it("supports React style createRef.", () => {
-      const ref = React.createRef()
+      const ref = lib.createRef()
       expect(ref).to.have.property("current", null)
 
       const div = (
@@ -149,10 +199,10 @@ describe("jsx-dom", () => {
           <button ref={ref} />
         </div>
       )
-      expect(ref).not.to.equal(null)
+      expect(ref).not.to.be.null
       expect(div.children[0]).to.equal(ref.current)
-      as(<input ref={ref} />)
-      expect(ref).not.to.equal(null)
+      cast(<input ref={ref} />)
+      expect(ref).not.to.be.null
       expect(ref.current).to.have.property("tagName", "INPUT")
     })
 
@@ -164,7 +214,7 @@ describe("jsx-dom", () => {
           <Button ref={(e) => (button = e)} />
         </div>
       )
-      expect(button).not.to.equal(null)
+      expect(button).not.to.be.null
       expect(div.children[0]).to.equal(button)
     })
 
@@ -175,11 +225,23 @@ describe("jsx-dom", () => {
       expect(button.className).to.equal("defaultClass")
     })
 
+    it("supports defaultProps in class components", () => {
+      class Button extends lib.Component<{ className: string }> {
+        static defaultProps = { className: "defaultClass" }
+        render() {
+          return <div className={this.props.className} />
+        }
+      }
+      // @ts-ignore
+      const button = <Button />
+      expect(button.className).to.equal("defaultClass")
+    })
+
     it("supports spellCheck attribute", () => {
-      expect(as<HTML.Input>(<input spellCheck={true} />).spellcheck).to.equal(true)
-      expect(as<HTML.Input>(<input spellCheck={false} />).spellcheck).to.equal(false)
-      expect(as<HTML.TextArea>(<textarea spellCheck={true} />).spellcheck).to.equal(true)
-      expect(as<HTML.TextArea>(<textarea spellCheck={false} />).spellcheck).to.equal(false)
+      expect(cast<HTML.Input>(<input spellCheck={true} />).spellcheck).to.equal(true)
+      expect(cast<HTML.Input>(<input spellCheck={false} />).spellcheck).to.equal(false)
+      expect(cast<HTML.TextArea>(<textarea spellCheck={true} />).spellcheck).to.equal(true)
+      expect(cast<HTML.TextArea>(<textarea spellCheck={false} />).spellcheck).to.equal(false)
     })
   })
 
@@ -211,8 +273,8 @@ describe("jsx-dom", () => {
     )
 
     // You can now get a ref directly to the DOM button:
-    const ref = React.createRef()
-    as(<FancyButton ref={ref}>Click me!</FancyButton>)
+    const ref = lib.createRef()
+    cast(<FancyButton ref={ref}>Click me!</FancyButton>)
     expect(ref.current).to.be.instanceOf(HTMLButtonElement)
   })
 
@@ -225,20 +287,24 @@ describe("jsx-dom", () => {
         </>
       )
       const nodes = frag.childNodes
-      expect(nodes[0].nodeType === Node.TEXT_NODE && nodes[0].textContent === "2")
-      expect(nodes[1].nodeName === "SPAN" && nodes[1].textContent === "Bonjour")
+      expect(nodes[0].nodeType).to.equal(Node.TEXT_NODE)
+      expect(nodes[0].textContent).to.equal("2")
+      expect(nodes[1].nodeName).to.equal("SPAN")
+      expect(nodes[1].textContent).to.equal("Bonjour")
     })
 
     it("supports fragments with explicit tag", () => {
       const frag = (
-        <React.Fragment>
+        <lib.Fragment>
           {[2]}
           <span>Bonjour</span>
-        </React.Fragment>
+        </lib.Fragment>
       )
       const nodes = frag.childNodes
-      expect(nodes[0].nodeType === Node.TEXT_NODE && nodes[0].textContent === "2")
-      expect(nodes[1].nodeName === "SPAN" && nodes[1].textContent === "Bonjour")
+      expect(nodes[0].nodeType).to.equal(Node.TEXT_NODE)
+      expect(nodes[0].textContent).to.equal("2")
+      expect(nodes[1].nodeName).to.equal("SPAN")
+      expect(nodes[1].textContent).to.equal("Bonjour")
     })
   })
 
@@ -256,8 +322,10 @@ describe("jsx-dom", () => {
       ) as HTMLTemplateElement
 
       const nodes = template.content.childNodes
-      expect(nodes[0].nodeType === Node.TEXT_NODE && nodes[0].textContent === "2")
-      expect(nodes[1].nodeName === "SPAN" && nodes[1].textContent === "Bonjour")
+      expect(nodes[0].nodeType).to.equal(Node.TEXT_NODE)
+      expect(nodes[0].textContent).to.equal("2")
+      expect(nodes[1].nodeName).to.equal("SPAN")
+      expect(nodes[1].textContent).to.equal("Bonjour")
     })
   })
 })

@@ -1,4 +1,4 @@
-import { className } from "./"
+import { className } from "./jsx-dom"
 import type { ClassNames, ClassList } from "../index"
 
 export { identity as useCallback } from "./util"
