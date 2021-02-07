@@ -17,7 +17,9 @@ yarn install jsx-dom
 
 ## Usage
 
-**Note:** Using HyperScript? `h` pragma is also supported. <!--**Experimental:** If you are using [React Automatic Runtime](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx), simply set `jsxImportSource` to `jsx-dom`.-->
+**Note:** Using HyperScript? `h` pragma is also supported.
+
+**Experimental:** If you are using [React Automatic Runtime](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx), simply set `jsxImportSource` to `jsx-dom` and you can omit the import.
 
 ```jsx
 import React from "jsx-dom"
@@ -34,7 +36,7 @@ document.body.appendChild(
 function Hello(props) {
   return (
     <div>
-      Hello {props.firstName}, {props.lastName}!
+      Hello, {props.firstName} {props.lastName}!
     </div>
   )
 }
@@ -43,6 +45,26 @@ Hello.defaultProps = {
 }
 
 document.body.appendChild(<Hello firstName="Johnny" lastName="Appleseed" />)
+
+// Class components
+// `defaultProps` and `props.children` are supported natively and work as you expect.
+// In terms of React jsx-dom class components have no state,
+// so `render` function will be called only once.
+class Welcome extends React.Component {
+  static defaultProps = {
+    firstName: "John",
+  }
+
+  render() {
+    return (
+      <div>
+        Welcome, {this.props.firstName} {this.props.lastName}!
+      </div>
+    )
+  }
+}
+
+document.body.appendChild(<Welcome firstName="Johnny" lastName="Appleseed" />)
 ```
 
 ## Syntax
@@ -138,9 +160,9 @@ function Component() {
 }
 ```
 
-### Functional components
+### Functional and class components
 
-You can write functional components and receive passed `props` in the same way in React. Unlike
+You can write functional and class components and receive passed `props` in the same way in React. Unlike
 React, `props.children` is guaranteed to be an array.
 
 ### SVG and Namespaces
@@ -170,7 +192,7 @@ If you do not need SVG and CSS property automatic type conversion support, you c
 import React, { SVGNamespace } from "jsx-dom"
 
 function Anchor() {
-  return <a namespaceURI={ SVGNamespace }>I am an SVG element!</a>
+  return <a namespaceURI={SVGNamespace}>I am an SVG element!</a>
 }
 ```
 

@@ -15,6 +15,9 @@ Object.assign(global, {
   HTMLButtonElement: window.HTMLButtonElement,
   DOMTokenList: window.DOMTokenList,
   customElements: window.customElements,
+
+  __FULL_BUILD__: true,
+  cast: (value) => value,
 })
 
 Object.defineProperties(window.Element.prototype, {
@@ -29,5 +32,5 @@ Object.defineProperties(window.Element.prototype, {
 })
 
 /** @type {typeof import("..")} */
-const React = require("../lib/index.cjs")
+const React = require("../src/index.ts")
 exports.React = React
