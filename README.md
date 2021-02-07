@@ -34,7 +34,7 @@ document.body.appendChild(
 function Hello(props) {
   return (
     <div>
-      Hello {props.firstName}, {props.lastName}!
+      Hello, {props.firstName} {props.lastName}!
     </div>
   )
 }
@@ -43,6 +43,26 @@ Hello.defaultProps = {
 }
 
 document.body.appendChild(<Hello firstName="Johnny" lastName="Appleseed" />)
+
+// Class components
+// `defaultProps` and `props.children` are supported natively and work as you expect.
+// In terms of React jsx-dom class components have no state,
+// so `render` function will be called only once.
+class Welcome extends React.Component {
+  static defaultProps = {
+    firstName: "John",
+  }
+
+  render() {
+    return (
+      <div>
+        Welcome, {this.props.firstName} {this.props.lastName}!
+      </div>
+    )
+  }
+}
+
+document.body.appendChild(<Welcome firstName="Johnny" lastName="Appleseed" />)
 ```
 
 ## Syntax
@@ -138,9 +158,9 @@ function Component() {
 }
 ```
 
-### Functional components
+### Functional and class components
 
-You can write functional components and receive passed `props` in the same way in React. Unlike
+You can write functional and class components and receive passed `props` in the same way in React. Unlike
 React, `props.children` is guaranteed to be an array.
 
 ### SVG and Namespaces
