@@ -1,3 +1,5 @@
+import type { ComponentClass } from "../index"
+
 export const keys: <T>(obj: T) => Array<keyof T> = Object.keys as any
 
 export function identity<T>(value: T) {
@@ -27,6 +29,11 @@ export function isObject(val: any) {
 // tslint:disable-next-line:ban-types
 export function isFunction(val: any): val is Function {
   return typeof val === "function"
+}
+
+export function isComponentClass(Component: Function): Component is ComponentClass {
+  const prototype = Component.prototype
+  return !!(prototype && prototype.isReactComponent)
 }
 
 export function isArrayLike(obj: any): obj is ArrayLike<any> {

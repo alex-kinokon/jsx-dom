@@ -1,5 +1,4 @@
 import { React } from "./register"
-import { as } from "./util"
 import { expect } from "chai"
 
 describe("hooks", () => {
@@ -14,7 +13,7 @@ describe("hooks", () => {
   })
 
   it("supports useRef", () => {
-    const ref = React.useRef()
+    const ref = React.useRef<HTMLButtonElement>()
     expect(ref).to.have.property("current", null)
 
     const div = (
@@ -24,9 +23,11 @@ describe("hooks", () => {
     )
     expect(ref).not.to.equal(null)
     expect(div.children[0]).to.equal(ref.current)
-    as(<input ref={ref} />)
-    expect(ref).not.to.equal(null)
-    expect(ref.current).to.have.property("tagName", "INPUT")
+
+    const ref2 = React.useRef<HTMLInputElement>()
+    cast(<input ref={ref2} />)
+    expect(ref2).not.to.equal(null)
+    expect(ref2.current).to.have.property("tagName", "INPUT")
   })
 
   it("supports useClassList", () => {

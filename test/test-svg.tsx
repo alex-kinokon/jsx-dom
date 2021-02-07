@@ -1,4 +1,3 @@
-import { as } from "./util"
 import { React } from "./register"
 
 import { expect } from "chai"
