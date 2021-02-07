@@ -123,6 +123,7 @@ Object.defineProperties(Component.prototype, {
   },
 })
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function jsx(tag: any, { children, ...attr }, key?: string) {
   if (__FULL_BUILD__ && !attr.namespaceURI && svg[tag] === 0) {
     attr = { ...attr, namespaceURI: SVGNamespace }
@@ -163,6 +164,7 @@ export function createElement(tag: any, attr: any, ...children: any[]) {
   attr = attr || {}
 
   if (attr.children != null && !children.length) {
+    // eslint-disable-next-line @typescript-eslint/no-extra-semi
     ;({ children, ...attr } = attr)
   }
 

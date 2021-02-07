@@ -1,8 +1,21 @@
+language: node_js
 os: linux
 dist: xenial
-language: node_js
 node_js:
-  - "12"
+  - node
+cache:
+  npm: false
+  directories:
+    - "~/.pnpm-store"
+before_install:
+  - curl -L https://unpkg.com/@pnpm/self-installer | node
+  - pnpm config set store-dir ~/.pnpm-store
 install:
-  - yarn
-  - yarn build
+  - pnpm install
+before_script:
+  - pnpm lint
+script:
+  - pnpm test
+env:
+  - NODE_ENV=development
+  - NODE_ENV=production
