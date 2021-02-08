@@ -1105,7 +1105,7 @@ interface DataHTMLAttributes<T> extends HTMLAttributes<T> {
 
 interface DetailsHTMLAttributes<T> extends HTMLAttributes<T> {
   open?: boolean
-  onToggle: ReactEventHandler<T>
+  onToggle?: ReactEventHandler<T>
 }
 
 interface DelHTMLAttributes<T> extends HTMLAttributes<T> {
