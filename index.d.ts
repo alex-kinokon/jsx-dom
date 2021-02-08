@@ -200,7 +200,7 @@ interface AttrWithRef<T> extends Attributes {
 
 type ReactElement = HTMLElement | SVGElement
 
-type DOMFactory<P extends DOMAttributes<T>, T extends Element> = (
+type DOMFactory<P extends DOMAttributes<T>, T extends Node> = (
   props?: (AttrWithRef<T> & P) | null,
   ...children: ReactNode[]
 ) => T
@@ -227,12 +227,13 @@ interface SVGFactory extends DOMFactory<SVGAttributes<SVGElement>, SVGElement> {
 // ----------------------------------------------------------------------
 
 type ReactText = string | number
-type ReactChild = Element | ReactText
+type ReactChild = Node | ReactText
+type ReactChildren = ReactNodeArray | NodeList | HTMLCollection
 
 interface ReactNodeArray extends Array<ReactNode> {}
 type ReactNode =
   | ReactChild
-  | ReactNodeArray
+  | ReactChildren
   | DocumentFragment
   | Text
   | Comment
@@ -247,7 +248,7 @@ type ReactNode =
 // DOM Elements
 export function createFactory<K extends keyof ReactHTML>(type: K): HTMLFactory<ReactHTML[K]>
 export function createFactory(type: keyof ReactSVG): SVGFactory
-export function createFactory<T extends Element>(type: string): T
+export function createFactory<T extends Node>(type: string): T
 
 // DOM Elements
 export function createElement<K extends keyof ReactHTML, T extends HTMLElementTagNameMap[K]>(
@@ -260,20 +261,20 @@ export function createElement<K extends keyof ReactSVG, T extends ReactSVG[K]>(
   props?: (SVGAttributes<T> & AttrWithRef<T>) | null,
   ...children: ReactNode[]
 ): SVGElement
-export function createElement<T extends Element>(
+export function createElement<T extends Node>(
   type: string,
   props?: (AttrWithRef<T> & DOMAttributes<T>) | null,
   ...children: ReactNode[]
 ): T
 
 // Custom components
-export function createElement<P extends {}, T extends Element>(
+export function createElement<P extends {}, T extends Node>(
   type: ComponentType<P, T>,
   props?: (Attributes & P) | null,
   ...children: ReactNode[]
 ): T
 
-export function createElement<T extends Element>(
+export function createElement<T extends Node>(
   type: string,
   props?: Attributes | null,
   ...children: ReactNode[]
@@ -283,19 +284,19 @@ export function createElement<T extends Element>(
 
 export function Fragment(props: { children?: ReactNode }): any // DocumentFragment
 
-interface FunctionComponent<P = {}, T extends Element = Element> {
+interface FunctionComponent<P = {}, T extends Node = Node> {
   (props: PropsWithChildren<P>, context?: any): T | null
   defaultProps?: Partial<P>
   displayName?: string
 }
 
-export interface ComponentClass<P = {}, T extends Element = Element> {
+export interface ComponentClass<P = {}, T extends Node = Node> {
   new (props: P, context?: any): Component<P, T>
   defaultProps?: Partial<P>
   displayName?: string
 }
 
-export class Component<P = {}, T extends Element = Element> {
+export class Component<P = {}, T extends Node = Node> {
   constructor(props: PropsWithChildren<P>)
   readonly props: PropsWithChildren<P>
   render(): T | null
@@ -303,7 +304,7 @@ export class Component<P = {}, T extends Element = Element> {
 
 type PropsWithChildren<P> = P & { children?: ReactNode }
 
-type ComponentType<P = {}, T extends Element = Element> =
+type ComponentType<P = {}, T extends Node = Node> =
   | ComponentClass<P, T>
   | FunctionComponent<P, T>
 
@@ -412,22 +413,22 @@ type ChangeEvent = Event
 
 type EventHandler<E extends Event, T> = (this: T, event: E & CurrentTarget<T>) => void
 
-type ReactEventHandler<T = Element> = EventHandler<Event, T>
+type ReactEventHandler<T = Node> = EventHandler<Event, T>
 
-type ClipboardEventHandler<T = Element> = EventHandler<ClipboardEvent, T>
-type CompositionEventHandler<T = Element> = EventHandler<CompositionEvent, T>
-type DragEventHandler<T = Element> = EventHandler<DragEvent, T>
-type FocusEventHandler<T = Element> = EventHandler<FocusEvent, T>
-type FormEventHandler<T = Element> = EventHandler<FormEvent, T>
-type ChangeEventHandler<T = Element> = EventHandler<ChangeEvent, T>
-type KeyboardEventHandler<T = Element> = EventHandler<KeyboardEvent, T>
-type MouseEventHandler<T = Element> = EventHandler<MouseEvent, T>
-type TouchEventHandler<T = Element> = EventHandler<TouchEvent, T>
-type PointerEventHandler<T = Element> = EventHandler<PointerEvent, T>
-type UIEventHandler<T = Element> = EventHandler<UIEvent, T>
-type WheelEventHandler<T = Element> = EventHandler<WheelEvent, T>
-type AnimationEventHandler<T = Element> = EventHandler<AnimationEvent, T>
-type TransitionEventHandler<T = Element> = EventHandler<TransitionEvent, T>
+type ClipboardEventHandler<T = Node> = EventHandler<ClipboardEvent, T>
+type CompositionEventHandler<T = Node> = EventHandler<CompositionEvent, T>
+type DragEventHandler<T = Node> = EventHandler<DragEvent, T>
+type FocusEventHandler<T = Node> = EventHandler<FocusEvent, T>
+type FormEventHandler<T = Node> = EventHandler<FormEvent, T>
+type ChangeEventHandler<T = Node> = EventHandler<ChangeEvent, T>
+type KeyboardEventHandler<T = Node> = EventHandler<KeyboardEvent, T>
+type MouseEventHandler<T = Node> = EventHandler<MouseEvent, T>
+type TouchEventHandler<T = Node> = EventHandler<TouchEvent, T>
+type PointerEventHandler<T = Node> = EventHandler<PointerEvent, T>
+type UIEventHandler<T = Node> = EventHandler<UIEvent, T>
+type WheelEventHandler<T = Node> = EventHandler<WheelEvent, T>
+type AnimationEventHandler<T = Node> = EventHandler<AnimationEvent, T>
+type TransitionEventHandler<T = Node> = EventHandler<TransitionEvent, T>
 
 export type DetailedHTMLProps<E extends HTMLAttributes<T>, T> = AttrWithRef<T> & E
 
