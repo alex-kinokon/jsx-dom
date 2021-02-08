@@ -139,6 +139,18 @@ describe("jsx-dom", () => {
       expect(node.firstElementChild).to.equal(img)
     })
 
+    it("children must be copied before iteration", () => {
+      const span = document.createElement("span")
+      const img = document.createElement("img")
+      const code = document.createElement("code")
+      span.append(img, code)
+
+      const node = <div>{span.children}</div>
+      expect(node.children).to.have.lengthOf(2)
+      expect(node.firstElementChild).to.equal(img)
+      expect(node.lastElementChild).to.equal(code)
+    })
+
     it("supports passing `children` explicitly", () => {
       expect((<div children="internal" />).textContent).to.equal("internal")
       expect((<div children={["internal", 20]} />).textContent).to.equal("internal20")
