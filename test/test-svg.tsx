@@ -194,7 +194,7 @@ describe("SVG", () => {
 
     [...element.firstElementChild.attributes as any as Array<Attr>]
     .map(x => x.name)
-    .forEach(x => expect(x).to.include("-"))
+    .forEach(x => expect(/^[^A-Z]*$/.test(x)).to.be.true)
   })
 
   it("supports non-presentation svg attributes", () => {
