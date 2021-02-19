@@ -111,4 +111,166 @@ describe("SVG", () => {
       "strokeWidth",
     ].forEach((key) => test(key))
   })
+
+  it("supports presentation svg attributes", () => {
+    const element = (
+      <svg>
+        <path
+          accentHeight="auto"
+          alignmentBaseline="auto"
+          arabicForm="initial"
+          baselineShift="auto"
+          capHeight="auto"
+          clipPath="auto"
+          clipRule="auto"
+          colorInterpolation="auto"
+          colorInterpolationFilters="auto"
+          colorProfile="auto"
+          colorRendering="auto"
+          dominantBaseline="auto"
+          enableBackground="auto"
+          fillOpacity="auto"
+          fillRule="inherit"
+          floodColor="auto"
+          floodOpacity="auto"
+          fontFamily="auto"
+          fontSize="auto"
+          fontSizeAdjust="auto"
+          fontStretch="auto"
+          fontStyle="auto"
+          fontVariant="auto"
+          fontWeight="auto"
+          glyphName="auto"
+          glyphOrientationHorizontal="auto"
+          glyphOrientationVertical="auto"
+          horizAdvX="auto"
+          horizOriginX="auto"
+          imageRendering="auto"
+          letterSpacing="auto"
+          lightingColor="auto"
+          markerEnd="auto"
+          markerMid="auto"
+          markerStart="auto"
+          overlinePosition="auto"
+          overlineThickness="auto"
+          panose1="auto"
+          paintOrder="auto"
+          pointerEvents="auto"
+          renderingIntent="auto"
+          shapeRendering="auto"
+          stopColor="auto"
+          stopOpacity="auto"
+          strikethroughPosition="auto"
+          strikethroughThickness="auto"
+          strokeDasharray="auto"
+          strokeDashoffset="auto"
+          strokeLinecap="inherit"
+          strokeLinejoin="inherit"
+          strokeMiterlimit="auto"
+          strokeOpacity="auto"
+          strokeWidth="auto"
+          textAnchor="auto"
+          textDecoration="auto"
+          textRendering="auto"
+          underlinePosition="auto"
+          underlineThickness="auto"
+          unicodeBidi="auto"
+          unicodeRange="auto"
+          unitsPerEm="auto"
+          vAlphabetic="auto"
+          vHanging="auto"
+          vIdeographic="auto"
+          vMathematical="auto"
+          vectorEffect="auto"
+          vertAdvY="auto"
+          vertOriginX="auto"
+          vertOriginY="auto"
+          wordSpacing="auto"
+          writingMode="auto"
+          xHeight="auto"
+        />
+      </svg>
+    );
+
+    [...element.firstElementChild.attributes as any as Array<Attr>]
+    .map(x => x.name)
+    .forEach(x => expect(/^[^A-Z]*$/.test(x)).to.be.true)
+  })
+
+  it("supports non-presentation svg attributes", () => {
+    const element = (
+      <svg>
+        <path
+          allowReorder="yes"
+          attributeName="auto"
+          attributeType="auto"
+          autoReverse={true}
+          baseFrequency="auto"
+          baseProfile="auto"
+          calcMode="auto"
+          clipPathUnits="auto"
+          contentScriptType="auto"
+          contentStyleType="auto"
+          diffuseConstant="auto"
+          edgeMode="auto"
+          externalResourcesRequired={true}
+          filterRes="auto"
+          filterUnits="auto"
+          glyphRef="auto"
+          gradientTransform="auto"
+          gradientUnits="auto"
+          kernelMatrix="auto"
+          kernelUnitLength="auto"
+          keyPoints="auto"
+          keySplines="auto"
+          keyTimes="auto"
+          lengthAdjust="auto"
+          limitingConeAngle="auto"
+          markerHeight="auto"
+          markerUnits="auto"
+          markerWidth="auto"
+          maskContentUnits="auto"
+          maskUnits="auto"
+          numOctaves="auto"
+          pathLength="auto"
+          patternContentUnits="auto"
+          patternTransform="auto"
+          patternUnits="auto"
+          pointsAtX="auto"
+          pointsAtY="auto"
+          pointsAtZ="auto"
+          preserveAlpha={true}
+          preserveAspectRatio="auto"
+          primitiveUnits="auto"
+          refX="auto"
+          refY="auto"
+          repeatCount="auto"
+          repeatDur="auto"
+          requiredExtensions="auto"
+          requiredFeatures="auto"
+          specularConstant="auto"
+          specularExponent="auto"
+          spreadMethod="auto"
+          startOffset="auto"
+          stdDeviation="auto"
+          stitchTiles="auto"
+          surfaceScale="auto"
+          systemLanguage="auto"
+          tableValues="auto"
+          targetX="auto"
+          targetY="auto"
+          textLength="auto"
+          viewBox="auto"
+          viewTarget="auto"
+          xChannelSelector="auto"
+          yChannelSelector="auto"
+          zoomAndPan="auto"
+        />
+      </svg>
+    );
+
+    [...element.firstElementChild.attributes as any as Array<Attr>]
+    .map(x => x.name)
+    .forEach(x => expect(x).to.not.include("-"))
+  })
 })
