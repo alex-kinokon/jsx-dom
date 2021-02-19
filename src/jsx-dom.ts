@@ -99,6 +99,8 @@ const svg = {
   view: 0,
 }
 
+const nonPresentationSVGAttributes = /^(a(ll|t|u)|base[FP]|c(al|lipPathU|on)|di|ed|ex|filter[RU]|g(lyphR|r)|ke|l(en|im)|ma(rker[HUW]|s)|n|pat|pr|point[^e]|re[^n]|s[puy]|st[^or]|ta|textL|vi|xC|y|z)/
+
 export function createFactory(tag: string) {
   return createElement.bind(null, tag)
 }
@@ -198,8 +200,8 @@ function appendChildToNode(child: Node, node: Node) {
   }
 }
 
-function normalizeAttribute(s: string) {
-  return s.replace(/[A-Z\d]/g, (match) => ":" + match.toLowerCase())
+function normalizeAttribute(s: string, separator: string) {
+  return s.replace(/[A-Z\d]/g, (match) => separator + match.toLowerCase())
 }
 
 function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
@@ -212,15 +214,15 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
       case "xlinkShow":
       case "xlinkTitle":
       case "xlinkType":
-        attrNS(node, XLinkNamespace, normalizeAttribute(key), value)
+        attrNS(node, XLinkNamespace, normalizeAttribute(key, ":"), value)
         return
       case "xmlnsXlink":
-        attr(node, normalizeAttribute(key), value)
+        attr(node, normalizeAttribute(key, ":"), value)
         return
       case "xmlBase":
       case "xmlLang":
       case "xmlSpace":
-        attrNS(node, XMLNamespace, normalizeAttribute(key), value)
+        attrNS(node, XMLNamespace, normalizeAttribute(key, ":"), value)
         return
     }
   }
@@ -282,7 +284,11 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
   } else if (value === true) {
     attr(node, key, "")
   } else if (value !== false && value != null) {
-    attr(node, key, value)
+    if (__FULL_BUILD__ && node instanceof SVGElement && !nonPresentationSVGAttributes.test(key)) {
+      attr(node, normalizeAttribute(key, "-"), value)
+    } else {
+      attr(node, key, value)
+    }
   }
 }
 

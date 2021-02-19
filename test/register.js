@@ -12,6 +12,7 @@ Object.assign(global, {
   Node: window.Node,
   Text: window.Text,
   HTMLElement: window.HTMLElement,
+  SVGElement: window.SVGElement,
   HTMLButtonElement: window.HTMLButtonElement,
   DOMTokenList: window.DOMTokenList,
   customElements: window.customElements,
