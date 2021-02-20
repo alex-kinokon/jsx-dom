@@ -227,12 +227,13 @@ interface SVGFactory extends DOMFactory<SVGAttributes<SVGElement>, SVGElement> {
 // ----------------------------------------------------------------------
 
 type ReactText = string | number
-type ReactChild = Element | ReactText
+type ReactChild = Node | ReactText
+type ReactChildren = ReactNodeArray | NodeList | HTMLCollection
 
 interface ReactNodeArray extends Array<ReactNode> {}
 type ReactNode =
   | ReactChild
-  | ReactNodeArray
+  | ReactChildren
   | DocumentFragment
   | Text
   | Comment
@@ -1107,7 +1108,7 @@ interface DataHTMLAttributes<T> extends HTMLAttributes<T> {
 
 interface DetailsHTMLAttributes<T> extends HTMLAttributes<T> {
   open?: boolean
-  onToggle: ReactEventHandler<T>
+  onToggle?: ReactEventHandler<T>
 }
 
 interface DelHTMLAttributes<T> extends HTMLAttributes<T> {
