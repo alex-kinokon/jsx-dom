@@ -60,7 +60,7 @@ describe("jsx-dom", () => {
 
   it("supports dynamic tagname", () => {
     const TagName = "div"
-    expect((<TagName/>).tagName).to.equal(TagName.toUpperCase())
+    expect((<TagName />).tagName).to.equal(TagName.toUpperCase())
   })
 
   it("supports React automatic runtime", () => {
