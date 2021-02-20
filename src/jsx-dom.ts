@@ -186,7 +186,7 @@ function appendChild(child: any[] | string | number | null | Element, node: Node
 }
 
 function appendChildren(children: any[], node: Node) {
-  for (const child of children) {
+  for (const child of [...children]) {
     appendChild(child, node)
   }
   return node

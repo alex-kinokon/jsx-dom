@@ -58,6 +58,11 @@ describe("jsx-dom", () => {
     expect((<Component a={1} b={2} c={3} />).innerHTML).to.equal("6")
   })
 
+  it("supports dynamic tagname", () => {
+    const TagName = "div"
+    expect((<TagName />).tagName).to.equal(TagName.toUpperCase())
+  })
+
   it("supports React automatic runtime", () => {
     expect(
       lib.jsx("div", {
@@ -102,6 +107,48 @@ describe("jsx-dom", () => {
 
     it("supports string as childNode", () => {
       expect((<div>{"text"}</div>).textContent).to.equal("text")
+    })
+
+    it("supports Node as childNode", () => {
+      const span = document.createElement("span")
+      const img = document.createElement("img")
+      span.append(img)
+
+      const node = <div>{span.firstChild}</div>
+      expect(node.children).to.have.lengthOf(1)
+      expect(node.firstElementChild).to.equal(img)
+    })
+
+    it("supports NodeList as childNode", () => {
+      const span = document.createElement("span")
+      const img = document.createElement("img")
+      span.append(img)
+
+      const node = <div>{span.childNodes}</div>
+      expect(node.children).to.have.lengthOf(1)
+      expect(node.firstElementChild).to.equal(img)
+    })
+
+    it("supports HTMLCollection as childNode", () => {
+      const span = document.createElement("span")
+      const img = document.createElement("img")
+      span.append(img)
+
+      const node = <div>{span.children}</div>
+      expect(node.children).to.have.lengthOf(1)
+      expect(node.firstElementChild).to.equal(img)
+    })
+
+    it("children must be copied before iteration", () => {
+      const span = document.createElement("span")
+      const img = document.createElement("img")
+      const code = document.createElement("code")
+      span.append(img, code)
+
+      const node = <div>{span.children}</div>
+      expect(node.children).to.have.lengthOf(2)
+      expect(node.firstElementChild).to.equal(img)
+      expect(node.lastElementChild).to.equal(code)
     })
 
     it("supports passing `children` explicitly", () => {
