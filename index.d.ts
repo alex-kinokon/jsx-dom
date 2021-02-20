@@ -284,7 +284,7 @@ export function createElement<T extends Element>(
 
 export function Fragment(props: { children?: ReactNode }): any // DocumentFragment
 
-export interface FunctionComponent<P = {}, T extends Element = Element> {
+export interface FunctionComponent<P = {}, T extends Element = JSX.Element> {
   (props: PropsWithChildren<P>, context?: any): T | null
   defaultProps?: Partial<P>
   displayName?: string
@@ -292,13 +292,13 @@ export interface FunctionComponent<P = {}, T extends Element = Element> {
 
 export { FunctionComponent as FC }
 
-export interface ComponentClass<P = {}, T extends Element = Element> {
+export interface ComponentClass<P = {}, T extends Element = JSX.Element> {
   new (props: P, context?: any): Component<P, T>
   defaultProps?: Partial<P>
   displayName?: string
 }
 
-export class Component<P = {}, T extends Element = Element> {
+export class Component<P = {}, T extends Element = JSX.Element> {
   constructor(props: PropsWithChildren<P>)
   readonly props: PropsWithChildren<P>
   render(): T | null
@@ -306,7 +306,7 @@ export class Component<P = {}, T extends Element = Element> {
 
 type PropsWithChildren<P> = P & { children?: ReactNode }
 
-type ComponentType<P = {}, T extends Element = Element> =
+type ComponentType<P = {}, T extends Element = JSX.Element> =
   | ComponentClass<P, T>
   | FunctionComponent<P, T>
 
