@@ -1,6 +1,6 @@
 {
   "name": "jsx-dom",
-  "version": "7.0.0-beta.0",
+  "version": "7.0.0-beta.1",
   "description": "JSX to document.createElement.",
   "main": "index.cjs.js",
   "module": "index.js",
