@@ -1,7 +1,5 @@
 name: ESLint
-on:
-  push:
-  pull_request:
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
