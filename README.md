@@ -296,5 +296,3 @@ polyfill.
 
 * `<div />`, and other tags, are inferred as a general `JSX.Element` in TypeScript instead of
 `HTMLDivElement` (or the equivalent types). This is a known bug and its fix depends on [TypeScript#21699](https://github.com/Microsoft/TypeScript/issues/21699).
-
-* [html](https://github.com/developit/htm) library is [not currently compatible](https://github.com/proteriax/jsx-dom/issues/32) with jsx-dom.
