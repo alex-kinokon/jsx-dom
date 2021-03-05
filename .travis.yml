@@ -8,13 +8,15 @@ cache:
   directories:
     - "~/.pnpm-store"
 before_install:
-  - curl -L https://unpkg.com/@pnpm/self-installer | node
+  - curl -L https://pnpm.js.org/pnpm.js | node - add --global pnpm
   - pnpm config set store-dir ~/.pnpm-store
 install:
-  - pnpm install -D
+  - pnpm install --dev --ignore-scripts
+  - pnpm install --prod --ignore-scripts
 before_script:
   - pnpm lint
 script:
+  - pnpm build
   - pnpm test
 env:
   - NODE_ENV=development
