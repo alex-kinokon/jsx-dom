@@ -11,7 +11,8 @@ before_install:
   - curl -L https://unpkg.com/@pnpm/self-installer | node
   - pnpm config set store-dir ~/.pnpm-store
 install:
-  - pnpm install
+  - pnpm install --dev
+  - pnpm install --prod
 before_script:
   - pnpm lint
 script:

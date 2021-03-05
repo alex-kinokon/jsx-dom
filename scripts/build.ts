@@ -1,4 +1,4 @@
-#!/usr/bin/env node -r ts-node/register/transpile-only
+#!/usr/bin/env ts-node-transpile-only
 import * as fs from "fs-extra"
 import { resolve } from "path"
 import babel from "@rollup/plugin-babel"
