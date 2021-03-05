@@ -858,7 +858,7 @@ export interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
 
   // Standard HTML Attributes
   accessKey?: string
-  className?: string
+  className?: ClassNames
   contentEditable?: Booleanish | "inherit"
   contextMenu?: string
   dir?: string
@@ -1476,7 +1476,7 @@ interface SVGAttributes<T> extends AriaAttributes, DOMAttributes<T> {
   // Attributes which also defined in HTMLAttributes
   // See comment in SVGDOMPropertyConfig.js
   class?: ClassNames
-  className?: string
+  className?: ClassNames
   color?: string
   height?: number | string
   id?: string
