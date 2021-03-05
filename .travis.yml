@@ -11,8 +11,7 @@ before_install:
   - curl -L https://pnpm.js.org/pnpm.js | node - add --global pnpm
   - pnpm config set store-dir ~/.pnpm-store
 install:
-  - pnpm install --dev --ignore-scripts
-  - pnpm install --prod --ignore-scripts
+  - pnpm install --dev --prod --ignore-scripts
 before_script:
   - pnpm lint
 script:
