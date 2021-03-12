@@ -243,6 +243,11 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
     case "textContent":
       node[key] = value
       return
+    case "dangerouslySetInnerHTML":
+      if (isObject(value)) {
+        node.innerHTML = value["__html"]
+      }
+      return
     case "spellCheck":
       cast<HTML.Input>(node).spellcheck = value
       return
