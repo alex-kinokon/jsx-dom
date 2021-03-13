@@ -226,6 +226,20 @@ describe("jsx-dom", () => {
       expect((<div textContent="<img>" />).querySelectorAll("img")).to.be.empty
     })
 
+    it("supports dangerouslySetInnerHTML", () => {
+      expect(
+        (
+          <div dangerouslySetInnerHTML={{ __html: "<div></div><div></div>" }} />
+        ).querySelectorAll("div").length
+      ).to.equal(2)
+
+      expect(
+        (
+          <svg dangerouslySetInnerHTML={{ __html: "<path></path><path></path>" }} />
+        ).querySelectorAll("path").length
+      ).to.equal(2)
+    })
+
     it("supports ref store function", () => {
       let button = null
       const div = (
