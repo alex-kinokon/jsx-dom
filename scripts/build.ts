@@ -8,14 +8,35 @@ import node from "@rollup/plugin-node-resolve"
 import { rollup } from "rollup"
 
 const extensions = [".ts", ".js"]
+const jsxRuntimeExports = ["jsx", "jsxs", "Fragment"]
 
 const OUT_DIR = resolve(__dirname, "../build")
+const OUT_DIR_MIN = resolve(OUT_DIR, "./min")
 
-const $build = async function (name: string, inject: RollupReplaceOptions) {
+type NamedExport = string | [string, string]
+
+interface BuildOptions {
+  input: string
+  outputDir: string
+  inject: RollupReplaceOptions
+}
+
+const prepareOptions = function (name: string, options?: Partial<BuildOptions>) {
+  return {
+    input: `./src/${name}.ts`,
+    outputDir: OUT_DIR,
+    inject: {},
+    ...options,
+  } as BuildOptions
+}
+
+const $build = async function (name: string, options?: Partial<BuildOptions>) {
+  options = prepareOptions(name, options)
+
   const bundle = await rollup({
-    input: "./src/index.ts",
+    input: options.input,
     plugins: [
-      replace(inject),
+      replace(options.inject),
       babel({
         extensions,
         comments: false,
@@ -43,8 +64,12 @@ const $build = async function (name: string, inject: RollupReplaceOptions) {
   })
 
   await Promise.all([
-    bundle.write({ format: "cjs", file: `${OUT_DIR}/${name}.cjs.js`, exports: "named" }),
-    bundle.write({ format: "es", file: `${OUT_DIR}/${name}.js`, exports: "named" }),
+    bundle.write({
+      format: "cjs",
+      file: `${options.outputDir}/${name}.cjs.js`,
+      exports: "named",
+    }),
+    bundle.write({ format: "es", file: `${options.outputDir}/${name}.js`, exports: "named" }),
   ])
 }
 
@@ -54,6 +79,23 @@ async function copyPackage() {
   delete source.scripts
   delete source.prettier
   await fs.writeJSON(resolve(OUT_DIR, "package.json"), source, { spaces: 2 })
+}
+
+async function provideReexport(
+  name: string,
+  dest: string,
+  src: string,
+  namedExports?: NamedExport[]
+) {
+  const imports = namedExports
+    ? `{\n${namedExports
+        .map((x) => `  ${Array.isArray(x) ? `${x[0]} as ${x[1]}` : x},\n`)
+        .join("")}}`
+    : "*"
+  const content = `export ${imports} from "${src}"`
+
+  await fs.mkdirp(dest)
+  await fs.writeFile(resolve(dest, name), content)
 }
 
 // https://github.com/jprichardson/node-fs-extra/issues/323
@@ -67,8 +109,18 @@ export async function build() {
     copy("README.md", OUT_DIR),
     copy("CHANGELOG.md", OUT_DIR),
     copy("LICENSE", OUT_DIR),
-    $build("min", { __FULL_BUILD__: "false" }),
-    $build("index", { __FULL_BUILD__: "true" }),
+
+    $build("index", { inject: { __FULL_BUILD__: "true" } }),
+    $build("index", { outputDir: OUT_DIR_MIN, inject: { __FULL_BUILD__: "false" } }),
+    $build("jsx-runtime", { inject: { "./jsx-dom": "jsx-dom", delimiters: ["", ""] } }),
+    $build("jsx-runtime", {
+      outputDir: OUT_DIR_MIN,
+      inject: { "./jsx-dom": "jsx-dom/min", delimiters: ["", ""] },
+    }),
+
+    provideReexport("index.d.ts", OUT_DIR_MIN, "../index"),
+    provideReexport("jsx-runtime.d.ts", OUT_DIR_MIN, "./index", jsxRuntimeExports),
+    provideReexport("jsx-runtime.d.ts", OUT_DIR, "./index", jsxRuntimeExports),
   ])
 }
 
