@@ -12,6 +12,7 @@ export {
   createElement,
   createElement as h,
   jsx,
+  jsx as jsxs,
   SVGNamespace,
 } from "./jsx-dom"
 
