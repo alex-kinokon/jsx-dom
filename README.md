@@ -19,7 +19,7 @@ yarn install jsx-dom
 
 **Note:** Using HyperScript? `h` pragma is also supported.
 
-**New:** If you are using [React Automatic Runtime](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx), simply set `jsxImportSource` to `jsx-dom` and you can omit the import.
+**Note:** If you are using [React Automatic Runtime](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx), simply set `jsxImportSource` to `jsx-dom` or `jsx-dom/min` and you can omit the import.
 
 ```jsx
 import React from "jsx-dom"
