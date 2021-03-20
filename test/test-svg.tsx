@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import { React } from "./register"
 
 import { expect } from "chai"
@@ -190,11 +191,11 @@ describe("SVG", () => {
           xHeight="auto"
         />
       </svg>
-    );
+    )
 
-    [...element.firstElementChild.attributes as any as Array<Attr>]
-    .map(x => x.name)
-    .forEach(x => expect(/^[^A-Z]*$/.test(x)).to.be.true)
+    ;[...((element.firstElementChild.attributes as any) as Array<Attr>)]
+      .map((x) => x.name)
+      .forEach((x) => expect(/^[^A-Z]*$/.test(x)).to.be.true)
   })
 
   it("supports non-presentation svg attributes", () => {
@@ -267,10 +268,10 @@ describe("SVG", () => {
           zoomAndPan="auto"
         />
       </svg>
-    );
+    )
 
-    [...element.firstElementChild.attributes as any as Array<Attr>]
-    .map(x => x.name)
-    .forEach(x => expect(x).to.not.include("-"))
+    ;[...((element.firstElementChild.attributes as any) as Array<Attr>)]
+      .map((x) => x.name)
+      .forEach((x) => expect(x).to.not.include("-"))
   })
 })

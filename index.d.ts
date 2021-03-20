@@ -11,7 +11,7 @@ export const SVGNamespace: "http://www.w3.org/2000/svg"
 
 export function className(value: ClassNames): string
 
-export { createElement as h, createElement as jsx, createElement as jsxs }
+export { createElement as h, jsx as jsxs }
 
 export function useText(initialValue?: string): readonly [Text, (value: string) => void]
 export function useClassList(initialValue?: ClassNames): ClassList
@@ -280,7 +280,35 @@ export function createElement<T extends Element>(
   ...children: ReactNode[]
 ): T
 
-// @TODO: Add typing for `jsx` function.
+// DOM Elements
+export function jsx<K extends keyof ReactHTML, T extends HTMLElementTagNameMap[K]>(
+  type: K,
+  props?: PropsWithChildren<(HTMLAttributes<T> & AttrWithRef<T>)> | null,
+  key?: string
+): T
+export function jsx<K extends keyof ReactSVG, T extends ReactSVG[K]>(
+  type: K,
+  props?: PropsWithChildren<(SVGAttributes<T> & AttrWithRef<T>)> | null,
+  key?: string
+): SVGElement
+export function jsx<T extends Element>(
+  type: string,
+  props?: PropsWithChildren<(AttrWithRef<T> & DOMAttributes<T>)> | null,
+  key?: string
+): T
+
+// Custom components
+export function jsx<P extends {}, T extends Element>(
+  type: ComponentType<P, T>,
+  props?: PropsWithChildren<(Attributes & P)> | null,
+  key?: string
+): T
+
+export function jsx<T extends Element>(
+  type: string,
+  props?: PropsWithChildren<Attributes> | null,
+  key?: string
+): T
 
 export function Fragment(props: { children?: ReactNode }): any // DocumentFragment
 
