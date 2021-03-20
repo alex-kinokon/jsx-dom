@@ -7,7 +7,7 @@
     "**/dist": true,
     "**/*.map": true
   },
-  "cSpell.words": ["arcrole"],
+  "cSpell.words": ["arcrole", "prettierrc"],
   "editor.formatOnSave": true,
   "[markdown]": {
     "editor.formatOnSave": false

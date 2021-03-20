@@ -1,7 +1,4 @@
 const { JSDOM } = require("jsdom")
-require("ts-node").register({
-  transpileOnly: true,
-})
 
 // Set up jsdom
 const dom = new JSDOM("")
@@ -18,7 +15,7 @@ Object.assign(global, {
   customElements: window.customElements,
 
   __FULL_BUILD__: true,
-  cast: (value) => value,
+  cast: value => value,
 })
 
 Object.defineProperties(window.Element.prototype, {
@@ -35,3 +32,6 @@ Object.defineProperties(window.Element.prototype, {
 /** @type {typeof import("..")} */
 const React = require("../src/index.ts")
 exports.React = React
+
+const chai = require("chai")
+chai.use(require("chai-string"))
