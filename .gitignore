@@ -4,5 +4,4 @@ node_modules
 *.cjs.js
 index.js
 build/*
-!build/min.d.ts
 drafts

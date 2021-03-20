@@ -11,6 +11,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": false,
+    "resolveJsonModule": true,
     "sourceMap": false,
     "target": "ES2018"
   },

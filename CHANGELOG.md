@@ -2,6 +2,7 @@
 - Breaking change:
   - TypeScript 4 is required. This particular release only requires TypeScript 3, but further updates may require TypeScript 4 specific features without a major version bump.
   - Remove `jsx-dom/svg` alias.
+  - CommonJS builds are removed. `jsx-dom` are meant to be consumed in the browser and its nature already requires a compiler tool.
 - Merges #39 - “Fix solution for #33”.
 - Merges #38 - “Added support for Class Components”.
 - Updates type definition with upstream (#d498b7c).
