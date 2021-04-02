@@ -9,7 +9,7 @@ import { rollup } from "rollup"
 import { formatSource } from "./format-source"
 
 const extensions = [".ts", ".js"]
-const jsxRuntimeExports = ["jsx", "jsxs", "Fragment"]
+const jsxRuntimeExports = ["jsx", "jsxs", "Fragment", "JSX"]
 
 const OUT_DIR = resolve(__dirname, "../build")
 const OUT_DIR_MIN = resolve(OUT_DIR, "./min")
