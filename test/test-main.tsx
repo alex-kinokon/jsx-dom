@@ -33,7 +33,7 @@ describe("jsx-dom", () => {
       expect(props.a).to.equal(1)
       expect(props.b).to.equal(2)
       expect(props.c).to.equal(3)
-      expect(cast(props).children).to.be.empty
+      expect(cast(props).children ?? []).to.be.empty
       return <div>{props.a + props.b + props.c}</div>
     }
 
@@ -50,7 +50,7 @@ describe("jsx-dom", () => {
         expect(this.props.a).to.equal(1)
         expect(this.props.b).to.equal(2)
         expect(this.props.c).to.equal(3)
-        expect(this.props.children).to.be.empty
+        expect(this.props.children ?? []).to.be.empty
         return <div>{this.props.a + this.props.b + this.props.c}</div>
       }
     }
@@ -244,7 +244,7 @@ describe("jsx-dom", () => {
       let button = null
       const div = (
         <div>
-          <button ref={(e) => (button = e)} />
+          <button ref={e => (button = e)} />
         </div>
       )
       expect(button).not.to.be.null
@@ -272,7 +272,7 @@ describe("jsx-dom", () => {
       const Button = ({ ref }) => <button ref={ref} />
       const div = (
         <div>
-          <Button ref={(e) => (button = e)} />
+          <Button ref={e => (button = e)} />
         </div>
       )
       expect(button).not.to.be.null
@@ -319,7 +319,7 @@ describe("jsx-dom", () => {
   })
 
   describe("events", () => {
-    it("supports event listeners", (done) => {
+    it("supports event listeners", done => {
       const button = (<button onClick={() => done()} />) as HTMLButtonElement
       button.click()
     })
@@ -327,7 +327,7 @@ describe("jsx-dom", () => {
 
   describe("forwardRef", () => {
     // const FancyButton = React.forwardRef((props, ref) => (
-    const FancyButton = (props) => (
+    const FancyButton = props => (
       <button ref={props.ref} className="FancyButton">
         {props.children}
       </button>
@@ -366,6 +366,18 @@ describe("jsx-dom", () => {
       expect(nodes[0].textContent).to.equal("2")
       expect(nodes[1].nodeName).to.equal("SPAN")
       expect(nodes[1].textContent).to.equal("Bonjour")
+    })
+
+    it("supports fragments with a single child", () => {
+      const frag = (
+        <>
+          <span>Bonjour</span>
+        </>
+      )
+      const nodes = frag.childNodes
+      expect(nodes.length).to.equal(1)
+      expect(nodes[0].nodeName).to.equal("SPAN")
+      expect(nodes[0].textContent).to.equal("Bonjour")
     })
   })
 

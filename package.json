@@ -6,10 +6,12 @@
   "module": "index.js",
   "scripts": {
     "build": "./scripts/build.ts build",
-    "prepare": "yarn test && yarn build",
+    "prepare": "pnpm test && pnpm build",
     "postpublish": "rm build/index.d.ts",
     "lint": "eslint src/*",
-    "test": "nyc --reporter=html mocha test/test-*.tsx"
+    "test:classic": "nyc --silent mocha -r test/register-classic.js test/test-*.tsx",
+    "test:automatic": "nyc --silent --no-clean mocha -r test/register-automatic.js test/test-*.tsx",
+    "test": "pnpm test:classic && pnpm test:automatic && nyc report --reporter=html"
   },
   "keywords": [
     "jsx",

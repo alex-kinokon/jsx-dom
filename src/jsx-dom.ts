@@ -33,7 +33,7 @@ export function className(value: any): string {
     return value.map(className).filter(Boolean).join(" ")
   } else if (isObject(value)) {
     return keys(value)
-      .filter((k) => value[k])
+      .filter(k => value[k])
       .join(" ")
   } else if (isVisibleChild(value)) {
     return "" + value
@@ -105,9 +105,9 @@ export function createFactory(tag: string) {
   return createElement.bind(null, tag)
 }
 
-export function Fragment(attr: { children: JSX.Element[] }) {
+export function Fragment(attr: { children: any }) {
   const fragment = document.createDocumentFragment()
-  appendChildren(attr.children, fragment)
+  appendChild(attr.children, fragment)
   return fragment
 }
 
@@ -201,7 +201,7 @@ function appendChildToNode(child: Node, node: Node) {
 }
 
 function normalizeAttribute(s: string, separator: string) {
-  return s.replace(/[A-Z\d]/g, (match) => separator + match.toLowerCase())
+  return s.replace(/[A-Z\d]/g, match => separator + match.toLowerCase())
 }
 
 function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
@@ -289,7 +289,11 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
   } else if (value === true) {
     attr(node, key, "")
   } else if (value !== false && value != null) {
-    if (__FULL_BUILD__ && node instanceof SVGElement && !nonPresentationSVGAttributes.test(key)) {
+    if (
+      __FULL_BUILD__ &&
+      node instanceof SVGElement &&
+      !nonPresentationSVGAttributes.test(key)
+    ) {
       attr(node, normalizeAttribute(key, "-"), value)
     } else {
       attr(node, key, value)
