@@ -1,12 +1,13 @@
 {
   "name": "jsx-dom",
-  "version": "7.0.0-beta.3",
+  "version": "7.0.0-beta.4",
   "description": "JSX to document.createElement.",
   "main": "index.js",
   "module": "index.js",
+  "private": true,
   "scripts": {
     "build": "./scripts/build.ts build",
-    "prepare": "yarn test && yarn build",
+    "prepare": "pnpm test && pnpm build",
     "postpublish": "rm build/index.d.ts",
     "lint": "eslint src/*",
     "test": "nyc --reporter=html mocha test/test-*.tsx"
