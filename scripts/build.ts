@@ -65,8 +65,10 @@ const buildRollup = async function (
 async function copyPackageJson() {
   const source = await fs.readJSON(resolve(__dirname, "../package.json"))
   delete source.devDependencies
+  delete source.private
   delete source.scripts
   delete source.prettier
+  source.type = "module"
   await fs.writeJSON(resolve(OUT_DIR, "package.json"), source, { spaces: 2 })
 }
 

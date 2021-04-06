@@ -1,5 +1,1 @@
-export {
-  jsx,
-  jsx as jsxs,
-  Fragment,
-} from "./jsx-dom"
+export { jsx, jsx as jsxs, Fragment } from "./jsx-dom"
