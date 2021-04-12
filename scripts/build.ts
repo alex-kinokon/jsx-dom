@@ -12,18 +12,28 @@ const extensions = [".ts", ".js"]
 const jsxRuntimeExports = ["jsx", "jsxs", "Fragment", "JSX"]
 
 const OUT_DIR = resolve(__dirname, "../build")
-const OUT_DIR_MIN = resolve(OUT_DIR, "./min")
-
-interface BuildOptions {
-  input: string
-  outputDir: string
-  inject: RollupReplaceOptions
+const OUT_DIRS = {
+  commonjs: {
+    FULL: resolve(OUT_DIR, "./cjs"),
+    MIN: resolve(OUT_DIR, "./cjs/min"),
+  },
+  es: {
+    FULL: resolve(OUT_DIR, "./esm"),
+    MIN: resolve(OUT_DIR, "./esm/min"),
+  },
+  types: {
+    FULL: resolve(OUT_DIR, "./types"),
+    MIN: resolve(OUT_DIR, "./types/min"),
+  },
 }
 
-const buildRollup = async function (
-  name: string,
-  { outputDir = OUT_DIR, inject = {} }: Partial<BuildOptions>
-) {
+interface BuildOptions {
+  format: "commonjs" | "es"
+  outputDir: string
+  inject?: RollupReplaceOptions
+}
+
+const buildRollup = async function (name: string, { outputDir, format, inject }: BuildOptions) {
   const bundle = await rollup({
     input: `./src/${name}.ts`,
     external: ["jsx-dom", "jsx-dom/min"],
@@ -56,7 +66,7 @@ const buildRollup = async function (
   })
 
   await bundle.write({
-    format: "es",
+    format,
     file: `${outputDir}/${name}.js`,
     exports: "named",
   })
@@ -88,25 +98,60 @@ export async function build() {
   await fs.ensureDir(OUT_DIR)
   await Promise.all([
     copyPackageJson(),
-    copy("index.d.ts", OUT_DIR),
     copy("README.md", OUT_DIR),
     copy("CHANGELOG.md", OUT_DIR),
     copy("LICENSE", OUT_DIR),
-    fs.writeFile(resolve(OUT_DIR, "jsx-dev-runtime.js"), 'export * from "./jsx-runtime"'),
+    fs.writeFile(resolve(OUT_DIR, "jsx-dev-runtime.js"), 'export * from "./esm/jsx-runtime"'),
 
-    buildRollup("index", { inject: { __FULL_BUILD__: "true" } }),
-    buildRollup("index", { outputDir: OUT_DIR_MIN, inject: { __FULL_BUILD__: "false" } }),
+    // build commonjs
+    buildRollup("index", {
+      format: "commonjs",
+      outputDir: OUT_DIRS.commonjs.FULL,
+      inject: { __FULL_BUILD__: "true" },
+    }),
+    buildRollup("index", {
+      format: "commonjs",
+      outputDir: OUT_DIRS.commonjs.MIN,
+      inject: { __FULL_BUILD__: "false" },
+    }),
     buildRollup("jsx-runtime", {
+      format: "commonjs",
+      outputDir: OUT_DIRS.commonjs.FULL,
       inject: { "./jsx-dom": "jsx-dom", delimiters: ["", ""] },
     }),
     buildRollup("jsx-runtime", {
-      outputDir: OUT_DIR_MIN,
+      format: "commonjs",
+      outputDir: OUT_DIRS.commonjs.MIN,
       inject: { "./jsx-dom": "jsx-dom/min", delimiters: ["", ""] },
     }),
 
-    reexport("index.d.ts", OUT_DIR_MIN, "../index"),
-    reexport("jsx-runtime.d.ts", OUT_DIR_MIN, "./index", jsxRuntimeExports),
-    reexport("jsx-runtime.d.ts", OUT_DIR, "./index", jsxRuntimeExports),
+    // build es
+    buildRollup("index", {
+      format: "es",
+      outputDir: OUT_DIRS.es.FULL,
+      inject: { __FULL_BUILD__: "true" },
+    }),
+    buildRollup("index", {
+      format: "es",
+      outputDir: OUT_DIRS.es.MIN,
+      inject: { __FULL_BUILD__: "false" },
+    }),
+    buildRollup("jsx-runtime", {
+      format: "es",
+      outputDir: OUT_DIRS.es.FULL,
+      inject: { "./jsx-dom": "jsx-dom", delimiters: ["", ""] },
+    }),
+    buildRollup("jsx-runtime", {
+      format: "es",
+      outputDir: OUT_DIRS.es.MIN,
+      inject: { "./jsx-dom": "jsx-dom/min", delimiters: ["", ""] },
+    }),
+
+    // build typescript types
+    copy("index.d.ts", OUT_DIRS.types.FULL),
+    reexport("index.d.ts", OUT_DIRS.types.MIN, "../index"),
+    reexport("jsx-runtime.d.ts", OUT_DIRS.types.MIN, "./index", jsxRuntimeExports),
+    reexport("jsx-runtime.d.ts", OUT_DIRS.types.FULL, "./index", jsxRuntimeExports),
   ])
 }
 

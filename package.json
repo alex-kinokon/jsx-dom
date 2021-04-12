@@ -2,8 +2,23 @@
   "name": "jsx-dom",
   "version": "7.0.0-beta.4",
   "description": "JSX to document.createElement.",
-  "main": "index.js",
-  "module": "index.js",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "typings": "types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js",
+      "types": "./types/index.d.ts",
+      "default": "./cjs/index.js"
+    },
+    "./min": {
+      "import": "./esm/min/index.js",
+      "require": "./cjs/min/index.js",
+      "types": "./types/min/index.d.ts",
+      "default": "./cjs/index.js"
+    }
+  },
   "private": true,
   "scripts": {
     "build": "./scripts/build.ts build",
@@ -16,7 +31,6 @@
     "jsx",
     "dom"
   ],
-  "typings": "index.d.ts",
   "author": "proteriax",
   "license": "BSD-3-Clause",
   "dependencies": {
