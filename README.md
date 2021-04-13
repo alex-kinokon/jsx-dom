@@ -17,7 +17,7 @@ yarn install jsx-dom
 
 ## Usage
 
-**Note:** Using HyperScript? `h` pragma is also supported.
+**Note:** `jsx-dom` is ESM only. If you absolutely need CommonJS support, use `jsx-dom-cjs` instead.
 
 **Note:** If you are using [React Automatic Runtime](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx), simply set `jsxImportSource` to `jsx-dom` or `jsx-dom/min` and you can omit the import.
 
