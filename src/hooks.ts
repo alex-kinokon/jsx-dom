@@ -28,7 +28,7 @@ export function useClassList(initialValue?: ClassNames) {
   let list = div.classList
 
   function ClassList(value: Element) {
-    value.className = list.value
+    value.setAttribute("class", list.value)
     list = value.classList
   }
 
