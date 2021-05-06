@@ -57,4 +57,32 @@ describe("hooks", () => {
     cls.toggle("container", false)
     expect(cls.contains("container")).to.be.false
   })
+
+  it("SVGElement supports useClassList", () => {
+    const cls = React.useClassList()
+    cls.add("me")
+    const svg = <svg class={cls} />
+    expect(svg.classList.value).to.equal("me")
+    expect(cls.size).to.equal(1)
+
+    cls.add("second")
+    expect(svg.classList.value).to.equal("me second")
+    expect(svg.classList.value).to.equal(cls.value)
+    expect(cls.size).to.equal(2)
+
+    cls.remove("me")
+    expect(svg.classList.value).to.equal("second")
+
+    cls.add("container")
+    expect(cls.contains("container")).to.be.true
+
+    cls.toggle("never")
+    expect(cls.contains("never")).to.be.true
+
+    cls.toggle("never")
+    expect(cls.contains("never")).to.be.false
+
+    cls.toggle("container", false)
+    expect(cls.contains("container")).to.be.false
+  })
 })
