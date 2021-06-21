@@ -199,6 +199,17 @@ describe("jsx-dom", () => {
   })
 
   describe("attributes", () => {
+    it("supports complex objects attributes as properties", () => {
+      class MyCustomElement extends HTMLElement {
+        constructor() {
+          super();
+        }
+      }
+      customElements.define('my-custom-element', MyCustomElement);
+      const richData = { foo: 'bar' }
+      expect((<my-custom-element richData={richData} />).richData).to.equal(richData)
+    })
+
     it("supports boolean attributes", () => {
       expect((<input disabled={true} />).getAttribute("disabled")).to.equal("")
       expect((<input disabled={false} />).getAttribute("disabled")).to.equal(null)

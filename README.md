@@ -160,6 +160,19 @@ function Component() {
 }
 ```
 
+5. Rich data jsx properties are accepted, but populated as properties rather than dom attributes. 
+
+```jsx
+class MyCustomElement extends HTMLElement {
+  constructor() {
+    super();
+  }
+}
+customElements.define('my-custom-element', MyCustomElement);
+const richData = { foo: 'bar' }
+return <my-custom-element richData={richData} />
+```
+
 ### Functional and class components
 
 You can write functional and class components and receive passed `props` in the same way in React. Unlike

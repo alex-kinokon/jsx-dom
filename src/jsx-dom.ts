@@ -286,6 +286,8 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
         node.addEventListener(key, value)
       }
     }
+  } else if (isObject(value)) {
+    node[key] = value
   } else if (value === true) {
     attr(node, key, "")
   } else if (value !== false && value != null) {
