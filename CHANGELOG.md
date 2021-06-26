@@ -1,3 +1,6 @@
+# 7.0.2
+- #61 Support rich data properties
+
 # 7.0.0
 - Breaking change:
   - TypeScript 4 is required. This particular release only requires TypeScript 3, but further updates may require TypeScript 4 specific features without a major version bump.
