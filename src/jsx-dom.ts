@@ -293,7 +293,7 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
       attr(node, key, "")
     }
     node[key] = value;
-  } else if (value !== false && value != null) {
+  } else if (value != null) {
     if (
       __FULL_BUILD__ &&
       node instanceof SVGElement &&
