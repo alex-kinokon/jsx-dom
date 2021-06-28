@@ -288,8 +288,11 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
     }
   } else if (isObject(value)) {
     node[key] = value
-  } else if (value === true) {
-    attr(node, key, "")
+  } else if (isBoolean(value)) {
+    if (value === true) {
+      attr(node, key, "")
+    }
+    node[key] = value;
   } else if (value !== false && value != null) {
     if (
       __FULL_BUILD__ &&
