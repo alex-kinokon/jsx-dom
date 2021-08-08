@@ -199,15 +199,31 @@ describe("jsx-dom", () => {
   })
 
   describe("attributes", () => {
+    describe("supports boolean properties", () => {
+      class MyCustomElement extends HTMLElement {
+        constructor() {
+          super();
+        }
+      }
+      customElements.define('boolean-test', MyCustomElement);
+      it("shoud attach truly attribute as property", () => {
+        expect((<boolean-test isBoolean={true} />).isBoolean).to.equal(true)
+      })
+
+      it("shoud attach falsy attribute as property", () => {
+        expect((<boolean-test isBoolean={false} />).isBoolean).to.equal(false)
+      })
+    })
+
     it("supports complex objects attributes as properties", () => {
       class MyCustomElement extends HTMLElement {
         constructor() {
           super();
         }
       }
-      customElements.define('my-custom-element', MyCustomElement);
+      customElements.define('rich-data-test', MyCustomElement);
       const richData = { foo: 'bar' }
-      expect((<my-custom-element richData={richData} />).richData).to.equal(richData)
+      expect((<rich-data-test richData={richData} />).richData).to.equal(richData)
     })
 
     it("supports boolean attributes", () => {
