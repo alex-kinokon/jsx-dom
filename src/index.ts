@@ -14,6 +14,7 @@ export {
   jsx,
   jsx as jsxs,
   SVGNamespace,
+  setDefaultProps,
 } from "./jsx-dom"
 
 export default {

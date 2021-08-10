@@ -16,6 +16,7 @@ export { createElement as h, jsx as jsxs }
 export function useText(initialValue?: string): readonly [Text, (value: string) => void]
 export function useClassList(initialValue?: ClassNames): ClassList
 
+export function setDefaultProps(props: any): void
 export interface ClassList {
   (value: Element): void
   readonly size: number

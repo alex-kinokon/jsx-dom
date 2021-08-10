@@ -101,6 +101,13 @@ const svg = {
 
 const nonPresentationSVGAttributes = /^(a(ll|t|u)|base[FP]|c(al|lipPathU|on)|di|ed|ex|filter[RU]|g(lyphR|r)|ke|l(en|im)|ma(rker[HUW]|s)|n|pat|pr|point[^e]|re[^n]|s[puy]|st[^or]|ta|textL|vi|xC|y|z)/
 
+const defaultProps = {}
+export function setDefaultProps(props: any) {
+  for (const key in props) {
+    defaultProps[key] = props[key]
+  }
+}
+
 export function createFactory(tag: string) {
   return createElement.bind(null, tag)
 }
@@ -127,6 +134,12 @@ Object.defineProperties(Component.prototype, {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function jsx(tag: any, { children, ...attr }, key?: string) {
+  for (const key in defaultProps) {
+    if (attr[key] === undefined) {
+      attr[key] = defaultProps[key]
+    }
+  }
+  
   if (__FULL_BUILD__ && !attr.namespaceURI && svg[tag] === 0) {
     attr = { ...attr, namespaceURI: SVGNamespace }
   }

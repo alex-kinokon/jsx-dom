@@ -18,6 +18,7 @@ describe("jsx-dom", () => {
       expect(lib.useMemo).to.be.a("function")
       expect(lib.useRef).to.be.a("function")
       expect(lib.useText).to.be.a("function")
+      expect(lib.setDefaultProps).to.be.a("function")
 
       const Div = lib.createFactory("div")
       expect((<Div>div tag</Div>).tagName).to.equal("DIV")
@@ -330,6 +331,27 @@ describe("jsx-dom", () => {
       expect(cast<HTML.Input>(<input spellCheck={false} />).spellcheck).to.equal(false)
       expect(cast<HTML.TextArea>(<textarea spellCheck={true} />).spellcheck).to.equal(true)
       expect(cast<HTML.TextArea>(<textarea spellCheck={false} />).spellcheck).to.equal(false)
+    })
+
+    lib.setDefaultProps({ page: { name: "home" } })
+    it("can setDefaultProps in functional components", () => {
+      const Div = (props: any) => {
+        expect(Object.keys(props).length).to.equal(2)
+        return <div>{props.page.name}</div>
+      }
+      expect((<Div />).innerText).to.equal('home')
+    })
+
+    it("can setDefaultProps in class components", () => {
+      class Div extends lib.Component {
+        render() {
+          // @ts-ignore
+          const page = this.props.page
+          expect(page).to.not.equal(undefined)
+          return <div>{page.name}</div>
+        }
+      }
+      expect((<Div />).innerText).to.equal('home')
     })
   })
 
