@@ -99,7 +99,8 @@ const svg = {
   view: 0,
 }
 
-const nonPresentationSVGAttributes = /^(a(ll|t|u)|base[FP]|c(al|lipPathU|on)|di|ed|ex|filter[RU]|g(lyphR|r)|ke|l(en|im)|ma(rker[HUW]|s)|n|pat|pr|point[^e]|re[^n]|s[puy]|st[^or]|ta|textL|vi|xC|y|z)/
+const nonPresentationSVGAttributes =
+  /^(a(ll|t|u)|base[FP]|c(al|lipPathU|on)|di|ed|ex|filter[RU]|g(lyphR|r)|ke|l(en|im)|ma(rker[HUW]|s)|n|pat|pr|point[^e]|re[^n]|s[puy]|st[^or]|ta|textL|vi|xC|y|z)/
 
 export function createFactory(tag: string) {
   return createElement.bind(null, tag)
@@ -145,7 +146,7 @@ export function jsx(tag: any, { children, ...attr }, key?: string) {
     }
 
     node = isComponentClass(tag)
-      ? new tag({ ...tag.defaultProps, ...attr, children }).render()
+      ? new tag({ ...attr, children }).render()
       : tag({ ...attr, children })
   }
 
@@ -166,7 +167,6 @@ export function createElement(tag: any, attr: any, ...children: any[]) {
   attr = attr || {}
 
   if (attr.children != null && !children.length) {
-    // eslint-disable-next-line @typescript-eslint/no-extra-semi
     ;({ children, ...attr } = attr)
   }
 
@@ -292,7 +292,7 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
     if (value === true) {
       attr(node, key, "")
     }
-    node[key] = value;
+    node[key] = value
   } else if (value != null) {
     if (
       __FULL_BUILD__ &&

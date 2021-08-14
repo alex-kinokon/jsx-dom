@@ -1,7 +1,7 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "import"],
   "env": {
     "node": true,
     "browser": true
@@ -9,16 +9,53 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/typescript",
+    "plugin:react-hooks/recommended",
+    "prettier"
   ],
   "settings": {
     "react": {
-      "version": "17.0"
+      "version": "detect"
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": { "alwaysTryTypes": true }
     }
   },
   "rules": {
     "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      { "disallowTypeAnnotations": false }
+    ],
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "extendDefaults": false,
+        "types": {
+          "String": {
+            "message": "Use string instead",
+            "fixWith": "string"
+          },
+          "Number": {
+            "message": "Use number instead",
+            "fixWith": "number"
+          },
+          "Boolean": {
+            "message": "Use boolean instead",
+            "fixWith": "boolean"
+          },
+          "Symbol": {
+            "message": "Use symbol instead",
+            "fixWith": "symbol"
+          }
+        }
+      }
+    ],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-empty-function": "off",
@@ -28,7 +65,7 @@
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/triple-slash-reference": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-empty-interface": "off",
     "arrow-body-style": ["error", "as-needed"],
     "class-methods-use-this": [
       "warn",
@@ -40,14 +77,19 @@
     "no-async-promise-executor": "off",
     "no-case-declarations": "off",
     "no-constant-condition": ["error", { "checkLoops": false }],
+    "no-debugger": "off",
     "no-empty": ["error", { "allowEmptyCatch": true }],
     "no-inner-declarations": "off",
     "no-lonely-if": "error",
+    "no-template-curly-in-string": "error",
     "no-var": "error",
-    "object-shorthand": "error",
+    "import/export": "off",
+    "import/order": ["error", { "groups": ["builtin", "external"] }],
+    "object-shorthand": ["error", "always", { "ignoreConstructors": true }],
     "one-var": ["error", { "var": "never", "let": "never" }],
     "prefer-arrow-callback": "error",
     "prefer-const": ["error", { "destructuring": "all" }],
+    "prefer-destructuring": "warn",
     "prefer-object-spread": "error",
     "prefer-rest-params": "warn",
     "prefer-spread": "warn",
@@ -57,6 +99,7 @@
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "spaced-comment": ["error", "always", { "markers": ["/"] }],
+    "sort-imports": ["warn", { "ignoreDeclarationSort": true }],
     "yoda": ["error", "never", { "exceptRange": true }]
   }
 }
