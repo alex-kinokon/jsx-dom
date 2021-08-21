@@ -1,15 +1,15 @@
 import { isRef } from "./ref"
 import {
-  isString,
+  forEach,
   isArrayLike,
   isBoolean,
-  isObject,
-  isFunction,
-  isElement,
-  isNumber,
-  keys,
-  forEach,
   isComponentClass,
+  isElement,
+  isFunction,
+  isNumber,
+  isObject,
+  isString,
+  keys,
 } from "./util"
 import { isUnitlessNumber } from "./css-props"
 import type { HTML, JSX } from "../index"
@@ -288,12 +288,9 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
     }
   } else if (isObject(value)) {
     node[key] = value
-  } else if (isBoolean(value)) {
-    if (value === true) {
-      attr(node, key, "")
-    }
-    node[key] = value
-  } else if (value != null) {
+  } else if (value === true) {
+    attr(node, key, "")
+  } else if (value !== false && value != null) {
     if (
       __FULL_BUILD__ &&
       node instanceof SVGElement &&

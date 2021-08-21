@@ -2,7 +2,7 @@ export { identity as memo } from "./util"
 export * from "./ref"
 export * from "./hooks"
 
-import { createElement, Fragment, Component } from "./jsx-dom"
+import { Component, Fragment, createElement } from "./jsx-dom"
 
 export {
   createFactory,

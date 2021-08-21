@@ -12,8 +12,9 @@
     "noUnusedParameters": true,
     "removeComments": false,
     "resolveJsonModule": true,
+    "useDefineForClassFields": true,
     "sourceMap": false,
-    "target": "ES2018"
+    "target": "ES2021"
   },
   "exclude": ["node_modules", "coverage", "drafts", "alias", "lib"]
 }
