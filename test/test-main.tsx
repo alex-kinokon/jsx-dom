@@ -1,6 +1,6 @@
-/* eslint-disable react/no-unknown-property */
 import { expect } from "chai"
-import type { HTML } from "../index"
+import { describe, it } from "mocha"
+import type { HTML } from "../types/index"
 import { React, React as lib } from "./register"
 
 describe("jsx-dom", () => {
@@ -81,10 +81,7 @@ describe("jsx-dom", () => {
     expect(
       lib.jsx("div", {
         className: "className",
-        children: [
-          "One child",
-          lib.jsx("div", { className: "child", children: "Two children" }),
-        ],
+        children: ["One child", lib.jsx("div", { className: "child", children: "Two children" })],
       }).outerHTML
     ).to.equal('<div class="className">One child<div class="child">Two children</div></div>')
   })
@@ -247,9 +244,9 @@ describe("jsx-dom", () => {
     })
 
     it("supports innerHTML, innerText and textContent", () => {
-      expect(
-        (<div innerHTML="<div></div><div></div>" />).querySelectorAll("div").length
-      ).to.equal(2)
+      expect((<div innerHTML="<div></div><div></div>" />).querySelectorAll("div").length).to.equal(
+        2
+      )
       expect((<div innerText="<img>" />).querySelectorAll("img")).to.be.empty
       expect((<div innerText="<img>" />).textContent).to.equal("<img>")
       expect((<div textContent="<img>" />).querySelectorAll("img")).to.be.empty
@@ -257,9 +254,9 @@ describe("jsx-dom", () => {
 
     it("supports dangerouslySetInnerHTML", () => {
       expect(
-        (
-          <div dangerouslySetInnerHTML={{ __html: "<div></div><div></div>" }} />
-        ).querySelectorAll("div").length
+        (<div dangerouslySetInnerHTML={{ __html: "<div></div><div></div>" }} />).querySelectorAll(
+          "div"
+        ).length
       ).to.equal(2)
 
       expect(

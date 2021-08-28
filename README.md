@@ -8,6 +8,8 @@
 
 Use JSX for creating DOM elements. Supports ES Module and TypeScript.
 
+**NEW!** [Styled components are now supported.](#styled-components)
+
 ## Installation
 
 ```bash
@@ -50,6 +52,9 @@ document.body.appendChild(<Hello firstName="Johnny" lastName="Appleseed" />)
 // `defaultProps` and `props.children` are supported natively and work as you expect.
 // In terms of React jsx-dom class components have no state,
 // so `render` function will be called only once.
+//
+// Component lifecycle functions are currently not supported. This may change in
+// the future.
 class Welcome extends React.Component {
   static defaultProps = {
     firstName: "John",
@@ -66,6 +71,23 @@ class Welcome extends React.Component {
 
 document.body.appendChild(<Welcome firstName="Johnny" lastName="Appleseed" />)
 ```
+
+### Styled Components
+```tsx
+import { styled } from "jsx-dom"
+
+const HeaderText = styled.h2`
+  font-size: 20px;
+  font-weight: 500;
+`
+
+document.body.appendChild(
+  <HeaderText style={{ /* you can override here */ }}>
+    Welcome!
+  </HeaderText>
+)
+```
+
 
 ## Syntax
 
