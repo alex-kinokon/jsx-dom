@@ -2,7 +2,7 @@ const { JSDOM } = require("jsdom")
 
 // Set up jsdom
 const dom = new JSDOM("")
-const window = dom.window
+const { window } = dom
 Object.assign(global, {
   window,
   document: window.document,
@@ -29,9 +29,10 @@ Object.defineProperties(window.Element.prototype, {
   },
 })
 
-/** @type {typeof import("..")} */
+/** @type {typeof import("../types/index.d")} */
 const React = require("../src/index.ts")
 exports.React = React
 
+// eslint-disable-next-line import/order
 const chai = require("chai")
 chai.use(require("chai-string"))

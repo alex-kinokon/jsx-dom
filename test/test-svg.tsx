@@ -1,11 +1,9 @@
-/* eslint-disable react/jsx-key */
-import { React } from "./register"
-
 import { expect } from "chai"
-import "mocha"
+import { describe, it } from "mocha"
+import { React } from "./register"
+import type { JSX } from "../types"
 
 describe("SVG", () => {
-  // tslint:disable-next-line:no-shadowed-variable
   const namespace = React.SVGNamespace
 
   it("exports the correct SVG namespace URI", () => {
@@ -70,7 +68,7 @@ describe("SVG", () => {
       <view />,
     ]
 
-    supportedElements.forEach((one) =>
+    supportedElements.forEach(one =>
       expect(one.namespaceURI, `Tag: ${one.tagName}`).to.equal(namespace)
     )
   })
@@ -110,7 +108,7 @@ describe("SVG", () => {
       "strokeMiterlimit",
       "strokeOpacity",
       "strokeWidth",
-    ].forEach((key) => test(key))
+    ].forEach(key => test(key))
   })
 
   it("supports presentation svg attributes", () => {
@@ -193,9 +191,9 @@ describe("SVG", () => {
       </svg>
     )
 
-    ;[...((element.firstElementChild.attributes as any) as Array<Attr>)]
-      .map((x) => x.name)
-      .forEach((x) => expect(/^[^A-Z]*$/.test(x)).to.be.true)
+    ;[...(element.firstElementChild.attributes as any as Array<Attr>)]
+      .map(x => x.name)
+      .forEach(x => expect(/^[^A-Z]*$/.test(x)).to.be.true)
   })
 
   it("supports non-presentation svg attributes", () => {
@@ -270,8 +268,8 @@ describe("SVG", () => {
       </svg>
     )
 
-    ;[...((element.firstElementChild.attributes as any) as Array<Attr>)]
-      .map((x) => x.name)
-      .forEach((x) => expect(x).to.not.include("-"))
+    ;[...(element.firstElementChild.attributes as any as Array<Attr>)]
+      .map(x => x.name)
+      .forEach(x => expect(x).to.not.include("-"))
   })
 })

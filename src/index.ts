@@ -4,6 +4,8 @@ export * from "./hooks"
 
 import { Component, Fragment, createElement } from "./jsx-dom"
 
+export { styled } from "./styled"
+
 export {
   createFactory,
   Fragment,

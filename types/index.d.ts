@@ -1,21 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
- * Adapted from React TypeScript definition from DefinitelyTyped 17.0
+ * Adapted from React TypeScript definition
  * @see https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/react/index.d.ts
- * https://github.com/DefinitelyTyped/DefinitelyTyped/commit/d498b7c4836191389b758296021f23e500f1fb07
+ * https://github.com/DefinitelyTyped/DefinitelyTyped/commit/e6491e0d87a72a566c0f6ce61fca2b57199aa172
  */
-import * as CSS from "csstype"
+import type * as CSS from "csstype"
+
+export * from "./extra"
+export { styled } from "./styled"
 
 type Booleanish = boolean | "true" | "false"
-
-export const SVGNamespace: "http://www.w3.org/2000/svg"
 
 export function className(value: ClassNames): string
 
 export { createElement as h, jsx as jsxs }
-
-export function useText(initialValue?: string): readonly [Text, (value: string) => void]
-export function useClassList(initialValue?: ClassNames): ClassList
-
 export interface ClassList {
   (value: Element): void
   readonly size: number
@@ -33,146 +31,6 @@ declare const __defaultExport: {
   Component: typeof Component
 }
 export default __defaultExport
-
-// Utility functions
-export function stopPropagation(event: Event): Event
-export function preventDefault(event: Event): Event
-
-export namespace HTML {
-  export type Anchor = HTMLAnchorElement
-  export type Area = HTMLAreaElement
-  export type Audio = HTMLAudioElement
-  export type Base = HTMLBaseElement
-  export type Body = HTMLBodyElement
-  export type BR = HTMLBRElement
-  export type Button = HTMLButtonElement
-  export type Canvas = HTMLCanvasElement
-  export type Data = HTMLDataElement
-  export type DataList = HTMLDataListElement
-  export type Details = HTMLDetailsElement
-  export type Dialog = HTMLDialogElement
-  export type Directory = HTMLDirectoryElement
-  export type Div = HTMLDivElement
-  export type DList = HTMLDListElement
-  export type Embed = HTMLEmbedElement
-  export type FieldSet = HTMLFieldSetElement
-  export type Font = HTMLFontElement
-  export type Form = HTMLFormElement
-  export type Frame = HTMLFrameElement
-  export type FrameSet = HTMLFrameSetElement
-  export type Head = HTMLHeadElement
-  export type Heading = HTMLHeadingElement
-  export type HR = HTMLHRElement
-  export type HtmlElement = HTMLHtmlElement
-  export type IFrame = HTMLIFrameElement
-  export type Image = HTMLImageElement
-  export type Input = HTMLInputElement
-  export type Label = HTMLLabelElement
-  export type Legend = HTMLLegendElement
-  export type LI = HTMLLIElement
-  export type Link = HTMLLinkElement
-  export type Map = HTMLMapElement
-  export type Marquee = HTMLMarqueeElement
-  export type MediaElement = HTMLMediaElement
-  export type Menu = HTMLMenuElement
-  export type Meta = HTMLMetaElement
-  export type Meter = HTMLMeterElement
-  export type Mod = HTMLModElement
-  export type Object = HTMLObjectElement
-  export type OList = HTMLOListElement
-  export type OptGroup = HTMLOptGroupElement
-  export type Option = HTMLOptionElement
-  export type Output = HTMLOutputElement
-  export type Paragraph = HTMLParagraphElement
-  export type Param = HTMLParamElement
-  export type Picture = HTMLPictureElement
-  export type Pre = HTMLPreElement
-  export type Progress = HTMLProgressElement
-  export type Quote = HTMLQuoteElement
-  export type Script = HTMLScriptElement
-  export type Select = HTMLSelectElement
-  export type Slot = HTMLSlotElement
-  export type Source = HTMLSourceElement
-  export type Span = HTMLSpanElement
-  export type Style = HTMLStyleElement
-  export type Table = HTMLTableElement
-  export type TableCaption = HTMLTableCaptionElement
-  export type TableCell = HTMLTableCellElement
-  export type TableCol = HTMLTableColElement
-  export type TableDataCell = HTMLTableDataCellElement
-  export type TableHeaderCell = HTMLTableHeaderCellElement
-  export type TableRow = HTMLTableRowElement
-  export type TableSection = HTMLTableSectionElement
-  export type Template = HTMLTemplateElement
-  export type TextArea = HTMLTextAreaElement
-  export type Time = HTMLTimeElement
-  export type Title = HTMLTitleElement
-  export type Track = HTMLTrackElement
-  export type UList = HTMLUListElement
-  export type Unknown = HTMLUnknownElement
-  export type Video = HTMLVideoElement
-}
-
-export namespace SVG {
-  export type Anchor = SVGAElement
-  export type Animate = SVGAnimateElement
-  export type AnimateMotion = SVGAnimateMotionElement
-  export type AnimateTransform = SVGAnimateTransformElement
-  export type Circle = SVGCircleElement
-  export type ClipPath = SVGClipPathElement
-  export type Defs = SVGDefsElement
-  export type Desc = SVGDescElement
-  export type Ellipse = SVGEllipseElement
-  export type FEBlend = SVGFEBlendElement
-  export type FEColorMatrix = SVGFEColorMatrixElement
-  export type FEComponentTransfer = SVGFEComponentTransferElement
-  export type FEConvolveMatrix = SVGFEConvolveMatrixElement
-  export type FEDiffuseLighting = SVGFEDiffuseLightingElement
-  export type FEDisplacementMap = SVGFEDisplacementMapElement
-  export type FEDistantLight = SVGFEDistantLightElement
-  export type FEDropShadow = SVGFEDropShadowElement
-  export type FEFlood = SVGFEFloodElement
-  export type FEFuncA = SVGFEFuncAElement
-  export type FEFuncB = SVGFEFuncBElement
-  export type FEFuncG = SVGFEFuncGElement
-  export type FEFuncR = SVGFEFuncRElement
-  export type FEGaussianBlur = SVGFEGaussianBlurElement
-  export type FEImage = SVGFEImageElement
-  export type FEMerge = SVGFEMergeElement
-  export type FEMergeNode = SVGFEMergeNodeElement
-  export type FEMorphology = SVGFEMorphologyElement
-  export type FEOffset = SVGFEOffsetElement
-  export type FEPointLight = SVGFEPointLightElement
-  export type FETile = SVGFETileElement
-  export type FETurbulence = SVGFETurbulenceElement
-  export type Filter = SVGFilterElement
-  export type Foreign = SVGForeignObjectElement
-  export type G = SVGGElement
-  export type Gradient = SVGGradientElement
-  export type Image = SVGImageElement
-  export type Line = SVGLineElement
-  export type LinearGradient = SVGLinearGradientElement
-  export type Marker = SVGMarkerElement
-  export type Mask = SVGMaskElement
-  export type Metadata = SVGMetadataElement
-  export type Path = SVGPathElement
-  export type Pattern = SVGPatternElement
-  export type Polygon = SVGPolygonElement
-  export type Polyline = SVGPolylineElement
-  export type RadialGradient = SVGRadialGradientElement
-  export type Rect = SVGRectElement
-  export type Script = SVGScriptElement
-  export type Stop = SVGStopElement
-  export type Style = SVGStyleElement
-  export type SVG = SVGSVGElement
-  export type Switch = SVGSwitchElement
-  export type Symbol = SVGSymbolElement
-  export type Text = SVGTextElement
-  export type TextPath = SVGTextPathElement
-  export type Title = SVGTitleElement
-  export type Use = SVGUseElement
-  export type View = SVGViewElement
-}
 
 type Key = string | number
 
@@ -244,19 +102,21 @@ type ReactNode =
 //
 // Top Level API
 // ----------------------------------------------------------------------
+export type HTMLElementTagNames = keyof HTMLElementTagNameMap
+export type SVGElementTagNames = keyof ReactSVG
 
 // DOM Elements
-export function createFactory<K extends keyof ReactHTML>(type: K): HTMLFactory<ReactHTML[K]>
-export function createFactory(type: keyof ReactSVG): SVGFactory
+export function createFactory<K extends HTMLElementTagNames>(type: K): HTMLFactory<ReactHTML[K]>
+export function createFactory(type: SVGElementTagNames): SVGFactory
 export function createFactory<T extends Element>(type: string): T
 
 // DOM Elements
-export function createElement<K extends keyof ReactHTML, T extends HTMLElementTagNameMap[K]>(
+export function createElement<K extends HTMLElementTagNames, T extends HTMLElementTagNameMap[K]>(
   type: K,
   props?: (HTMLAttributes<T> & AttrWithRef<T>) | null,
   ...children: ReactNode[]
 ): T
-export function createElement<K extends keyof ReactSVG, T extends ReactSVG[K]>(
+export function createElement<K extends SVGElementTagNames, T extends ReactSVG[K]>(
   type: K,
   props?: (SVGAttributes<T> & AttrWithRef<T>) | null,
   ...children: ReactNode[]
@@ -281,12 +141,12 @@ export function createElement<T extends Element>(
 ): T
 
 // DOM Elements
-export function jsx<K extends keyof ReactHTML, T extends HTMLElementTagNameMap[K]>(
+export function jsx<K extends HTMLElementTagNames, T extends HTMLElementTagNameMap[K]>(
   type: K,
   props?: PropsWithChildren<HTMLAttributes<T> & AttrWithRef<T>> | null,
   key?: string
 ): T
-export function jsx<K extends keyof ReactSVG, T extends ReactSVG[K]>(
+export function jsx<K extends SVGElementTagNames, T extends ReactSVG[K]>(
   type: K,
   props?: PropsWithChildren<SVGAttributes<T> & AttrWithRef<T>> | null,
   key?: string
@@ -677,14 +537,14 @@ interface AriaAttributes {
   /** Identifies the currently active element when DOM focus is on a composite widget, textbox, group, or application. */
   "aria-activedescendant"?: string
   /** Indicates whether assistive technologies will present all, or only parts of, the changed region based on the change notifications defined by the aria-relevant attribute. */
-  "aria-atomic"?: boolean | "false" | "true"
+  "aria-atomic"?: Booleanish
   /**
    * Indicates whether inputting text could trigger display of one or more predictions of the user's intended value for an input and specifies how predictions would be
    * presented if they are made.
    */
   "aria-autocomplete"?: "none" | "inline" | "list" | "both"
   /** Indicates an element is being modified and that assistive technologies MAY want to wait until the modifications are complete before exposing them to the user. */
-  "aria-busy"?: boolean | "false" | "true"
+  "aria-busy"?: Booleanish
   /**
    * Indicates the current "checked" state of checkboxes, radio buttons, and other widgets.
    * @see aria-pressed @see aria-selected.
@@ -711,7 +571,7 @@ interface AriaAttributes {
    */
   "aria-controls"?: string
   /** Indicates the element that represents the current item within a container or set of related elements. */
-  "aria-current"?: boolean | "false" | "true" | "page" | "step" | "location" | "date" | "time"
+  "aria-current"?: Booleanish | "page" | "step" | "location" | "date" | "time"
   /**
    * Identifies the element (or elements) that describes the object.
    * @see aria-labelledby
@@ -726,7 +586,7 @@ interface AriaAttributes {
    * Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable.
    * @see aria-hidden @see aria-readonly.
    */
-  "aria-disabled"?: boolean | "false" | "true"
+  "aria-disabled"?: Booleanish
   /**
    * Indicates what functions can be performed when a dragged object is released on the drop target.
    * @deprecated in ARIA 1.1
@@ -738,7 +598,7 @@ interface AriaAttributes {
    */
   "aria-errormessage"?: string
   /** Indicates whether the element, or another grouping element it controls, is currently expanded or collapsed. */
-  "aria-expanded"?: boolean | "false" | "true"
+  "aria-expanded"?: Booleanish
   /**
    * Identifies the next element (or elements) in an alternate reading order of content which, at the user's discretion,
    * allows assistive technology to override the general default of reading in document source order.
@@ -748,20 +608,20 @@ interface AriaAttributes {
    * Indicates an element's "grabbed" state in a drag-and-drop operation.
    * @deprecated in ARIA 1.1
    */
-  "aria-grabbed"?: boolean | "false" | "true"
+  "aria-grabbed"?: Booleanish
 
   /** Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element. */
-  "aria-haspopup"?: boolean | "false" | "true" | "menu" | "listbox" | "tree" | "grid" | "dialog"
+  "aria-haspopup"?: Booleanish | "menu" | "listbox" | "tree" | "grid" | "dialog"
   /**
    * Indicates whether the element is exposed to an accessibility API.
    * @see aria-disabled.
    */
-  "aria-hidden"?: boolean | "false" | "true"
+  "aria-hidden"?: Booleanish
   /**
    * Indicates the entered value does not conform to the format expected by the application.
    * @see aria-errormessage.
    */
-  "aria-invalid"?: boolean | "false" | "true" | "grammar" | "spelling"
+  "aria-invalid"?: Booleanish | "grammar" | "spelling"
   /** Indicates keyboard shortcuts that an author has implemented to activate or give focus to an element. */
   "aria-keyshortcuts"?: string
   /**
@@ -779,11 +639,11 @@ interface AriaAttributes {
   /** Indicates that an element will be updated, and describes the types of updates the user agents, assistive technologies, and user can expect from the live region. */
   "aria-live"?: "off" | "assertive" | "polite"
   /** Indicates whether an element is modal when displayed. */
-  "aria-modal"?: boolean | "false" | "true"
+  "aria-modal"?: Booleanish
   /** Indicates whether a text box accepts multiple lines of input or only a single line. */
-  "aria-multiline"?: boolean | "false" | "true"
+  "aria-multiline"?: Booleanish
   /** Indicates that the user may select more than one item from the current selectable descendants. */
-  "aria-multiselectable"?: boolean | "false" | "true"
+  "aria-multiselectable"?: Booleanish
   /** Indicates whether the element's orientation is horizontal, vertical, or unknown/ambiguous. */
   "aria-orientation"?: "horizontal" | "vertical"
   /**
@@ -811,7 +671,7 @@ interface AriaAttributes {
    * Indicates that the element is not editable, but is otherwise operable.
    * @see aria-disabled.
    */
-  "aria-readonly"?: boolean | "false" | "true"
+  "aria-readonly"?: Booleanish
 
   /**
    * Indicates what notifications the user agent will trigger when the accessibility tree within a live region is modified.
@@ -830,7 +690,7 @@ interface AriaAttributes {
     | "text removals"
 
   /** Indicates that user input is required on the element before a form may be submitted. */
-  "aria-required"?: boolean | "false" | "true"
+  "aria-required"?: Booleanish
   /** Defines a human-readable, author-localized description for the role of an element. */
   "aria-roledescription"?: string
   /**
@@ -852,7 +712,7 @@ interface AriaAttributes {
    * Indicates the current "selected" state of various widgets.
    * @see aria-checked @see aria-pressed.
    */
-  "aria-selected"?: boolean | "false" | "true"
+  "aria-selected"?: Booleanish
   /**
    * Defines the number of items in the current set of listitems or treeitems. Not required if all elements in the set are present in the DOM.
    * @see aria-posinset.
@@ -872,6 +732,81 @@ interface AriaAttributes {
   /** Defines the human readable text alternative of aria-valuenow for a range widget. */
   "aria-valuetext"?: string
 }
+
+// All the WAI-ARIA 1.1 role attribute values from https://www.w3.org/TR/wai-aria-1.1/#role_definitions
+type AriaRole =
+  | "alert"
+  | "alertdialog"
+  | "application"
+  | "article"
+  | "banner"
+  | "button"
+  | "cell"
+  | "checkbox"
+  | "columnheader"
+  | "combobox"
+  | "complementary"
+  | "contentinfo"
+  | "definition"
+  | "dialog"
+  | "directory"
+  | "document"
+  | "feed"
+  | "figure"
+  | "form"
+  | "grid"
+  | "gridcell"
+  | "group"
+  | "heading"
+  | "img"
+  | "link"
+  | "list"
+  | "listbox"
+  | "listitem"
+  | "log"
+  | "main"
+  | "marquee"
+  | "math"
+  | "menu"
+  | "menubar"
+  | "menuitem"
+  | "menuitemcheckbox"
+  | "menuitemradio"
+  | "navigation"
+  | "none"
+  | "note"
+  | "option"
+  | "presentation"
+  | "progressbar"
+  | "radio"
+  | "radiogroup"
+  | "region"
+  | "row"
+  | "rowgroup"
+  | "rowheader"
+  | "scrollbar"
+  | "search"
+  | "searchbox"
+  | "separator"
+  | "slider"
+  | "spinbutton"
+  | "status"
+  | "switch"
+  | "tab"
+  | "table"
+  | "tablist"
+  | "tabpanel"
+  | "term"
+  | "textbox"
+  | "timer"
+  | "toolbar"
+  | "tooltip"
+  | "tree"
+  | "treegrid"
+  | "treeitem"
+  | (string & {})
+
+export type StyleInput = string | CSSProperties | (string | CSSProperties)[]
 
 export interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
   // Extension
@@ -897,7 +832,7 @@ export interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
   placeholder?: string
   slot?: string
   spellCheck?: Booleanish
-  style?: string | CSSProperties
+  style?: StyleInput
   tabIndex?: number
   title?: string
   translate?: "yes" | "no"
@@ -906,7 +841,7 @@ export interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
   radioGroup?: string // <command>, <menuitem>
 
   // WAI-ARIA
-  role?: string
+  role?: AriaRole
 
   // RDFa Attributes
   about?: string
@@ -1066,6 +1001,8 @@ type HTMLAttributeReferrerPolicy =
   | "strict-origin-when-cross-origin"
   | "unsafe-url"
 
+type HTMLAttributeAnchorTarget = "_self" | "_blank" | "_parent" | "_top" | (string & {})
+
 interface AnchorHTMLAttributes<T> extends HTMLAttributes<T> {
   download?: any
   href?: string
@@ -1073,7 +1010,7 @@ interface AnchorHTMLAttributes<T> extends HTMLAttributes<T> {
   media?: string
   ping?: string
   rel?: string
-  target?: string
+  target?: HTMLAttributeAnchorTarget
   type?: string
   referrerPolicy?: HTMLAttributeReferrerPolicy
 }
@@ -1315,6 +1252,7 @@ interface MetaHTMLAttributes<T> extends HTMLAttributes<T> {
   content?: string
   httpEquiv?: string
   name?: string
+  media?: string
 }
 
 interface MeterHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -1409,11 +1347,13 @@ interface SlotHTMLAttributes<T> extends HTMLAttributes<T> {
 }
 
 interface SourceHTMLAttributes<T> extends HTMLAttributes<T> {
+  height?: number | string
   media?: string
   sizes?: string
   src?: string
   srcSet?: string
   type?: string
+  width?: number | string
 }
 
 interface StyleHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -1500,7 +1440,7 @@ interface VideoHTMLAttributes<T> extends MediaHTMLAttributes<T> {
 //   - "number | string"
 //   - "string"
 //   - union of string literals
-interface SVGAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+export interface SVGAttributes<T> extends AriaAttributes, DOMAttributes<T> {
   // Attributes which also defined in HTMLAttributes
   // See comment in SVGDOMPropertyConfig.js
   class?: ClassNames
@@ -1520,7 +1460,7 @@ interface SVGAttributes<T> extends AriaAttributes, DOMAttributes<T> {
   width?: number | string
 
   // Other HTML properties supported by SVG elements in browsers
-  role?: string
+  role?: AriaRole
   tabIndex?: number
   crossOrigin?: "anonymous" | "use-credentials" | ""
 
@@ -1934,7 +1874,7 @@ export namespace JSX {
     i: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
     iframe: DetailedHTMLProps<IframeHTMLAttributes<HTMLIFrameElement>, HTMLIFrameElement>
     img: DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>
-    input: DetailedHTMLProps<InputHTMLAttributes<HTML.Input>, HTML.Input>
+    input: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
     ins: DetailedHTMLProps<InsHTMLAttributes<HTMLModElement>, HTMLModElement>
     kbd: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
     keygen: DetailedHTMLProps<KeygenHTMLAttributes<HTMLElement>, HTMLElement>
@@ -1986,10 +1926,7 @@ export namespace JSX {
     td: DetailedHTMLProps<TdHTMLAttributes<HTMLTableDataCellElement>, HTMLTableDataCellElement>
     textarea: DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>
     tfoot: DetailedHTMLProps<HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement>
-    th: DetailedHTMLProps<
-      ThHTMLAttributes<HTMLTableHeaderCellElement>,
-      HTMLTableHeaderCellElement
-    >
+    th: DetailedHTMLProps<ThHTMLAttributes<HTMLTableHeaderCellElement>, HTMLTableHeaderCellElement>
     thead: DetailedHTMLProps<HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement>
     time: DetailedHTMLProps<TimeHTMLAttributes<HTMLElement>, HTMLElement>
     title: DetailedHTMLProps<HTMLAttributes<HTMLTitleElement>, HTMLTitleElement>

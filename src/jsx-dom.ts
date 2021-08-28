@@ -12,7 +12,7 @@ import {
   keys,
 } from "./util"
 import { isUnitlessNumber } from "./css-props"
-import type { HTML, JSX } from "../index"
+import type { HTML, JSX } from "../types/index"
 
 export const SVGNamespace = "http://www.w3.org/2000/svg"
 const XLinkNamespace = "http://www.w3.org/1999/xlink"
@@ -204,6 +204,24 @@ function normalizeAttribute(s: string, separator: string) {
   return s.replace(/[A-Z\d]/g, match => separator + match.toLowerCase())
 }
 
+function style(node: Element & HTMLOrSVGElement, value?: any) {
+  if (value == null || value === false) {
+    return
+  } else if (Array.isArray(value)) {
+    value.forEach(v => style(node, v))
+  } else if (isString(value)) {
+    node.setAttribute("style", value)
+  } else if (isObject(value)) {
+    forEach(value, (val, key) => {
+      if (__FULL_BUILD__ && isNumber(val) && isUnitlessNumber[key] !== 0) {
+        cast<HTMLElement>(node).style[key] = val + "px"
+      } else {
+        cast<HTMLElement>(node).style[key] = val
+      }
+    })
+  }
+}
+
 function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
   if (__FULL_BUILD__) {
     switch (key) {
@@ -263,16 +281,8 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
     case "namespaceURI":
       return
     case "style":
-      if (isObject(value)) {
-        forEach(value, (val, key) => {
-          if (__FULL_BUILD__ && isNumber(val) && isUnitlessNumber[key] !== 0) {
-            cast<HTMLElement>(node).style[key] = val + "px"
-          } else {
-            cast<HTMLElement>(node).style[key] = val
-          }
-        })
-        return
-      }
+      style(node, value)
+      return
     // fallthrough
   }
 
@@ -291,11 +301,7 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
   } else if (value === true) {
     attr(node, key, "")
   } else if (value !== false && value != null) {
-    if (
-      __FULL_BUILD__ &&
-      node instanceof SVGElement &&
-      !nonPresentationSVGAttributes.test(key)
-    ) {
+    if (__FULL_BUILD__ && node instanceof SVGElement && !nonPresentationSVGAttributes.test(key)) {
       attr(node, normalizeAttribute(key, "-"), value)
     } else {
       attr(node, key, value)

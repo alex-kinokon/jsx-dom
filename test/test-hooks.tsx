@@ -1,5 +1,6 @@
-import { React } from "./register"
 import { expect } from "chai"
+import { describe, it } from "mocha"
+import { React } from "./register"
 
 describe("hooks", () => {
   it("supports useText", () => {

@@ -1,8 +1,9 @@
 #!/usr/bin/env ts-node-transpile-only
-import * as fs from "fs-extra"
 import { resolve } from "path"
+import * as fs from "fs-extra"
 import babel from "@rollup/plugin-babel"
-import replace, { RollupReplaceOptions } from "@rollup/plugin-replace"
+import type { RollupReplaceOptions } from "@rollup/plugin-replace"
+import replace from "@rollup/plugin-replace"
 import prettier from "rollup-plugin-prettier"
 import node from "@rollup/plugin-node-resolve"
 import { rollup } from "rollup"
@@ -68,6 +69,7 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
       format,
       file: `${outputDir}/${name}.js`,
       exports: "named",
+      banner: "/* eslint-disable */",
     })
   }
 
@@ -101,10 +103,11 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
   await fs.ensureDir(OUT_DIR)
   await Promise.all([
     copyPackageJson(),
-    copy("index.d.ts", OUT_DIR),
+    copy("types", OUT_DIR),
     copy("README.md", OUT_DIR),
     copy("CHANGELOG.md", OUT_DIR),
     copy("LICENSE", OUT_DIR),
+    fs.writeFile(resolve(OUT_DIR, "index.d.ts"), 'export * from "./types/index.d"'),
     fs.writeFile(
       resolve(OUT_DIR, "jsx-dev-runtime.js"),
       format === "esm"

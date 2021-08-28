@@ -1,0 +1,146 @@
+import type { ClassList, ClassNames } from "./index.d"
+
+// Utility functions
+export function stopPropagation(event: Event): Event
+export function preventDefault(event: Event): Event
+
+export const SVGNamespace: "http://www.w3.org/2000/svg"
+
+export function useText(initialValue?: string): readonly [Text, (value: string) => void]
+export function useClassList(initialValue?: ClassNames): ClassList
+
+export namespace HTML {
+  export type Anchor = HTMLAnchorElement
+  export type Area = HTMLAreaElement
+  export type Audio = HTMLAudioElement
+  export type Base = HTMLBaseElement
+  export type Body = HTMLBodyElement
+  export type BR = HTMLBRElement
+  export type Button = HTMLButtonElement
+  export type Canvas = HTMLCanvasElement
+  export type Data = HTMLDataElement
+  export type DataList = HTMLDataListElement
+  export type Details = HTMLDetailsElement
+  export type Dialog = HTMLDialogElement
+  export type Directory = HTMLDirectoryElement
+  export type Div = HTMLDivElement
+  export type DList = HTMLDListElement
+  export type Embed = HTMLEmbedElement
+  export type FieldSet = HTMLFieldSetElement
+  export type Font = HTMLFontElement
+  export type Form = HTMLFormElement
+  export type Frame = HTMLFrameElement
+  export type FrameSet = HTMLFrameSetElement
+  export type Head = HTMLHeadElement
+  export type Heading = HTMLHeadingElement
+  export type HR = HTMLHRElement
+  export type HtmlElement = HTMLHtmlElement
+  export type IFrame = HTMLIFrameElement
+  export type Image = HTMLImageElement
+  export type Input = HTMLInputElement
+  export type Label = HTMLLabelElement
+  export type Legend = HTMLLegendElement
+  export type LI = HTMLLIElement
+  export type Link = HTMLLinkElement
+  export type Map = HTMLMapElement
+  export type Marquee = HTMLMarqueeElement
+  export type MediaElement = HTMLMediaElement
+  export type Menu = HTMLMenuElement
+  export type Meta = HTMLMetaElement
+  export type Meter = HTMLMeterElement
+  export type Mod = HTMLModElement
+  export type Object = HTMLObjectElement
+  export type OList = HTMLOListElement
+  export type OptGroup = HTMLOptGroupElement
+  export type Option = HTMLOptionElement
+  export type Output = HTMLOutputElement
+  export type Paragraph = HTMLParagraphElement
+  export type Param = HTMLParamElement
+  export type Picture = HTMLPictureElement
+  export type Pre = HTMLPreElement
+  export type Progress = HTMLProgressElement
+  export type Quote = HTMLQuoteElement
+  export type Script = HTMLScriptElement
+  export type Select = HTMLSelectElement
+  export type Slot = HTMLSlotElement
+  export type Source = HTMLSourceElement
+  export type Span = HTMLSpanElement
+  export type Style = HTMLStyleElement
+  export type Table = HTMLTableElement
+  export type TableCaption = HTMLTableCaptionElement
+  export type TableCell = HTMLTableCellElement
+  export type TableCol = HTMLTableColElement
+  export type TableDataCell = HTMLTableDataCellElement
+  export type TableHeaderCell = HTMLTableHeaderCellElement
+  export type TableRow = HTMLTableRowElement
+  export type TableSection = HTMLTableSectionElement
+  export type Template = HTMLTemplateElement
+  export type TextArea = HTMLTextAreaElement
+  export type Time = HTMLTimeElement
+  export type Title = HTMLTitleElement
+  export type Track = HTMLTrackElement
+  export type UList = HTMLUListElement
+  export type Unknown = HTMLUnknownElement
+  export type Video = HTMLVideoElement
+}
+
+export namespace SVG {
+  export type Anchor = SVGAElement
+  export type Animate = SVGAnimateElement
+  export type AnimateMotion = SVGAnimateMotionElement
+  export type AnimateTransform = SVGAnimateTransformElement
+  export type Circle = SVGCircleElement
+  export type ClipPath = SVGClipPathElement
+  export type Defs = SVGDefsElement
+  export type Desc = SVGDescElement
+  export type Ellipse = SVGEllipseElement
+  export type FEBlend = SVGFEBlendElement
+  export type FEColorMatrix = SVGFEColorMatrixElement
+  export type FEComponentTransfer = SVGFEComponentTransferElement
+  export type FEConvolveMatrix = SVGFEConvolveMatrixElement
+  export type FEDiffuseLighting = SVGFEDiffuseLightingElement
+  export type FEDisplacementMap = SVGFEDisplacementMapElement
+  export type FEDistantLight = SVGFEDistantLightElement
+  export type FEDropShadow = SVGFEDropShadowElement
+  export type FEFlood = SVGFEFloodElement
+  export type FEFuncA = SVGFEFuncAElement
+  export type FEFuncB = SVGFEFuncBElement
+  export type FEFuncG = SVGFEFuncGElement
+  export type FEFuncR = SVGFEFuncRElement
+  export type FEGaussianBlur = SVGFEGaussianBlurElement
+  export type FEImage = SVGFEImageElement
+  export type FEMerge = SVGFEMergeElement
+  export type FEMergeNode = SVGFEMergeNodeElement
+  export type FEMorphology = SVGFEMorphologyElement
+  export type FEOffset = SVGFEOffsetElement
+  export type FEPointLight = SVGFEPointLightElement
+  export type FETile = SVGFETileElement
+  export type FETurbulence = SVGFETurbulenceElement
+  export type Filter = SVGFilterElement
+  export type Foreign = SVGForeignObjectElement
+  export type G = SVGGElement
+  export type Gradient = SVGGradientElement
+  export type Image = SVGImageElement
+  export type Line = SVGLineElement
+  export type LinearGradient = SVGLinearGradientElement
+  export type Marker = SVGMarkerElement
+  export type Mask = SVGMaskElement
+  export type Metadata = SVGMetadataElement
+  export type Path = SVGPathElement
+  export type Pattern = SVGPatternElement
+  export type Polygon = SVGPolygonElement
+  export type Polyline = SVGPolylineElement
+  export type RadialGradient = SVGRadialGradientElement
+  export type Rect = SVGRectElement
+  export type Script = SVGScriptElement
+  export type Stop = SVGStopElement
+  export type Style = SVGStyleElement
+  export type SVG = SVGSVGElement
+  export type Switch = SVGSwitchElement
+  export type Symbol = SVGSymbolElement
+  export type Text = SVGTextElement
+  export type TextPath = SVGTextPathElement
+  export type Title = SVGTitleElement
+  export type Use = SVGUseElement
+  export type View = SVGViewElement
+}

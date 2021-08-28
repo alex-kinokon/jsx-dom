@@ -1,6 +1,7 @@
-import { React } from "./register"
 import { expect } from "chai"
+import { describe, it } from "mocha"
 import type { StandardLonghandProperties } from "csstype"
+import { React } from "./register"
 
 describe("CSS", () => {
   it("supports numeric CSS properties", () => {
@@ -51,7 +52,7 @@ describe("CSS", () => {
       "widows",
       "zIndex",
       "zoom",
-    ].forEach((key) => testUnitless(key))
+    ].forEach(key => testUnitless(key))
   })
 
   it("supports unitless CSS properties with vendor prefixes", () => {

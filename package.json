@@ -1,6 +1,6 @@
 {
   "name": "jsx-dom",
-  "version": "8.0.1-beta.0",
+  "version": "8.0.1-beta.1",
   "description": "JSX to document.createElement.",
   "main": "index.js",
   "module": "index.js",
@@ -38,7 +38,8 @@
     "@types/chai-string": "^1.4.2",
     "@types/fs-extra": "^9.0.12",
     "@types/jsdom": "^16.2.13",
-    "@types/mocha": "^9.0.0",
+    "@types/lodash": "^4.14.172",
+    "@types/mocha": "github:whitecolor/mocha-types#da22474cf43f48a56c86f8c23a5a0ea36e295768",
     "@types/node": "^16.6.1",
     "@types/prettier": "^2.3.2",
     "@types/prop-types": "^15.7.4",
@@ -51,11 +52,16 @@
     "chai-string": "^1.5.0",
     "coffeescript": "^2.5.1",
     "eslint": "7.32.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-import-resolver-typescript": "2.4.0",
+    "eslint-plugin-import": "2.24.0",
     "eslint-plugin-react": "7.24.0",
+    "eslint-plugin-react-hooks": "4.2.0",
     "fs-extra": "^10.0.0",
     "husky": "6.0.0",
     "jsdom": "^17.0.0",
     "lint-staged": "^11.1.2",
+    "lodash": "^4.17.21",
     "mocha": "^9.0.3",
     "nyc": "^15.1.0",
     "prettier": "^2.3.2",
@@ -64,11 +70,7 @@
     "tiny-invariant": "^1.1.0",
     "ts-node": "^10.2.0",
     "tslib": "^2.3.1",
-    "typescript": "^4.3.5",
-    "eslint-config-prettier": "8.3.0",
-    "eslint-import-resolver-typescript": "2.4.0",
-    "eslint-plugin-import": "2.24.0",
-    "eslint-plugin-react-hooks": "4.2.0"
+    "typescript": "^4.3.5"
   },
   "lint-staged": {
     "*.ts": [
@@ -92,7 +94,7 @@
   "prettier": {
     "arrowParens": "avoid",
     "tabWidth": 2,
-    "printWidth": 97,
+    "printWidth": 100,
     "semi": false,
     "singleQuote": false,
     "trailingComma": "es5"

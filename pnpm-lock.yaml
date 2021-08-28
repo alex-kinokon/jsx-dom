@@ -13,7 +13,8 @@ specifiers:
   '@types/chai-string': ^1.4.2
   '@types/fs-extra': ^9.0.12
   '@types/jsdom': ^16.2.13
-  '@types/mocha': ^9.0.0
+  '@types/lodash': ^4.14.172
+  '@types/mocha': github:whitecolor/mocha-types#da22474cf43f48a56c86f8c23a5a0ea36e295768
   '@types/node': ^16.6.1
   '@types/prettier': ^2.3.2
   '@types/prop-types': ^15.7.4
@@ -36,6 +37,7 @@ specifiers:
   husky: 6.0.0
   jsdom: ^17.0.0
   lint-staged: ^11.1.2
+  lodash: ^4.17.21
   mocha: ^9.0.3
   nyc: ^15.1.0
   prettier: ^2.3.2
@@ -62,7 +64,8 @@ devDependencies:
   '@types/chai-string': 1.4.2
   '@types/fs-extra': 9.0.12
   '@types/jsdom': 16.2.13
-  '@types/mocha': 9.0.0
+  '@types/lodash': 4.14.172
+  '@types/mocha': github.com/whitecolor/mocha-types/da22474cf43f48a56c86f8c23a5a0ea36e295768
   '@types/node': 16.6.1
   '@types/prettier': 2.3.2
   '@types/prop-types': 15.7.4
@@ -84,6 +87,7 @@ devDependencies:
   husky: 6.0.0
   jsdom: 17.0.0
   lint-staged: 11.1.2
+  lodash: 4.17.21
   mocha: 9.0.3
   nyc: 15.1.0
   prettier: 2.3.2
@@ -917,8 +921,8 @@ packages:
     resolution: {integrity: sha512-cxWFQVseBm6O9Gbw1IWb8r6OS4OhSt3hPZLkFApLjM8TEXROBuQGLAH2i2gZpcXdLBIrpXuTDhH7Vbm1iXmNGA==}
     dev: true
 
-  /@types/mocha/9.0.0:
-    resolution: {integrity: sha512-scN0hAWyLVAvLR9AyW7HoFF5sJZglyBsbPuHO4fv7JRvfmPBMfp1ozWqOf/e4wwPNxezBZXRfWzMb6iFLgEVRA==}
+  /@types/lodash/4.14.172:
+    resolution: {integrity: sha512-/BHF5HAx3em7/KkzVKm3LrsD6HZAXuXO1AJZQ3cRRBZj4oHZDviWPYu0aEplAqDFNHZPW6d3G7KN+ONcCCC7pw==}
     dev: true
 
   /@types/node/16.4.13:
@@ -4345,4 +4349,10 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+    dev: true
+
+  github.com/whitecolor/mocha-types/da22474cf43f48a56c86f8c23a5a0ea36e295768:
+    resolution: {tarball: https://codeload.github.com/whitecolor/mocha-types/tar.gz/da22474cf43f48a56c86f8c23a5a0ea36e295768}
+    name: '@types/mocha'
+    version: 8.0.0
     dev: true
