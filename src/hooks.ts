@@ -1,5 +1,5 @@
 import { className } from "./jsx-dom"
-import type { ClassNames, ClassList } from "../index"
+import type { ClassList, ClassNames } from "../types/index"
 
 export { identity as useCallback } from "./util"
 
