@@ -86,6 +86,18 @@ document.body.appendChild(
     Welcome!
   </HeaderText>
 )
+
+const Name = styled.div<{ large?: boolean }>`
+  font-size: ${props => props.large ? 40 : 20}px;
+  ${props => props.large ? "font-weight: 600;" : ""}
+`
+
+document.body.appendChild(
+  <Name large>
+    Welcome!
+  </Name>
+)
+
 ```
 
 
