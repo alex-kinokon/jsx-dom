@@ -12,7 +12,7 @@ import {
   keys,
 } from "./util"
 import { isUnitlessNumber } from "./css-props"
-import type { HTML, JSX } from "../types/index"
+import type { ComponentClass, HTML, JSX } from "../types/index"
 
 export const SVGNamespace = "http://www.w3.org/2000/svg"
 const XLinkNamespace = "http://www.w3.org/1999/xlink"
@@ -112,19 +112,25 @@ export function Fragment(attr: { children: JSX.Element | JSX.Element[] }) {
   return fragment
 }
 
-export function Component(props: any) {
-  this.props = props
+export class Component {
+  constructor(readonly props: any) {}
+
+  render() {
+    return null
+  }
 }
+
 Object.defineProperties(Component.prototype, {
   isReactComponent: {
     value: true,
   },
-  render: {
-    value() {
-      return null
-    },
-  },
 })
+
+function initComponentClass(Class: ComponentClass, attr, children) {
+  attr = { ...attr, children }
+  const instance = new Class(attr)
+  return instance.render()
+}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function jsx(tag: any, { children, ...attr }, key?: string) {
@@ -146,7 +152,7 @@ export function jsx(tag: any, { children, ...attr }, key?: string) {
     }
 
     node = isComponentClass(tag)
-      ? new tag({ ...attr, children }).render()
+      ? initComponentClass(tag, attr, children)
       : tag({ ...attr, children })
   }
 

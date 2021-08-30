@@ -15,6 +15,7 @@ Use JSX for creating DOM elements. Supports ES Module and TypeScript.
 ```bash
 npm install --save jsx-dom
 yarn install jsx-dom
+pnpm add jsx-dom
 ```
 
 ## Usage
@@ -126,7 +127,7 @@ Note that `false`, `true`, `null`, `undefined` will be ignored per [React docume
 
 ### Style
 
-1. `style` accepts both strings and objects. Unitless properties supported by React are also supported.
+1. `style` accepts a string, an object and an array of any combination of the above, including deeply nested arrays. Unitless properties supported by React are also supported.
 
 ```jsx
 <div style="background: transparent;" />
@@ -135,7 +136,7 @@ Note that `false`, `true`, `null`, `undefined` will be ignored per [React docume
 
 ### Children
 
-Passing `children` as an explicit attribute, when there is no other JSX child node, is also supported.
+Passing `children` as an explicit attribute, when there is no other JSX child node, is also supported. Any object that matches the TypeScript `ArrayLike` interface can be used as `children`, including jQuery objects.
 
 ```jsx
 <div children={["Total: ", 20]} />
@@ -194,7 +195,7 @@ function Component() {
 }
 ```
 
-5. Rich data jsx properties are accepted, but populated as properties rather than dom attributes. 
+5. Rich data jsx properties are accepted, but populated as properties rather than DOM attributes. 
 
 ```jsx
 class MyCustomElement extends HTMLElement {
@@ -258,7 +259,9 @@ import React, { useText } from "jsx-dom"
 function Component() {
   const [text, setText] = useText("Downloading")
 
-  fetch("./api").then(() => setText("Done!"))
+  fetch("./api").then(() => {
+    setText("Done!")
+  })
 
   return (
     <div>Status: {text}</div>
@@ -325,7 +328,7 @@ function createFactory(component: string): (props: object) => JSX.Element
 function useRef<T>(initialValue?: T): RefObject<T>
 ```
 
-The following functions will **not** have memoization, and are only useful if you are
+The following functions do **not** have memoization, and are only useful if you are
 migrating from/to React.
 
 ```ts
@@ -336,8 +339,7 @@ function useCallback<T extends Function>(fn: T, deps: any[]): T
 
 ## Browser Support
 
-There is no support for Internet Explorer, although it will very likely work if you bring your own
-polyfill.
+There is no support for Internet Explorer.
 
 ## Known Issues
 

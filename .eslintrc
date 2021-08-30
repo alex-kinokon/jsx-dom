@@ -28,10 +28,7 @@
   },
   "rules": {
     "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/consistent-type-imports": [
-      "error",
-      { "disallowTypeAnnotations": false }
-    ],
+    "@typescript-eslint/consistent-type-imports": ["error", { "disallowTypeAnnotations": false }],
     "@typescript-eslint/ban-types": [
       "error",
       {
@@ -67,10 +64,7 @@
     "@typescript-eslint/triple-slash-reference": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "arrow-body-style": ["error", "as-needed"],
-    "class-methods-use-this": [
-      "warn",
-      { "exceptMethods": ["toString", "shouldComponentUpdate"] }
-    ],
+    "class-methods-use-this": "off",
     "complexity": ["warn", { "max": 100 }],
     "curly": ["error", "multi-line", "consistent"],
     "eqeqeq": ["error", "smart"],
