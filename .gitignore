@@ -1,0 +1,8 @@
+.nyc_output
+coverage
+node_modules
+*.cjs.js
+index.js
+build/*
+esm
+cjs
