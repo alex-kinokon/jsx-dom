@@ -265,7 +265,9 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
     case "innerHTML":
     case "innerText":
     case "textContent":
-      node[key] = value
+      if (isVisibleChild(value)) {
+        node[key] = value
+      }
       return
     case "dangerouslySetInnerHTML":
       if (isObject(value)) {
