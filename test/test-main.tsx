@@ -87,8 +87,11 @@ describe("jsx-dom", () => {
   })
 
   describe("childNodes", () => {
-    it("ignores `null`", () => {
+    it("ignores `null`, `undefined`, `true` and `false`", () => {
       expect((<div>{null}</div>).children).to.be.empty
+      expect((<div>{undefined}</div>).children).to.be.empty
+      expect((<div>{true}</div>).children).to.be.empty
+      expect((<div>{false}</div>).children).to.be.empty
     })
 
     it("supports deep nested childNodes", () => {
