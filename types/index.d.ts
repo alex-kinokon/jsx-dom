@@ -327,9 +327,126 @@ export type DetailedHTMLProps<E extends HTMLAttributes<T>, T> = AttrWithRef<T> &
 
 export interface SVGProps<T> extends SVGAttributes<T>, AttrWithRef<T> {}
 
+interface EventHandlers<T> {
+  // Clipboard Events
+  copy?: ClipboardEventHandler<T> | undefined
+  cut?: ClipboardEventHandler<T> | undefined
+  paste?: ClipboardEventHandler<T> | undefined
+
+  // Composition Events
+  compositionend?: CompositionEventHandler<T> | undefined
+  compositionstart?: CompositionEventHandler<T> | undefined
+  compositionupdate?: CompositionEventHandler<T> | undefined
+
+  // Focus Events
+  focus?: FocusEventHandler<T> | undefined
+  blur?: FocusEventHandler<T> | undefined
+
+  // Form Events
+  change?: FormEventHandler<T> | undefined
+  beforeinput?: FormEventHandler<T> | undefined
+  input?: FormEventHandler<T> | undefined
+  reset?: FormEventHandler<T> | undefined
+  submit?: FormEventHandler<T> | undefined
+  invalid?: FormEventHandler<T> | undefined
+
+  // Image Events
+  load?: ReactEventHandler<T> | undefined
+  error?: ReactEventHandler<T> | undefined // also a Media Event
+
+  // Keyboard Events
+  keydown?: KeyboardEventHandler<T> | undefined
+  keypress?: KeyboardEventHandler<T> | undefined
+  keyup?: KeyboardEventHandler<T> | undefined
+
+  // Media Events
+  abort?: ReactEventHandler<T> | undefined
+  canplay?: ReactEventHandler<T> | undefined
+  canplaythrough?: ReactEventHandler<T> | undefined
+  durationchange?: ReactEventHandler<T> | undefined
+  emptied?: ReactEventHandler<T> | undefined
+  encrypted?: ReactEventHandler<T> | undefined
+  ended?: ReactEventHandler<T> | undefined
+  loadeddata?: ReactEventHandler<T> | undefined
+  loadedmetadata?: ReactEventHandler<T> | undefined
+  loadstart?: ReactEventHandler<T> | undefined
+  pause?: ReactEventHandler<T> | undefined
+  play?: ReactEventHandler<T> | undefined
+  playing?: ReactEventHandler<T> | undefined
+  progress?: ReactEventHandler<T> | undefined
+  ratechange?: ReactEventHandler<T> | undefined
+  seeked?: ReactEventHandler<T> | undefined
+  seeking?: ReactEventHandler<T> | undefined
+  stalled?: ReactEventHandler<T> | undefined
+  suspend?: ReactEventHandler<T> | undefined
+  timeupdate?: ReactEventHandler<T> | undefined
+  volumechange?: ReactEventHandler<T> | undefined
+  waiting?: ReactEventHandler<T> | undefined
+
+  // MouseEvents
+  auxclick?: MouseEventHandler<T> | undefined
+  click?: MouseEventHandler<T> | undefined
+  contextmenu?: MouseEventHandler<T> | undefined
+  doubleclick?: MouseEventHandler<T> | undefined
+  drag?: DragEventHandler<T> | undefined
+  dragend?: DragEventHandler<T> | undefined
+  dragenter?: DragEventHandler<T> | undefined
+  dragexit?: DragEventHandler<T> | undefined
+  dragleave?: DragEventHandler<T> | undefined
+  dragover?: DragEventHandler<T> | undefined
+  dragstart?: DragEventHandler<T> | undefined
+  drop?: DragEventHandler<T> | undefined
+  mousedown?: MouseEventHandler<T> | undefined
+  mouseenter?: MouseEventHandler<T> | undefined
+  mouseleave?: MouseEventHandler<T> | undefined
+  mousemove?: MouseEventHandler<T> | undefined
+  mouseout?: MouseEventHandler<T> | undefined
+  mouseover?: MouseEventHandler<T> | undefined
+  mouseup?: MouseEventHandler<T> | undefined
+
+  // Selection Events
+  select?: ReactEventHandler<T> | undefined
+
+  // Touch Events
+  touchcancel?: TouchEventHandler<T> | undefined
+  touchend?: TouchEventHandler<T> | undefined
+  touchmove?: TouchEventHandler<T> | undefined
+  touchstart?: TouchEventHandler<T> | undefined
+
+  // Pointer Events
+  pointerdown?: PointerEventHandler<T> | undefined
+  pointermove?: PointerEventHandler<T> | undefined
+  pointerup?: PointerEventHandler<T> | undefined
+  pointercancel?: PointerEventHandler<T> | undefined
+  pointerenter?: PointerEventHandler<T> | undefined
+  pointerleave?: PointerEventHandler<T> | undefined
+  pointerover?: PointerEventHandler<T> | undefined
+  pointerout?: PointerEventHandler<T> | undefined
+
+  // UI Events
+  scroll?: UIEventHandler<T> | undefined
+
+  // Wheel Events
+  wheel?: WheelEventHandler<T> | undefined
+
+  // Animation Events
+  animationstart?: AnimationEventHandler<T> | undefined
+  animationend?: AnimationEventHandler<T> | undefined
+  animationiteration?: AnimationEventHandler<T> | undefined
+
+  // Transition Events
+  transitionend?: TransitionEventHandler<T> | undefined
+
+  // Custom events
+  [K: string]: ReactEventHandler<T> | undefined
+}
+
 export interface DOMAttributes<T> {
   children?: ReactNode | undefined
   dangerouslySetInnerHTML?: { __html: string } | undefined
+
+  on?: EventHandlers<T> | undefined
+  onCapture?: EventHandlers<T> | undefined
 
   // Clipboard Events
   onCopy?: ClipboardEventHandler<T> | undefined

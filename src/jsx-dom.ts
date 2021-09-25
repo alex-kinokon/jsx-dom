@@ -291,17 +291,28 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
     case "style":
       style(node, value)
       return
+    case "on":
+    case "onCapture":
+      const useCapture = key === "onCapture"
+      forEach(value, (eventHandler, eventName) => {
+        node.addEventListener(eventName, eventHandler, useCapture)
+      })
+      return
     // fallthrough
   }
 
   if (isFunction(value)) {
     if (key[0] === "o" && key[1] === "n") {
       const attribute = key.toLowerCase()
-      // Issue #33
-      if (node[attribute] == null) {
+      const useCapture = attribute.endsWith("capture")
+
+      if (!useCapture && node[attribute] === null) {
+        // use property when possible PR #17
         node[attribute] = value
+      } else if (useCapture) {
+        node.addEventListener(attribute.substring(2, attribute.length - 7), value, true)
       } else {
-        node.addEventListener(key, value)
+        node.addEventListener(attribute.substring(2), value)
       }
     }
   } else if (isObject(value)) {
