@@ -1,4 +1,5 @@
 const { JSDOM } = require("jsdom")
+process.env.TEST = true
 
 // Set up jsdom
 const dom = new JSDOM("")
