@@ -146,6 +146,19 @@ export function jsx(tag: any, { children, ...attr }, key?: string) {
     attributes(attr, node)
     appendChild(children, node)
 
+    // Select `option` elements in `select`
+    if (node instanceof window.HTMLSelectElement && attr.value != null) {
+      if (attr.multiple === true && Array.isArray(attr.value)) {
+        const values = attr.value.map(value => String(value))
+
+        node
+          .querySelectorAll("option")
+          .forEach(option => (option.selected = values.includes(option.value)))
+      } else {
+        node.value = attr.value
+      }
+    }
+
     if (isRef(attr.ref)) {
       attr.ref.current = node
     } else if (isFunction(attr.ref)) {
@@ -274,6 +287,17 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
         node.innerHTML = value["__html"]
       }
       return
+    case "value":
+      if (value == null || node instanceof window.HTMLSelectElement) {
+        // skip nullish values
+        // for `<select>` apply value after appending `<option>` elements
+        return
+      } else if (node instanceof window.HTMLTextAreaElement) {
+        node.value = value
+        return
+      }
+      // use attribute for other elements
+      break
     case "spellCheck":
       cast<HTML.Input>(node).spellcheck = value
       return
