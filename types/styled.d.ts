@@ -1,11 +1,4 @@
-import type {
-  FunctionComponent,
-  HTMLAttributes,
-  HTMLElementTagNames,
-  StyleInput,
-  // SVGElementTagNames,
-  // SVGAttributes,
-} from "./index"
+import type { FunctionComponent, JSX, StyleInput } from "./index"
 
 export type InterpolationFunction<T> = (props: T) => string | number | null
 
@@ -15,9 +8,9 @@ export type StyledComponent<InherentProps> = <AdditionalProps = {}>(
 ) => FunctionComponent<InherentProps & AdditionalProps>
 
 type HTMLStyledComponentMap = {
-  [key in HTMLElementTagNames]: StyledComponent<HTMLAttributes<HTMLElementTagNameMap[key]>>
+  [key in keyof JSX.IntrinsicElements]: StyledComponent<JSX.IntrinsicElements[key]>
 }
-type CustomStyledComponent = <Props extends { style }>(
+type CustomStyledComponent = <Props extends { style: any }>(
   customComponent: FunctionComponent<Props>
 ) => (
   template: TemplateStringsArray,

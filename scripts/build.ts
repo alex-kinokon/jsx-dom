@@ -1,5 +1,6 @@
 #!/usr/bin/env ts-node-transpile-only
 import { resolve } from "path"
+import type { ModuleFormat } from "rollup"
 import * as fs from "fs-extra"
 import babel from "@rollup/plugin-babel"
 import type { RollupReplaceOptions } from "@rollup/plugin-replace"
@@ -8,17 +9,12 @@ import prettier from "rollup-plugin-prettier"
 import node from "@rollup/plugin-node-resolve"
 import { rollup } from "rollup"
 import { formatSource } from "./format-source"
+import { dependencies, devDependencies } from "../package.json"
 
 interface BuildOptions {
   targetDir: string
-  format: "cjs" | "esm"
+  format: ModuleFormat
   packageName: string
-}
-
-interface RollupBuildOptions {
-  input: string
-  outputDir: string
-  inject: RollupReplaceOptions
 }
 
 export async function build({ targetDir, format, packageName }: BuildOptions) {
@@ -32,13 +28,27 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
 
   const buildRollup = async function (
     name: string,
-    { outputDir = OUT_DIR, inject = {} }: Partial<RollupBuildOptions>
+    {
+      outputDir = OUT_DIR,
+      inject = {},
+      externals = [],
+      moduleFormat = format,
+    }: {
+      outputDir?: string
+      inject?: RollupReplaceOptions
+      externals?: string[]
+      moduleFormat?: ModuleFormat
+    } = {}
   ) {
     const bundle = await rollup({
       input: `./src/${name}.ts`,
-      external: [packageName, `${packageName}/min`],
+      external: [...externals, packageName, `${packageName}/min`],
       plugins: [
-        replace({ ...inject, preventAssignment: true }),
+        replace({
+          ...inject,
+          "process.env.TEST": "false",
+          preventAssignment: true,
+        }),
         babel({
           extensions,
           comments: false,
@@ -66,7 +76,7 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
     })
 
     await bundle.write({
-      format,
+      format: moduleFormat,
       file: `${outputDir}/${name}.js`,
       exports: "named",
       banner: "/* eslint-disable */",
@@ -80,6 +90,7 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
     delete source.private
     delete source.scripts
     delete source.prettier
+    delete source.pnpm
     if (isESM) {
       source.type = "module"
     } else {
@@ -107,14 +118,25 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
     copy("README.md", OUT_DIR),
     copy("CHANGELOG.md", OUT_DIR),
     copy("LICENSE", OUT_DIR),
-    fs.writeFile(resolve(OUT_DIR, "index.d.ts"), 'export * from "./types/index.d"'),
+    fs.writeFile(
+      resolve(OUT_DIR, "index.d.ts"),
+      /* javascript */ `export * from "./types/index.d";`
+    ),
+    fs.writeFile(
+      resolve(OUT_DIR, "styled.macro.d.ts"),
+      /* javascript */ `import { styled } from "./index.d";\nexport default styled;`
+    ),
     fs.writeFile(
       resolve(OUT_DIR, "jsx-dev-runtime.js"),
       format === "esm"
-        ? 'export * from "./jsx-runtime"'
-        : 'module.exports = require("./jsx-runtime")'
+        ? /* javascript */ `export * from "./jsx-runtime";`
+        : /* javascript */ `module.exports = require("./jsx-runtime");`
     ),
 
+    buildRollup("styled.macro", {
+      moduleFormat: "cjs",
+      externals: Object.keys(dependencies).concat(Object.keys(devDependencies)),
+    }),
     buildRollup("index", { inject: { __FULL_BUILD__: "true" } }),
     buildRollup("index", { outputDir: OUT_DIR_MIN, inject: { __FULL_BUILD__: "false" } }),
     buildRollup("jsx-runtime", {
@@ -124,7 +146,6 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
       outputDir: OUT_DIR_MIN,
       inject: { "./jsx-dom": `${packageName}/min`, delimiters: ["", ""] },
     }),
-
     reexport("index.d.ts", OUT_DIR_MIN, "../index"),
     reexport("jsx-runtime.d.ts", OUT_DIR_MIN, "./index", jsxRuntimeExports),
     reexport("jsx-runtime.d.ts", OUT_DIR, "./index", jsxRuntimeExports),

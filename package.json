@@ -1,6 +1,6 @@
 {
   "name": "jsx-dom",
-  "version": "8.0.1-beta.1",
+  "version": "8.0.1-beta.2",
   "description": "JSX to document.createElement.",
   "main": "index.js",
   "module": "index.js",
@@ -30,12 +30,16 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.14.7",
     "@babel/plugin-transform-typescript": "^7.15.0",
     "@babel/preset-react": "^7.14.5",
+    "@babel/types": "^7.15.6",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
     "@rollup/plugin-replace": "^3.0.0",
+    "@types/babel-plugin-macros": "^2.8.5",
     "@types/babel__core": "^7.1.15",
     "@types/chai": "^4.2.21",
     "@types/chai-string": "^1.4.2",
+    "@types/clean-css": "^4.2.5",
+    "@types/dedent": "^0.7.0",
     "@types/fs-extra": "^9.0.12",
     "@types/jsdom": "^16.2.13",
     "@types/lodash": "^4.14.172",
@@ -45,12 +49,15 @@
     "@types/prop-types": "^15.7.4",
     "@typescript-eslint/eslint-plugin": "4.29.1",
     "@typescript-eslint/parser": "4.29.1",
+    "babel-plugin-macros": "^3.1.0",
     "babel-plugin-minify-constant-folding": "^0.5.0",
     "babel-plugin-minify-dead-code-elimination": "^0.5.1",
     "babel-plugin-minify-guarded-expressions": "^0.4.4",
     "chai": "^4.3.4",
     "chai-string": "^1.5.0",
+    "clean-css": "^5.2.0",
     "coffeescript": "^2.5.1",
+    "dedent": "^0.7.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-import-resolver-typescript": "2.4.0",
@@ -98,5 +105,10 @@
     "semi": false,
     "singleQuote": false,
     "trailingComma": "es5"
+  },
+  "pnpm": {
+    "overrides": {
+      "@babel/types": "7.15.6"
+    }
   }
 }
