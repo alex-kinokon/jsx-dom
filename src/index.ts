@@ -1,27 +1,29 @@
-export { identity as memo } from "./util"
-export * from "./ref"
-export * from "./hooks"
+export { createRef, isRef } from "./ref"
+export { useClassList, useText } from "./hooks"
+export { memo, StrictMode, useCallback, useMemo, useRef } from "./react-compat-api"
 
 import { Component, Fragment, createElement } from "./jsx-dom"
 
 export { styled } from "./styled"
 
 export {
+  className,
+  Component,
+  Component as PureComponent,
+  createElement as h,
+  createElement,
   createFactory,
   Fragment,
-  Component,
-  className,
-  createElement,
-  createElement as h,
-  jsx,
   jsx as jsxs,
+  jsx,
   SVGNamespace,
 } from "./jsx-dom"
 
 export default {
+  Component,
+  PureComponent: Component,
   createElement,
   Fragment,
-  Component,
 }
 
 export function preventDefault(event: Event) {
