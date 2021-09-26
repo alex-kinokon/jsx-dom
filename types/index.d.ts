@@ -370,8 +370,8 @@ export interface DOMAttributes<T> {
   // Image Events
   onLoad?: ReactEventHandler<T> | undefined
   onLoadCapture?: ReactEventHandler<T> | undefined
-  onError?: ReactEventHandler<T> // also a Media Event| undefined
-  onErrorCapture?: ReactEventHandler<T> // also a Media Event| undefined
+  onError?: ReactEventHandler<T> | undefined // also a Media Event
+  onErrorCapture?: ReactEventHandler<T> | undefined // also a Media Event
 
   // Keyboard Events
   onKeyDown?: KeyboardEventHandler<T> | undefined
