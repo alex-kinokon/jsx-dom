@@ -320,7 +320,7 @@ namespace SVG {
 }
 ```
 
-## API
+## API Compatibility with React
 The following functions are included for compatibility with React API:
 
 ```ts
@@ -328,13 +328,16 @@ function createFactory(component: string): (props: object) => JSX.Element
 function useRef<T>(initialValue?: T): RefObject<T>
 ```
 
-The following functions do **not** have memoization, and are only useful if you are
+The following functions do **not** have memoization or optimization, and are only useful if you are
 migrating from/to React.
 
 ```ts
 function memo<P, T extends (props: P) => JSX.Element>(render: T): T
 function useMemo<T>(fn: () => T, deps: any[]): T
 function useCallback<T extends Function>(fn: T, deps: any[]): T
+
+const StrictMode: React.FC
+class PureComponent {}
 ```
 
 ## Browser Support

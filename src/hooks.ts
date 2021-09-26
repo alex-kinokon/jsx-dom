@@ -1,8 +1,6 @@
 import { className } from "./jsx-dom"
 import type { ClassList, ClassNames } from "../types/index"
 
-export { identity as useCallback } from "./util"
-
 export function useText(initialValue?: string) {
   const text = new Text()
   Object.defineProperty(text, "toString", {

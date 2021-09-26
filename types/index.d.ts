@@ -38,12 +38,12 @@ type ClassName = string | { [key: string]: boolean } | false | null | undefined 
 
 export type ClassNames = ClassName | ClassList
 
-interface RefObject<T> {
+export interface RefObject<T> {
   readonly current: T | null
 }
-type RefCallback<T> = (instance: T) => void
+export type RefCallback<T> = (instance: T) => void
 
-type Ref<T> = RefCallback<T> | RefObject<T> | null
+export type Ref<T> = RefCallback<T> | RefObject<T> | null
 
 /**
  * @internal You shouldn't need to use this type since you never see these attributes
@@ -89,7 +89,7 @@ type ReactChild = Node | ReactText
 type ReactChildren = ReactNodeArray | NodeList | HTMLCollection
 
 interface ReactNodeArray extends Array<ReactNode> {}
-type ReactNode =
+export type ReactNode =
   | ReactChild
   | ReactChildren
   | DocumentFragment
@@ -171,6 +171,7 @@ export function jsx<T extends Element>(
 ): T
 
 export function Fragment(props: { children?: ReactNode | undefined }): any // DocumentFragment
+export function StrictMode(props: { children?: ReactNode | undefined }): any // DocumentFragment
 
 export interface FunctionComponent<P = {}, T extends Element = JSX.Element> {
   (props: PropsWithChildren<P>, context?: any): T | null
@@ -192,9 +193,11 @@ export class Component<P = {}, T extends Element = JSX.Element> {
   render(): T | null
 }
 
+export { Component as PureComponent }
+
 type PropsWithChildren<P> = P & { children?: ReactNode | undefined }
 
-type ComponentType<P = {}, T extends Element = JSX.Element> =
+export type ComponentType<P = {}, T extends Element = JSX.Element> =
   | ComponentClass<P, T>
   | FunctionComponent<P, T>
 
@@ -207,7 +210,7 @@ type ComponentType<P = {}, T extends Element = JSX.Element> =
 // TODO (TypeScript 3.0): ReadonlyArray<unknown>
 type DependencyList = ReadonlyArray<any>
 
-interface MutableRefObject<T> {
+export interface MutableRefObject<T> {
   current: T
 }
 
@@ -303,28 +306,28 @@ type ChangeEvent = Event
 
 type EventHandler<E extends Event, T> = (this: T, event: E & CurrentTarget<T>) => void
 
-type ReactEventHandler<T = Element> = EventHandler<Event, T>
+export type ReactEventHandler<T = Element> = EventHandler<Event, T>
 
-type ClipboardEventHandler<T = Element> = EventHandler<ClipboardEvent, T>
-type CompositionEventHandler<T = Element> = EventHandler<CompositionEvent, T>
-type DragEventHandler<T = Element> = EventHandler<DragEvent, T>
-type FocusEventHandler<T = Element> = EventHandler<FocusEvent, T>
-type FormEventHandler<T = Element> = EventHandler<FormEvent, T>
-type ChangeEventHandler<T = Element> = EventHandler<ChangeEvent, T>
-type KeyboardEventHandler<T = Element> = EventHandler<KeyboardEvent, T>
-type MouseEventHandler<T = Element> = EventHandler<MouseEvent, T>
-type TouchEventHandler<T = Element> = EventHandler<TouchEvent, T>
-type PointerEventHandler<T = Element> = EventHandler<PointerEvent, T>
-type UIEventHandler<T = Element> = EventHandler<UIEvent, T>
-type WheelEventHandler<T = Element> = EventHandler<WheelEvent, T>
-type AnimationEventHandler<T = Element> = EventHandler<AnimationEvent, T>
-type TransitionEventHandler<T = Element> = EventHandler<TransitionEvent, T>
+export type ClipboardEventHandler<T = Element> = EventHandler<ClipboardEvent, T>
+export type CompositionEventHandler<T = Element> = EventHandler<CompositionEvent, T>
+export type DragEventHandler<T = Element> = EventHandler<DragEvent, T>
+export type FocusEventHandler<T = Element> = EventHandler<FocusEvent, T>
+export type FormEventHandler<T = Element> = EventHandler<FormEvent, T>
+export type ChangeEventHandler<T = Element> = EventHandler<ChangeEvent, T>
+export type KeyboardEventHandler<T = Element> = EventHandler<KeyboardEvent, T>
+export type MouseEventHandler<T = Element> = EventHandler<MouseEvent, T>
+export type TouchEventHandler<T = Element> = EventHandler<TouchEvent, T>
+export type PointerEventHandler<T = Element> = EventHandler<PointerEvent, T>
+export type UIEventHandler<T = Element> = EventHandler<UIEvent, T>
+export type WheelEventHandler<T = Element> = EventHandler<WheelEvent, T>
+export type AnimationEventHandler<T = Element> = EventHandler<AnimationEvent, T>
+export type TransitionEventHandler<T = Element> = EventHandler<TransitionEvent, T>
 
 export type DetailedHTMLProps<E extends HTMLAttributes<T>, T> = AttrWithRef<T> & E
 
 export interface SVGProps<T> extends SVGAttributes<T>, AttrWithRef<T> {}
 
-interface DOMAttributes<T> {
+export interface DOMAttributes<T> {
   children?: ReactNode | undefined
   dangerouslySetInnerHTML?: { __html: string } | undefined
 
@@ -531,7 +534,7 @@ export interface CSSProperties extends CSS.Properties<string | number> {
 }
 
 // All the WAI-ARIA 1.1 attributes from https://www.w3.org/TR/wai-aria-1.1/
-interface AriaAttributes {
+export interface AriaAttributes {
   /** Identifies the currently active element when DOM focus is on a composite widget, textbox, group, or application. */
   "aria-activedescendant"?: string | undefined
   /** Indicates whether assistive technologies will present all, or only parts of, the changed region based on the change notifications defined by the aria-relevant attribute. */
@@ -886,7 +889,7 @@ export interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
   is?: string | undefined
 }
 
-interface AllHTMLAttributes<T> extends HTMLAttributes<T> {
+export interface AllHTMLAttributes<T> extends HTMLAttributes<T> {
   // Standard HTML Attributes
   accept?: string | undefined
   acceptCharset?: string | undefined
@@ -996,7 +999,7 @@ interface AllHTMLAttributes<T> extends HTMLAttributes<T> {
   wrap?: string | undefined
 }
 
-type HTMLAttributeReferrerPolicy =
+export type HTMLAttributeReferrerPolicy =
   | ""
   | "no-referrer"
   | "no-referrer-when-downgrade"
@@ -1007,7 +1010,7 @@ type HTMLAttributeReferrerPolicy =
   | "strict-origin-when-cross-origin"
   | "unsafe-url"
 
-type HTMLAttributeAnchorTarget = "_self" | "_blank" | "_parent" | "_top" | (string & {})
+export type HTMLAttributeAnchorTarget = "_self" | "_blank" | "_parent" | "_top" | (string & {})
 
 interface AnchorHTMLAttributes<T> extends HTMLAttributes<T> {
   download?: any | undefined

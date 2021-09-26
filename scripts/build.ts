@@ -33,16 +33,23 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
       inject = {},
       externals = [],
       moduleFormat = format,
+      cjsExtension = false,
     }: {
       outputDir?: string
       inject?: RollupReplaceOptions
       externals?: string[]
       moduleFormat?: ModuleFormat
+      cjsExtension?: boolean
     } = {}
   ) {
     const bundle = await rollup({
       input: `./src/${name}.ts`,
       external: [...externals, packageName, `${packageName}/min`],
+      onwarn(warning, rollupWarn) {
+        if (warning.code !== "CIRCULAR_DEPENDENCY") {
+          rollupWarn(warning)
+        }
+      },
       plugins: [
         replace({
           ...inject,
@@ -77,7 +84,7 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
 
     await bundle.write({
       format: moduleFormat,
-      file: `${outputDir}/${name}.js`,
+      file: `${outputDir}/${name}.${cjsExtension ? "cjs" : "js"}`,
       exports: "named",
       banner: "/* eslint-disable */",
     })
@@ -135,6 +142,7 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
 
     buildRollup("styled.macro", {
       moduleFormat: "cjs",
+      cjsExtension: true,
       externals: Object.keys(dependencies).concat(Object.keys(devDependencies)),
     }),
     buildRollup("index", { inject: { __FULL_BUILD__: "true" } }),
