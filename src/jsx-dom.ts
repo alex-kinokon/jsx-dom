@@ -145,6 +145,12 @@ export function jsx(tag: any, { children, ...attr }, key?: string) {
       : document.createElement(tag)
     attributes(attr, node)
     appendChild(children, node)
+
+    if (isRef(attr.ref)) {
+      attr.ref.current = node
+    } else if (isFunction(attr.ref)) {
+      attr.ref(node)
+    }
   } else if (isFunction(tag)) {
     // Custom elements.
     if (isObject(tag.defaultProps)) {
@@ -154,12 +160,6 @@ export function jsx(tag: any, { children, ...attr }, key?: string) {
     node = isComponentClass(tag)
       ? initComponentClass(tag, attr, children)
       : tag({ ...attr, children })
-  }
-
-  if (isRef(attr.ref)) {
-    attr.ref.current = node
-  } else if (isFunction(attr.ref)) {
-    attr.ref(node)
   }
   return node
 }
