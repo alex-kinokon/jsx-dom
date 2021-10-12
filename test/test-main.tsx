@@ -298,14 +298,19 @@ describe("jsx-dom", () => {
 
     it("supports ref in functional components", () => {
       let button = null
-      const Button = ({ ref }) => <button ref={ref} />
+      const Button = ({ ref }) => (
+        <span>
+          <button ref={ref} />
+        </span>
+      )
       const div = (
         <div>
           <Button ref={e => (button = e)} />
         </div>
       )
       expect(button).not.to.be.null
-      expect(div.children[0]).to.equal(button)
+      expect(div.children[0].children[0]).to.equal(button)
+      expect(button).to.be.instanceOf(HTMLButtonElement)
     })
 
     it("supports defaultProps in functional components", () => {
