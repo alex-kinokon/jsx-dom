@@ -2,8 +2,6 @@
 
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![build status](https://travis-ci.org/proteriax/jsx-dom.svg?branch=master)](https://travis-ci.org/proteriax/jsx-dom)
-[![dependency status](https://david-dm.org/proteriax/jsx-dom/status.svg)](https://david-dm.org/proteriax/jsx-dom#info=dependencies)
-[![devDependency status](https://david-dm.org/proteriax/jsx-dom/dev-status.svg)](https://david-dm.org/proteriax/jsx-dom#info=devDependencies)
 [![npm version](https://badge.fury.io/js/jsx-dom.svg)](https://badge.fury.io/js/jsx-dom)
 
 Use JSX for creating DOM elements. Supports ES Module and TypeScript.
