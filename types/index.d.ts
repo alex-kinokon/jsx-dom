@@ -993,7 +993,7 @@ export interface AllHTMLAttributes<T> extends HTMLAttributes<T> {
   target?: string | undefined
   type?: string | undefined
   useMap?: string | undefined
-  value?: string | readonly string[] | number | undefined
+  value?: string | number | undefined
   width?: number | string | undefined
   wmode?: string | undefined
   wrap?: string | undefined
@@ -1059,7 +1059,7 @@ interface ButtonHTMLAttributes<T> extends HTMLAttributes<T> {
   formTarget?: string | undefined
   name?: string | undefined
   type?: "submit" | "reset" | "button" | undefined
-  value?: string | readonly string[] | number | undefined
+  value?: string | number | undefined
 }
 
 interface CanvasHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -1077,7 +1077,7 @@ interface ColgroupHTMLAttributes<T> extends HTMLAttributes<T> {
 }
 
 interface DataHTMLAttributes<T> extends HTMLAttributes<T> {
-  value?: string | readonly string[] | number | undefined
+  value?: string | number | undefined
 }
 
 interface DetailsHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -1218,7 +1218,7 @@ interface LabelHTMLAttributes<T> extends HTMLAttributes<T> {
 }
 
 interface LiHTMLAttributes<T> extends HTMLAttributes<T> {
-  value?: string | readonly string[] | number | undefined
+  value?: number | undefined
 }
 
 interface LinkHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -1271,7 +1271,7 @@ interface MeterHTMLAttributes<T> extends HTMLAttributes<T> {
   max?: number | string | undefined
   min?: number | string | undefined
   optimum?: number | undefined
-  value?: string | readonly string[] | number | undefined
+  value?: number | undefined
 }
 
 interface QuoteHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -1305,7 +1305,7 @@ interface OptionHTMLAttributes<T> extends HTMLAttributes<T> {
   disabled?: boolean | undefined
   label?: string | undefined
   selected?: boolean | undefined
-  value?: string | readonly string[] | number | undefined
+  value?: string | number | undefined
 }
 
 interface OutputHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -1321,7 +1321,7 @@ interface ParamHTMLAttributes<T> extends HTMLAttributes<T> {
 
 interface ProgressHTMLAttributes<T> extends HTMLAttributes<T> {
   max?: number | string | undefined
-  value?: string | readonly string[] | number | undefined
+  value?: number | undefined
 }
 
 interface ScriptHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -1393,7 +1393,7 @@ interface TextareaHTMLAttributes<T> extends HTMLAttributes<T> {
   readOnly?: boolean | undefined
   required?: boolean | undefined
   rows?: number | undefined
-  value?: string | readonly string[] | number | undefined
+  value?: string | number | undefined
   wrap?: string | undefined
 
   onChange?: ChangeEventHandler<T> | undefined

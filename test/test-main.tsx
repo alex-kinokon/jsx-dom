@@ -338,6 +338,79 @@ describe("jsx-dom", () => {
       expect(cast<HTML.TextArea>(<textarea spellCheck={true} />).spellcheck).to.equal(true)
       expect(cast<HTML.TextArea>(<textarea spellCheck={false} />).spellcheck).to.equal(false)
     })
+
+    it("supports value attribute on textarea", () => {
+      expect(cast<HTML.TextArea>(<textarea value="Test" />).value).to.equal("Test")
+      expect(cast<HTML.TextArea>(<textarea value={undefined} />).value).to.equal("")
+    })
+
+    it("supports value attribute on select", () => {
+      const select = (
+        <select value="B">
+          <option value="A"></option>
+          <option value="B"></option>
+          <option value="C"></option>
+        </select>
+      ) as HTMLSelectElement
+
+      expect(select.querySelector<HTMLOptionElement>("[value=B]").selected).to.equal(true)
+
+      const selectDeep = (
+        <select value={["C"]}>
+          <optgroup label="Group 1">
+            <option value="A"></option>
+          </optgroup>
+          <optgroup label="Group 2">
+            <option value="B" selected></option>
+            <option value="C"></option>
+          </optgroup>
+        </select>
+      ) as HTMLSelectElement
+
+      expect(selectDeep.querySelector<HTMLOptionElement>("[value=C]").selected).to.equal(true)
+    })
+
+    it("supports value attribute on select with multiple", () => {
+      const select = (
+        <select multiple value={["B", "C"]}>
+          <option value="A" selected></option>
+          <option value="B" selected></option>
+          <option value="C"></option>
+        </select>
+      ) as HTMLSelectElement
+
+      expect(select.querySelector<HTMLOptionElement>("[value=A]").selected).to.equal(false)
+      expect(select.querySelector<HTMLOptionElement>("[value=B]").selected).to.equal(true)
+      expect(select.querySelector<HTMLOptionElement>("[value=C]").selected).to.equal(true)
+
+      const selectSingle = (
+        <select multiple value={"C"}>
+          <option value="A"></option>
+          <option value="B" selected></option>
+          <option value="C" selected></option>
+        </select>
+      ) as HTMLSelectElement
+
+      expect(selectSingle.querySelector<HTMLOptionElement>("[value=A]").selected).to.equal(false)
+      expect(selectSingle.querySelector<HTMLOptionElement>("[value=B]").selected).to.equal(false)
+      expect(selectSingle.querySelector<HTMLOptionElement>("[value=C]").selected).to.equal(true)
+
+      const selectDeep = (
+        <select multiple value={["A", "B"]}>
+          <optgroup label="Group 1">
+            <option value="A"></option>
+          </optgroup>
+          <optgroup label="Group 2">
+            <option value="B" selected></option>
+            <option value="C"></option>
+          </optgroup>
+        </select>
+      ) as HTMLSelectElement
+
+      expect(selectDeep.querySelector<HTMLOptionElement>("[value=A]").selected).to.equal(true)
+      expect(selectDeep.querySelector<HTMLOptionElement>("[value=B]").selected).to.equal(true)
+      expect(selectDeep.querySelector<HTMLOptionElement>("[value=C]").selected).to.equal(false)
+    })
   })
 
   describe("styles", () => {
