@@ -18,7 +18,7 @@ pnpm add jsx-dom
 
 ## Usage
 
-**Note:** `jsx-dom` is ESM only. If you absolutely need CommonJS support, use `jsx-dom-cjs` instead.
+`jsx-dom` is ESM only. If you need CommonJS support, install `jsx-dom-cjs` instead. These two packages only differ in module format.
 
 **Note:** If you are using [React Automatic Runtime](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx), simply set `jsxImportSource` to `jsx-dom` or `jsx-dom/min` and you can omit the import.
 
@@ -290,20 +290,23 @@ function Component() {
 Some extra features are provided by this package:
 
 ```ts
-function preventDefault(event: Event): Event
+// Returns the event object
+export function preventDefault(event: Event): Event;
 
-function stopPropagation(event: Event): Event
+// Returns the event object
+export function stopPropagation(event: Event): Event;
 
-/** `namespaceURI` string for SVG Elements. */
-const SVGNamespace: string
+// `namespaceURI` string for SVG Elements.
+export const SVGNamespace: string;
 
-function className(value: any): string
+// Convert a value into a className string. See docs above.
+export function className(value: any): string;
 ```
 
 ### Type aliases for convenience
 ```ts
 /** Short type aliases for HTML elements */
-namespace HTML {
+export namespace HTML {
     type Anchor = HTMLAnchorElement
     type Button = HTMLButtonElement
     type Div = HTMLDivElement
@@ -311,7 +314,7 @@ namespace HTML {
 }
 
 /** Short type aliases for SVG elements */
-namespace SVG {
+export namespace SVG {
     type Anchor = SVGAElement
     type Animate = SVGAnimateElement
     ...
@@ -330,12 +333,16 @@ The following functions do **not** have memoization or optimization, and are onl
 migrating from/to React.
 
 ```ts
-function memo<P, T extends (props: P) => JSX.Element>(render: T): T
-function useMemo<T>(fn: () => T, deps: any[]): T
-function useCallback<T extends Function>(fn: T, deps: any[]): T
+// Returns `render` function
+export function memo<P, T extends (props: P) => JSX.Element>(render: T): T;
+// Returns `fn` function
+export function useMemo<T>(fn: () => T, deps: any[]): T;
+// Returns `fn` function
+export function useCallback<T extends Function>(fn: T, deps: any[]): T;
 
-const StrictMode: React.FC
-class PureComponent {}
+export const StrictMode: React.FC;
+
+export class PureComponent {}
 ```
 
 ## Browser Support
