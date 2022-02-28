@@ -127,7 +127,7 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
     copy("LICENSE", OUT_DIR),
     fs.writeFile(
       resolve(OUT_DIR, "index.d.ts"),
-      /* javascript */ `export * from "./types/index.d";`
+      /* javascript */ `export * from "./types/index.d";\nexport as namespace jsxDom;`
     ),
     fs.writeFile(
       resolve(OUT_DIR, "styled.macro.d.ts"),
