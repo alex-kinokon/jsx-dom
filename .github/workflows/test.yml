@@ -18,9 +18,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-
 
-      - uses: pnpm/action-setup@v2.0.1
+      - uses: pnpm/action-setup@v2.2.1
         with:
-          version: 6.0.2
+          version: 7.0.0-rc.7
           run_install: true
 
       - name: Run build
