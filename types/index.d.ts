@@ -92,6 +92,7 @@ interface ReactNodeArray extends Array<ReactNode> {}
 export type ReactNode =
   | ReactChild
   | ReactChildren
+  | ShadowRootContainer
   | DocumentFragment
   | Text
   | Comment
@@ -173,6 +174,25 @@ export function jsx<T extends Element>(
 export function Fragment(props: { children?: ReactNode | undefined }): any // DocumentFragment
 export function StrictMode(props: { children?: ReactNode | undefined }): any // DocumentFragment
 
+declare const jsxDomType: unique symbol
+declare const enum JsxDomType {
+  ShadowRoot = "ShadowRoot",
+}
+
+type ShadowRootContainer = ReturnType<typeof ShadowRoot>
+
+export function ShadowRoot(
+  props: ShadowRootInit & {
+    ref?: RefObject<ShadowRoot> | ((value: ShadowRoot) => void)
+    children?: ReactNode | undefined
+  }
+): {
+  [jsxDomType]: JsxDomType
+  attr: ShadowRootInit
+  ref?: RefObject<ShadowRoot> | ((value: ShadowRoot) => void)
+  children: ReactElement | ReactElement[]
+}
+
 export interface FunctionComponent<P = {}, T extends Element = JSX.Element> {
   (props: PropsWithChildren<P>, context?: any): T | null
   defaultProps?: Partial<P>
@@ -226,7 +246,7 @@ export function createRef<T = any>(): RefObject<T>
  * @version 16.8.0
  * @see https://reactjs.org/docs/hooks-reference.html#useref
  */
-export function useRef<T extends unknown>(initialValue: T): MutableRefObject<T>
+export function useRef<T>(initialValue: T): MutableRefObject<T>
 
 // convenience overload for refs given as a ref prop as they typically start with a null value
 /**
@@ -242,7 +262,7 @@ export function useRef<T extends unknown>(initialValue: T): MutableRefObject<T>
  * @version 16.8.0
  * @see https://reactjs.org/docs/hooks-reference.html#useref
  */
-export function useRef<T extends unknown>(initialValue: T | null): RefObject<T>
+export function useRef<T>(initialValue: T | null): RefObject<T>
 
 // convenience overload for potentially undefined initialValue / call with 0 arguments
 // has a default to stop it from defaulting to {} instead

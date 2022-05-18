@@ -13,6 +13,8 @@ Object.assign(global, {
   SVGElement: window.SVGElement,
   HTMLButtonElement: window.HTMLButtonElement,
   DOMTokenList: window.DOMTokenList,
+  DocumentFragment: window.DocumentFragment,
+  ShadowRoot: window.ShadowRoot,
   customElements: window.customElements,
 
   __FULL_BUILD__: true,
