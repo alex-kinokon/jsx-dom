@@ -6,6 +6,8 @@ import { Component, Fragment, createElement } from "./jsx-dom"
 
 export { styled } from "./styled"
 
+export { ShadowRoot } from "./shadow"
+
 export {
   className,
   Component,
@@ -24,6 +26,7 @@ export default {
   PureComponent: Component,
   createElement,
   Fragment,
+  ShadowRoot,
 }
 
 export function preventDefault(event: Event) {

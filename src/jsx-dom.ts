@@ -13,6 +13,8 @@ import {
 } from "./util"
 import { isUnitlessNumber } from "./css-props"
 import type { ComponentClass, HTML, JSX } from "../types/index"
+import type { ShadowRootContainer } from "./shadow"
+import { isShadowRoot } from "./shadow"
 
 export const SVGNamespace = "http://www.w3.org/2000/svg"
 const XLinkNamespace = "http://www.w3.org/1999/xlink"
@@ -159,11 +161,7 @@ export function jsx(tag: any, { children, ...attr }, key?: string) {
       }
     }
 
-    if (isRef(attr.ref)) {
-      attr.ref.current = node
-    } else if (isFunction(attr.ref)) {
-      attr.ref(node)
-    }
+    attachRef(attr.ref, node)
   } else if (isFunction(tag)) {
     // Custom elements.
     if (isObject(tag.defaultProps)) {
@@ -173,6 +171,8 @@ export function jsx(tag: any, { children, ...attr }, key?: string) {
     node = isComponentClass(tag)
       ? initComponentClass(tag, attr, children)
       : tag({ ...attr, children })
+  } else {
+    throw new TypeError(`Invalid JSX element type: ${tag}`)
   }
   return node
 }
@@ -192,7 +192,18 @@ export function createElement(tag: any, attr: any, ...children: any[]) {
   return jsx(tag, { ...attr, children }, attr.key)
 }
 
-function appendChild(child: any[] | string | number | null | Element, node: Node) {
+function attachRef(ref: any | undefined, node: Node) {
+  if (isRef<Node>(ref)) {
+    ref.current = node
+  } else if (isFunction(ref)) {
+    ref(node)
+  }
+}
+
+function appendChild(
+  child: any[] | string | number | ShadowRootContainer | null | Element,
+  node: Node
+) {
   if (isArrayLike(child)) {
     appendChildren(child as any, node)
   } else if (isString(child) || isNumber(child)) {
@@ -201,6 +212,10 @@ function appendChild(child: any[] | string | number | null | Element, node: Node
     appendChildToNode(document.createComment(""), node)
   } else if (isElement(child)) {
     appendChildToNode(child, node)
+  } else if (isShadowRoot(child)) {
+    const shadowRoot = (node as HTMLElement).attachShadow(child.attr)
+    appendChild(child.children, shadowRoot)
+    attachRef(child.ref, shadowRoot)
   }
 }
 

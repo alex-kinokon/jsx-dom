@@ -99,6 +99,20 @@ document.body.appendChild(
 
 ```
 
+### Shadow DOM
+```tsx
+import { ShadowRoot } from "jsx-dom"
+
+document.body.appendChild(
+  <dialog>
+    <ShadowRoot mode="closed">
+      <style>:root { font-family: Helvetica Neue; }</style>
+      <button>Hello</button>
+    </ShadowRoot>
+  </dialog>
+)
+```
+
 
 ## Syntax
 
