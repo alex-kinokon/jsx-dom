@@ -235,7 +235,7 @@ function appendChildToNode(child: Node, node: Node) {
 }
 
 function normalizeAttribute(s: string, separator: string) {
-  return s.replace(/[A-Z\d]/g, match => separator + match.toLowerCase())
+  return s.replace(/[A-Z]/g, match => separator + match.toLowerCase())
 }
 
 function style(node: Element & HTMLOrSVGElement, value?: any) {
