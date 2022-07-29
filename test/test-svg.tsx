@@ -111,7 +111,17 @@ describe("SVG", () => {
     ].forEach(key => test(key))
   })
 
-  it("supports presentation svg attributes", () => {
+  it("supports alphanumeric SVG attributes", () => {
+    const el: SVGLineElement = <line x1={0} y1={0} x2={20} y2={20} />
+
+    expect(el.attributes.length).to.equal(4)
+
+    for (const attr of ["x1", "y1", "x2", "y2"]) {
+      expect(el.hasAttribute(attr)).to.be.true
+    }
+  })
+
+  it("supports presentation SVG attributes", () => {
     const element = (
       <svg>
         <path
