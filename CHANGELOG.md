@@ -1,3 +1,10 @@
+# 8.0.2
+- Bug fix: `import("jsx-dom").ShadowRoot` was not properly exported.
+
+# 8.0.0
+- Breaking change:
+  - [https://github.com/proteriax/jsx-dom/issues/65](Disabled rendering `false` as attribute to custom components).
+
 # 7.0.2
 - #61 Support rich data properties
 

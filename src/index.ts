@@ -3,9 +3,9 @@ export { useClassList, useText } from "./hooks"
 export { memo, StrictMode, useCallback, useMemo, useRef } from "./react-compat-api"
 
 import { Component, Fragment, createElement } from "./jsx-dom"
+import { ShadowRoot } from "./shadow"
 
 export { styled } from "./styled"
-
 export { ShadowRoot } from "./shadow"
 
 export {
