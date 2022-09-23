@@ -430,6 +430,55 @@ describe("jsx-dom", () => {
       const button = (<button onClick={() => done()} />) as HTMLButtonElement
       button.click()
     })
+    it("supports capture event listeners", done => {
+      const button = (
+        <button
+          onClickCapture={event => {
+            event.stopImmediatePropagation()
+            done()
+          }}
+          onClick={() => done("`onClickCapture` was not called")}
+        />
+      ) as HTMLButtonElement
+      button.click()
+    })
+    it("uses `element.on...` properties", () => {
+      const button = (<button onClick={() => void 0} />) as HTMLButtonElement
+      expect(button.onclick).to.be.a("function")
+    })
+    it("uses addEventListener", () => {
+      const button = (<button onCustomEvent={() => void 0} />) as HTMLButtonElement
+      // @ts-expect-error checking not existing property
+      expect(button.oncustomevent).to.not.be.a("function")
+      // @ts-expect-error checking not existing property
+      expect(button.customevent).to.not.be.a("function")
+    })
+    it("supports custom events", done => {
+      const button = (<button onCustomEvent={() => done()} />) as HTMLButtonElement
+      button.dispatchEvent(new window.Event("customevent"))
+    })
+    it("supports event listeners using `on` attribute", done => {
+      const button = (<button on={{ click: () => done() }} />) as HTMLButtonElement
+      button.click()
+    })
+    it("supports capture event listeners using `onCapture` attribute", done => {
+      const button = (
+        <button
+          onCapture={{
+            click: event => {
+              event.stopImmediatePropagation()
+              done()
+            },
+          }}
+          onClick={() => done("`onCapture` was not called")}
+        />
+      ) as HTMLButtonElement
+      button.click()
+    })
+    it("supports custom events using `on` attribute", done => {
+      const button = (<button on={{ CustomEvent: () => done() }} />) as HTMLButtonElement
+      button.dispatchEvent(new window.Event("CustomEvent"))
+    })
   })
 
   describe("forwardRef", () => {
