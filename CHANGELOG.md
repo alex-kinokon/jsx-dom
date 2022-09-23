@@ -1,3 +1,6 @@
+# 8.0.3
+- Added: [RFC Support capture events, fix custom events, support on/onCapture](https://github.com/alex-kinokon/jsx-dom/pull/70)
+
 # 8.0.2
 - Bug fix: `import("jsx-dom").ShadowRoot` was not properly exported.
 
