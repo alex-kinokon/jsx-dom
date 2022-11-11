@@ -351,7 +351,24 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
       } else if (useCapture) {
         node.addEventListener(attribute.substring(2, attribute.length - 7), value, true)
       } else {
-        node.addEventListener(attribute.substring(2), value)
+        let eventName;
+        if (attribute in window) {
+          // standard event
+          // the JSX attribute could have been "onMouseOver" and the
+          // member name "onmouseover" is on the window's prototype
+          // so let's add the listener "mouseover", which is all lowercased
+          let standardEventName = attribute.substring(2);
+          eventName = standardEventName;
+        } else {
+          // custom event
+          // the JSX attribute could have been "onMyCustomEvent"
+          // so let's trim off the "on" prefix and lowercase the first character
+          // and add the listener "myCustomEvent"
+          // except for the first character, we keep the event name case
+          let cutomEventName = attribute[2] + key.slice(3);
+          eventName = cutomEventName;
+        }
+        node.addEventListener(eventName, value)
       }
     }
   } else if (isObject(value)) {
