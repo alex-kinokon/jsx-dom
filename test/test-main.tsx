@@ -451,11 +451,11 @@ describe("jsx-dom", () => {
       // @ts-expect-error checking not existing property
       expect(button.oncustomevent).to.not.be.a("function")
       // @ts-expect-error checking not existing property
-      expect(button.customevent).to.not.be.a("function")
+      expect(button.customEvent).to.not.be.a("function")
     })
     it("supports custom events", done => {
       const button = (<button onCustomEvent={() => done()} />) as HTMLButtonElement
-      button.dispatchEvent(new window.Event("customevent"))
+      button.dispatchEvent(new window.Event("customEvent"))
     })
     it("supports event listeners using `on` attribute", done => {
       const button = (<button on={{ click: () => done() }} />) as HTMLButtonElement
