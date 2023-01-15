@@ -21,7 +21,7 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
   const isESM = format === "esm"
 
   const extensions = [".ts", ".js"]
-  const jsxRuntimeExports = ["jsx", "jsxs", "Fragment", "JSX"]
+  const jsxRuntimeExports = "jsx, jsxs, jsx as jsxDEV, Fragment, JSX"
 
   const OUT_DIR = resolve(__dirname, "..", targetDir)
   const OUT_DIR_MIN = resolve(OUT_DIR, "./min")
@@ -106,8 +106,8 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
     await fs.writeJSON(resolve(OUT_DIR, "package.json"), source, { spaces: 2 })
   }
 
-  async function reexport(name: string, dest: string, src: string, namedExports?: string[]) {
-    const imports = namedExports ? `{${namedExports.join(",")}}` : "*"
+  async function reexport(name: string, dest: string, src: string, namedExports?: string) {
+    const imports = namedExports ? `{${namedExports}}` : "*"
     const content = `export ${imports} from "${src}"`
 
     await fs.mkdirp(dest)
