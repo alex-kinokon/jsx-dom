@@ -196,6 +196,14 @@ describe("jsx-dom", () => {
 
       expect(node.className).to.equal("0 rest")
     })
+
+    it("accepts a DOMTokenList as classname", () => {
+      const base = (<div class="base" />) as HTMLDivElement
+      expect(base.classList).to.be.instanceOf(DOMTokenList)
+
+      const node = <div class={base.classList} />
+      expect(node.className).to.equal("base")
+    })
   })
 
   describe("attributes", () => {

@@ -26,6 +26,8 @@ function isVisibleChild(value: any): boolean {
   return !isBoolean(value) && value != null
 }
 
+const DomTokenList = typeof DOMTokenList !== "undefined" ? DOMTokenList : function () {}
+
 /**
  * Convert a `value` to a className string.
  * `value` can be a string, an array or a `Dictionary<boolean>`.
@@ -33,6 +35,8 @@ function isVisibleChild(value: any): boolean {
 export function className(value: any): string {
   if (Array.isArray(value)) {
     return value.map(className).filter(Boolean).join(" ")
+  } else if (value instanceof DomTokenList) {
+    return "" + value
   } else if (isObject(value)) {
     return keys(value)
       .filter(k => value[k])
@@ -122,7 +126,7 @@ export class Component {
   }
 }
 
-Object.defineProperties(Component.prototype, {
+/* @__PURE__ */ Object.defineProperties(Component.prototype, {
   isReactComponent: {
     value: true,
   },
@@ -351,22 +355,22 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
       } else if (useCapture) {
         node.addEventListener(attribute.substring(2, attribute.length - 7), value, true)
       } else {
-        let eventName;
+        let eventName
         if (attribute in window) {
           // standard event
           // the JSX attribute could have been "onMouseOver" and the
           // member name "onmouseover" is on the window's prototype
           // so let's add the listener "mouseover", which is all lowercased
-          let standardEventName = attribute.substring(2);
-          eventName = standardEventName;
+          const standardEventName = attribute.substring(2)
+          eventName = standardEventName
         } else {
           // custom event
           // the JSX attribute could have been "onMyCustomEvent"
           // so let's trim off the "on" prefix and lowercase the first character
           // and add the listener "myCustomEvent"
           // except for the first character, we keep the event name case
-          let cutomEventName = attribute[2] + key.slice(3);
-          eventName = cutomEventName;
+          const customEventName = attribute[2] + key.slice(3)
+          eventName = customEventName
         }
         node.addEventListener(eventName, value)
       }

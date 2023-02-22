@@ -1,3 +1,7 @@
+# 8.0.5
+- Added support for using `DOMTokenList` (e.g. `element.classList`) for `className`.
+- Renamed `ClassList` type declaration to `BasicClassList` to not confuse with the browser’s class list type.
+
 # 8.0.3
 - Added: [RFC Support capture events, fix custom events, support on/onCapture](https://github.com/alex-kinokon/jsx-dom/pull/70)
 

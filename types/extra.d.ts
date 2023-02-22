@@ -1,4 +1,4 @@
-import type { ClassList, ClassNames } from "./index.d"
+import type { BasicClassList, ClassNames } from "./index.d"
 
 // Utility functions
 export function stopPropagation(event: Event): Event
@@ -7,7 +7,7 @@ export function preventDefault(event: Event): Event
 export const SVGNamespace: "http://www.w3.org/2000/svg"
 
 export function useText(initialValue?: string): readonly [Text, (value: string) => void]
-export function useClassList(initialValue?: ClassNames): ClassList
+export function useClassList(initialValue?: ClassNames): BasicClassList
 
 export namespace HTML {
   export type Anchor = HTMLAnchorElement

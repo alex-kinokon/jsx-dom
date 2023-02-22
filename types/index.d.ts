@@ -14,7 +14,8 @@ type Booleanish = boolean | "true" | "false"
 export function className(value: ClassNames): string
 
 export { createElement as h, jsx as jsxs }
-export interface ClassList {
+
+export interface BasicClassList {
   (value: Element): void
   readonly size: number
   readonly value: string
@@ -36,7 +37,7 @@ type Key = string | number
 
 type ClassName = string | { [key: string]: boolean } | false | null | undefined | ClassName[]
 
-export type ClassNames = ClassName | ClassList
+export type ClassNames = ClassName | BasicClassList | DOMTokenList
 
 export interface RefObject<T> {
   readonly current: T | null

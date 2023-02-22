@@ -1,5 +1,5 @@
 import { className } from "./jsx-dom"
-import type { ClassList, ClassNames } from "../types/index"
+import type { BasicClassList, ClassNames } from "../types/index"
 
 export function useText(initialValue?: string) {
   const text = new Text()
@@ -54,5 +54,5 @@ export function useClassList(initialValue?: ClassNames) {
     })
   )
 
-  return ClassList as ClassList
+  return ClassList as BasicClassList
 }

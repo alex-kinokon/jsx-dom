@@ -1,4 +1,3 @@
-#!/usr/bin/env ts-node-transpile-only
 import { resolve } from "path"
 import type { ModuleFormat } from "rollup"
 import * as fs from "fs-extra"
@@ -58,9 +57,10 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
         }),
         babel({
           extensions,
-          comments: false,
+          comments: true,
           minified: false,
           babelHelpers: "bundled",
+          presets: ["@babel/preset-env"],
           plugins: [
             "@babel/plugin-transform-typescript",
             "minify-constant-folding",
@@ -98,6 +98,7 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
     delete source.scripts
     delete source.prettier
     delete source.pnpm
+    delete source.browserslist
     if (isESM) {
       source.type = "module"
     } else {
