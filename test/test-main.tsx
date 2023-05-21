@@ -487,6 +487,22 @@ describe("jsx-dom", () => {
       const button = (<button on={{ CustomEvent: () => done() }} />) as HTMLButtonElement
       button.dispatchEvent(new window.Event("CustomEvent"))
     })
+    it("maps onDoubleClick to dblclick event", done => {
+      const button = (<button onDoubleClick={() => done()} />) as HTMLButtonElement
+      button.dispatchEvent(new window.Event('dblclick'));
+    });
+    it("maps onDblClick to dblclick event", done => {
+      const button = (<button onDblClick={() => done()} />) as HTMLButtonElement
+      button.dispatchEvent(new window.Event('dblclick'));
+    });
+    it("maps onDoubleClickCapture to dblclick event", done => {
+      const button = (<button onDoubleClickCapture={() => done()} />) as HTMLButtonElement
+      button.dispatchEvent(new window.Event('dblclick'));
+    });
+    it("maps onDblClickCapture to dblclick event", done => {
+      const button = (<button onDblClickCapture={() => done()} />) as HTMLButtonElement
+      button.dispatchEvent(new window.Event('dblclick'));
+    });
   })
 
   describe("forwardRef", () => {
