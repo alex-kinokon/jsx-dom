@@ -349,9 +349,9 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
       let attribute = key.toLowerCase()
       const useCapture = attribute.endsWith("capture")
       if (attribute === "ondoubleclick") {
-        attribute = "ondblclick";
+        attribute = "ondblclick"
       } else if (useCapture && attribute === "ondoubleclickcapture") {
-        attribute = "ondblclickcapture";
+        attribute = "ondblclickcapture"
       }
 
       if (!useCapture && node[attribute] === null) {
