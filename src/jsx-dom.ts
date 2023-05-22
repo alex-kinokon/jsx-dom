@@ -346,12 +346,13 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
 
   if (isFunction(value)) {
     if (key[0] === "o" && key[1] === "n") {
-      var attribute = key.toLowerCase()
+      let attribute = key.toLowerCase()
       const useCapture = attribute.endsWith("capture")
-      if (attribute == "ondoubleclick")
+      if (attribute === "ondoubleclick") {
         attribute = "ondblclick";
-      else if (useCapture && attribute == "ondoubleclickcapture")
+      } else if (useCapture && attribute === "ondoubleclickcapture") {
         attribute = "ondblclickcapture";
+      }
 
       if (!useCapture && node[attribute] === null) {
         // use property when possible PR #17
