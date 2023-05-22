@@ -572,6 +572,8 @@ export interface DOMAttributes<T> {
   onClickCapture?: MouseEventHandler<T> | undefined
   onContextMenu?: MouseEventHandler<T> | undefined
   onContextMenuCapture?: MouseEventHandler<T> | undefined
+  onDblClick?: MouseEventHandler<T> | undefined
+  onDblClickCapture?: MouseEventHandler<T> | undefined
   onDoubleClick?: MouseEventHandler<T> | undefined
   onDoubleClickCapture?: MouseEventHandler<T> | undefined
   onDrag?: DragEventHandler<T> | undefined

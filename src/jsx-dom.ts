@@ -139,7 +139,7 @@ function initComponentClass(Class: ComponentClass, attr, children) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function jsx(tag: any, { children, ...attr }, key?: string) {
+export function jsx(tag: any, { children, ...attr }, _key?: string) {
   if (__FULL_BUILD__ && !attr.namespaceURI && svg[tag] === 0) {
     attr = { ...attr, namespaceURI: SVGNamespace }
   }
@@ -346,8 +346,13 @@ function attribute(key: string, value: any, node: Element & HTMLOrSVGElement) {
 
   if (isFunction(value)) {
     if (key[0] === "o" && key[1] === "n") {
-      const attribute = key.toLowerCase()
+      let attribute = key.toLowerCase()
       const useCapture = attribute.endsWith("capture")
+      if (attribute === "ondoubleclick") {
+        attribute = "ondblclick"
+      } else if (useCapture && attribute === "ondoubleclickcapture") {
+        attribute = "ondblclickcapture"
+      }
 
       if (!useCapture && node[attribute] === null) {
         // use property when possible PR #17
