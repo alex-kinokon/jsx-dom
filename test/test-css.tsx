@@ -60,4 +60,16 @@ describe("CSS", () => {
     testUnitless("WebkitFlex")
     testUnitless("MozFlex")
   })
+
+  it("supports CSS custom properties (variables)", () => {
+    const test = (key: string, value: string) =>
+      expect((<div style={{ [key]: value }} />).style.getPropertyValue(key)).to.equal(value, key)
+
+    test("--my-variable", "1")
+    test("--my-variable", "1px")
+    test("--my-variable", "anystring")
+    test("--myVariable", "1")
+    test("--myVariable", "1px")
+    test("--myVariable", "anystring")
+  })
 })

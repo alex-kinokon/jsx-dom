@@ -251,7 +251,11 @@ function style(node: Element & HTMLOrSVGElement, value?: any) {
     node.setAttribute("style", value)
   } else if (isObject(value)) {
     forEach(value, (val, key) => {
-      if (__FULL_BUILD__ && isNumber(val) && isUnitlessNumber[key] !== 0) {
+      if (key.indexOf('-') === 0) {
+        // CSS custom properties (variables) start with `-` (e.g. `--my-variable`)
+        // and must be assigned via `setProperty`.
+        cast<HTMLElement>(node).style.setProperty(key, val)
+      } else if (__FULL_BUILD__ && isNumber(val) && isUnitlessNumber[key] !== 0) {
         cast<HTMLElement>(node).style[key] = val + "px"
       } else {
         cast<HTMLElement>(node).style[key] = val
