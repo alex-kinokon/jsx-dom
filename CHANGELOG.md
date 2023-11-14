@@ -1,7 +1,9 @@
 # 8.1.0
 - Fixes #97: support `disabled` on `<link>` element.
 - Fixes #94: supports `forwardRef` and `useImperativeHandle`.
+- Fixes #68: exports more types.
 - Bumped TypeScript definition sync with `@types/react` at #e05c7e9.
+- Removes all `*Capture` event listener types. They were never supported.
 
 # 8.0.5
 - Added support for using `DOMTokenList` (e.g. `element.classList`) for `className`.
