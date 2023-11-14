@@ -196,8 +196,8 @@ export function createElement(tag: any, attr: any, ...children: any[]) {
   return jsx(tag, { ...attr, children }, attr.key)
 }
 
-function attachRef(ref: any | undefined, node: Node) {
-  if (isRef<Node>(ref)) {
+export function attachRef<T = Node>(ref: any | undefined, node: T) {
+  if (isRef<T>(ref)) {
     ref.current = node
   } else if (isFunction(ref)) {
     ref(node)
@@ -251,7 +251,7 @@ function style(node: Element & HTMLOrSVGElement, value?: any) {
     node.setAttribute("style", value)
   } else if (isObject(value)) {
     forEach(value, (val, key) => {
-      if (key.indexOf('-') === 0) {
+      if (key.indexOf("-") === 0) {
         // CSS custom properties (variables) start with `-` (e.g. `--my-variable`)
         // and must be assigned via `setProperty`.
         cast<HTMLElement>(node).style.setProperty(key, val)

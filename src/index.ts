@@ -1,6 +1,14 @@
 export { createRef, isRef } from "./ref"
 export { useClassList, useText } from "./hooks"
-export { memo, StrictMode, useCallback, useMemo, useRef } from "./react-compat-api"
+export {
+  forwardRef,
+  memo,
+  StrictMode,
+  useCallback,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+} from "./react-compat-api"
 
 import { Component, Fragment, createElement } from "./jsx-dom"
 import { ShadowRoot } from "./shadow"

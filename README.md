@@ -340,7 +340,11 @@ The following functions are included for compatibility with React API:
 
 ```ts
 function createFactory(component: string): (props: object) => JSX.Element
+function useImperativeHandle<T>(ref: Ref<T>, init: () => T, deps?: DependencyList): void
 function useRef<T>(initialValue?: T): RefObject<T>
+function forwardRef<T = Node, P = {}>(
+  render: (props: P, ref: Ref<T>) => ReactNode
+): FunctionComponent<P & { ref?: Ref<T> }>
 ```
 
 The following functions do **not** have memoization or optimization, and are only useful if you are

@@ -58,7 +58,7 @@ interface AttrWithRef<T> extends Attributes {
   ref?: Ref<T> | undefined
 }
 
-type ReactElement = HTMLElement | SVGElement
+export type ReactElement = HTMLElement | SVGElement
 
 type DOMFactory<P extends DOMAttributes<T>, T extends Element> = (
   props?: (AttrWithRef<T> & P) | null,
@@ -256,6 +256,13 @@ export interface MutableRefObject<T> {
 export function createRef<T = any>(): RefObject<T>
 
 /**
+ * React compatibility-only API.
+ */
+export function forwardRef<T = Node, P = {}>(
+  render: (props: P, ref: Ref<T>) => ReactNode
+): FunctionComponent<P & { ref?: Ref<T> }>
+
+/**
  * `useRef` returns a mutable ref object whose `.current` property is initialized to the passed argument
  * (`initialValue`). The returned object will persist for the full lifetime of the component.
  *
@@ -296,6 +303,8 @@ export function useRef<T>(initialValue: T | null): RefObject<T>
  * @see https://react.dev/reference/react/useRef
  */
 export function useRef<T = unknown>(): MutableRefObject<T | undefined>
+
+export function useImperativeHandle<T>(ref: Ref<T>, init: () => T, deps?: DependencyList): void
 
 // I made 'inputs' required here and in useMemo as there's no point to memoizing without the memoization key
 // useCallback(X) is identical to just using X, useMemo(() => Y) is identical to just using Y.

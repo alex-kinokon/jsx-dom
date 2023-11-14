@@ -1,3 +1,8 @@
+# 8.1.0
+- Fixes #97: support `disabled` on `<link>` element.
+- Fixes #94: supports `forwardRef` and `useImperativeHandle`.
+- Bumped TypeScript definition sync with `@types/react` at #e05c7e9.
+
 # 8.0.5
 - Added support for using `DOMTokenList` (e.g. `element.classList`) for `className`.
 - Renamed `ClassList` type declaration to `BasicClassList` to not confuse with the browser’s class list type.

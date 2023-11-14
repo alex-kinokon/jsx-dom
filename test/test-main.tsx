@@ -321,6 +321,62 @@ describe("jsx-dom", () => {
       expect(button).to.be.instanceOf(HTMLButtonElement)
     })
 
+    describe("supports forwardRef", () => {
+      it("element", () => {
+        const Container = React.forwardRef<HTMLButtonElement, any>((props, ref) => (
+          <div {...props}>
+            <button ref={ref}>Button</button>
+          </div>
+        ))
+
+        const ref = lib.createRef()
+        const node = (
+          <Container className="container" ref={ref}>
+            Click me!
+          </Container>
+        )
+        expect(node.className).to.equal("container")
+        expect(ref.current).to.be.instanceOf(HTMLButtonElement)
+      })
+
+      it("component", () => {
+        const Button = props => <button {...props} />
+        const Container = React.forwardRef<HTMLButtonElement, any>((props, ref) => (
+          <div {...props}>
+            <Button ref={ref}>Button</Button>
+          </div>
+        ))
+
+        const ref = lib.createRef()
+        const node = (
+          <Container className="container" ref={ref}>
+            Click me!
+          </Container>
+        )
+        expect(node.className).to.equal("container")
+        expect(ref.current).to.be.instanceOf(HTMLButtonElement)
+      })
+    })
+
+    it("supports useImperativeHandle", () => {
+      const Button = React.forwardRef<{ focus: () => string }, any>((props, ref) => {
+        React.useImperativeHandle(ref, () => ({
+          focus: () => "ping",
+        }))
+        return <button {...props} />
+      })
+
+      const ref = lib.createRef()
+      const node = (
+        <Button className="container" ref={ref}>
+          Click me!
+        </Button>
+      )
+      expect(node.className).to.equal("container")
+      expect(ref.current).to.have.property("focus")
+      expect(ref.current.focus()).to.equal("ping")
+    })
+
     it("supports defaultProps in functional components", () => {
       const Button = (props: any) => <div className={props.className} />
       Button.defaultProps = { className: "defaultClass" }
