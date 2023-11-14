@@ -2,7 +2,7 @@
 /**
  * Adapted from React TypeScript definition
  * @see https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/react/index.d.ts
- * https://github.com/DefinitelyTyped/DefinitelyTyped/commit/e6491e0d87a72a566c0f6ce61fca2b57199aa172
+ * https://github.com/DefinitelyTyped/DefinitelyTyped/commit/e05c7e9d4cf1034467ca7561d8dac71b0546b498
  */
 import type * as CSS from "csstype"
 
@@ -10,6 +10,7 @@ export * from "./extra"
 export { styled } from "./styled"
 
 type Booleanish = boolean | "true" | "false"
+type CrossOrigin = "anonymous" | "use-credentials" | "" | undefined
 
 export function className(value: ClassNames): string
 
@@ -33,7 +34,7 @@ declare const __defaultExport: {
 }
 export default __defaultExport
 
-type Key = string | number
+type Key = string | number | bigint
 
 type ClassName = string | { [key: string]: boolean } | false | null | undefined | ClassName[]
 
@@ -85,13 +86,26 @@ interface SVGFactory extends DOMFactory<SVGAttributes<SVGElement>, SVGElement> {
 // http://facebook.github.io/react/docs/glossary.html
 // ----------------------------------------------------------------------
 
+/**
+ * @deprecated Inline the type instead to make the intent clear.
+ */
 type ReactText = string | number
+/**
+ * @deprecated Inline the type instead to make the intent clear.
+ */
 type ReactChild = Node | ReactText
 type ReactChildren = ReactNodeArray | NodeList | HTMLCollection
 
+/**
+ * @deprecated Use either `ReactNode[]` if you need an array or `Iterable<ReactNode>` if its passed to a host component.
+ */
 interface ReactNodeArray extends Array<ReactNode> {}
+
 export type ReactNode =
-  | ReactChild
+  | ReactElement
+  | string
+  | number
+  | Iterable<ReactNode>
   | ReactChildren
   | ShadowRootContainer
   | DocumentFragment
@@ -200,7 +214,7 @@ export function ShadowRoot(
 }
 
 export interface FunctionComponent<P = {}, T extends Element = JSX.Element> {
-  (props: PropsWithChildren<P>, context?: any): T | null
+  (props: P, context?: any): T | null
   defaultProps?: Partial<P>
   displayName?: string
 }
@@ -221,7 +235,7 @@ export class Component<P = {}, T extends Element = JSX.Element> {
 
 export { Component as PureComponent }
 
-type PropsWithChildren<P> = P & { children?: ReactNode | undefined }
+type PropsWithChildren<P = unknown> = P & { children?: ReactNode | undefined }
 
 export type ComponentType<P = {}, T extends Element = JSX.Element> =
   | ComponentClass<P, T>
@@ -233,8 +247,7 @@ export type ComponentType<P = {}, T extends Element = JSX.Element> =
 
 // based on the code in https://github.com/facebook/react/pull/13968
 
-// TODO (TypeScript 3.0): ReadonlyArray<unknown>
-type DependencyList = ReadonlyArray<any>
+type DependencyList = ReadonlyArray<unknown>
 
 export interface MutableRefObject<T> {
   current: T
@@ -250,7 +263,7 @@ export function createRef<T = any>(): RefObject<T>
  * value around similar to how you’d use instance fields in classes.
  *
  * @version 16.8.0
- * @see https://reactjs.org/docs/hooks-reference.html#useref
+ * @see https://react.dev/reference/react/useRef
  */
 export function useRef<T>(initialValue: T): MutableRefObject<T>
 
@@ -266,7 +279,7 @@ export function useRef<T>(initialValue: T): MutableRefObject<T>
  * of the generic argument.
  *
  * @version 16.8.0
- * @see https://reactjs.org/docs/hooks-reference.html#useref
+ * @see https://react.dev/reference/react/useRef
  */
 export function useRef<T>(initialValue: T | null): RefObject<T>
 
@@ -280,7 +293,7 @@ export function useRef<T>(initialValue: T | null): RefObject<T>
  * value around similar to how you’d use instance fields in classes.
  *
  * @version 16.8.0
- * @see https://reactjs.org/docs/hooks-reference.html#useref
+ * @see https://react.dev/reference/react/useRef
  */
 export function useRef<T = unknown>(): MutableRefObject<T | undefined>
 
@@ -291,7 +304,7 @@ export function useRef<T = unknown>(): MutableRefObject<T | undefined>
  * has changed.
  *
  * @version 16.8.0
- * @see https://reactjs.org/docs/hooks-reference.html#usecallback
+ * @see https://react.dev/reference/react/useCallback
  */
 export function useCallback<T extends (...args: never[]) => any>(
   callback: T,
@@ -314,7 +327,7 @@ export function useCallback<T extends (...args: never[]) => any>(
  * ```
  *
  * @version 16.8.0
- * @see https://reactjs.org/docs/hooks-reference.html#usememo
+ * @see https://react.dev/reference/react/useMemo
  */
 // allow undefined, but don't make it optional as that is very likely a mistake
 export function useMemo<T>(factory: () => T, deps: DependencyList | undefined): T
@@ -352,6 +365,9 @@ export type TransitionEventHandler<T = Element> = EventHandler<TransitionEvent, 
 export type DetailedHTMLProps<E extends HTMLAttributes<T>, T> = AttrWithRef<T> & E
 
 export interface SVGProps<T> extends SVGAttributes<T>, AttrWithRef<T> {}
+
+interface SVGLineElementAttributes<T> extends SVGProps<T> {}
+interface SVGTextElementAttributes<T> extends SVGProps<T> {}
 
 interface EventHandlers<T> {
   // Clipboard Events
@@ -519,7 +535,9 @@ export interface DOMAttributes<T> {
   // Keyboard Events
   onKeyDown?: KeyboardEventHandler<T> | undefined
   onKeyDownCapture?: KeyboardEventHandler<T> | undefined
+  /** @deprecated */
   onKeyPress?: KeyboardEventHandler<T> | undefined
+  /** @deprecated */
   onKeyPressCapture?: KeyboardEventHandler<T> | undefined
   onKeyUp?: KeyboardEventHandler<T> | undefined
   onKeyUpCapture?: KeyboardEventHandler<T> | undefined
@@ -555,6 +573,8 @@ export interface DOMAttributes<T> {
   onProgressCapture?: ReactEventHandler<T> | undefined
   onRateChange?: ReactEventHandler<T> | undefined
   onRateChangeCapture?: ReactEventHandler<T> | undefined
+  onResize?: ReactEventHandler<T> | undefined
+  onResizeCapture?: ReactEventHandler<T> | undefined
   onSeeked?: ReactEventHandler<T> | undefined
   onSeekedCapture?: ReactEventHandler<T> | undefined
   onSeeking?: ReactEventHandler<T> | undefined
@@ -689,6 +709,16 @@ export interface AriaAttributes {
    * presented if they are made.
    */
   "aria-autocomplete"?: "none" | "inline" | "list" | "both" | undefined
+  /**
+   * Defines a string value that labels the current element, which is intended to be converted into Braille.
+   * @see aria-label.
+   */
+  "aria-braillelabel"?: string | undefined
+  /**
+   * Defines a human-readable, author-localized abbreviated description for the role of an element, which is intended to be converted into Braille.
+   * @see aria-roledescription.
+   */
+  "aria-brailleroledescription"?: string | undefined
   /** Indicates an element is being modified and that assistive technologies MAY want to wait until the modifications are complete before exposing them to the user. */
   "aria-busy"?: Booleanish | undefined
   /**
@@ -707,6 +737,11 @@ export interface AriaAttributes {
    */
   "aria-colindex"?: number | undefined
   /**
+   * Defines a human readable text alternative of aria-colindex.
+   * @see aria-rowindextext.
+   */
+  "aria-colindextext"?: string | undefined
+  /**
    * Defines the number of columns spanned by a cell or gridcell within a table, grid, or treegrid.
    * @see aria-colindex @see aria-rowspan.
    */
@@ -723,6 +758,11 @@ export interface AriaAttributes {
    * @see aria-labelledby
    */
   "aria-describedby"?: string | undefined
+  /**
+   * Defines a string value that describes or annotates the current element.
+   * @see related aria-describedby.
+   */
+  "aria-description"?: string | undefined
   /**
    * Identifies the element that provides a detailed, extended description for the object.
    * @see aria-describedby.
@@ -851,6 +891,11 @@ export interface AriaAttributes {
    */
   "aria-rowindex"?: number | undefined
   /**
+   * Defines a human readable text alternative of aria-rowindex.
+   * @see aria-colindextext.
+   */
+  "aria-rowindextext"?: string | undefined
+  /**
    * Defines the number of rows spanned by a cell or gridcell within a table, grid, or treegrid.
    * @see aria-rowindex @see aria-colspan.
    */
@@ -966,14 +1011,16 @@ export interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
 
   // Standard HTML Attributes
   accessKey?: string | undefined
+  autoFocus?: boolean | undefined
   className?: ClassNames | undefined
-  contentEditable?: Booleanish | "inherit" | undefined
+  contentEditable?: Booleanish | "inherit" | "plaintext-only" | undefined
   contextMenu?: string | undefined
   dir?: string | undefined
   draggable?: Booleanish | undefined
   hidden?: boolean | undefined
   id?: string | undefined
   lang?: string | undefined
+  nonce?: string | undefined
   placeholder?: string | undefined
   slot?: string | undefined
   spellCheck?: Booleanish | undefined
@@ -990,11 +1037,14 @@ export interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
 
   // RDFa Attributes
   about?: string | undefined
+  content?: string | undefined
   datatype?: string | undefined
   inlist?: any | undefined
   prefix?: string | undefined
   property?: string | undefined
+  rel?: string | undefined
   resource?: string | undefined
+  rev?: string | undefined
   typeof?: string | undefined
   vocab?: string | undefined
 
@@ -1047,7 +1097,7 @@ export interface AllHTMLAttributes<T> extends HTMLAttributes<T> {
   autoComplete?: string | undefined
   autoFocus?: boolean | undefined
   autoPlay?: boolean | undefined
-  capture?: boolean | string | undefined
+  capture?: boolean | "user" | "environment" | undefined
   cellPadding?: number | string | undefined
   cellSpacing?: number | string | undefined
   charSet?: string | undefined
@@ -1060,7 +1110,7 @@ export interface AllHTMLAttributes<T> extends HTMLAttributes<T> {
   content?: string | undefined
   controls?: boolean | undefined
   coords?: string | undefined
-  crossOrigin?: string | undefined
+  crossOrigin?: CrossOrigin
   data?: string | undefined
   dateTime?: string | undefined
   default?: boolean | undefined
@@ -1103,7 +1153,6 @@ export interface AllHTMLAttributes<T> extends HTMLAttributes<T> {
   multiple?: boolean | undefined
   muted?: boolean | undefined
   name?: string | undefined
-  nonce?: string | undefined
   noValidate?: boolean | undefined
   open?: boolean | undefined
   optimum?: number | undefined
@@ -1113,7 +1162,6 @@ export interface AllHTMLAttributes<T> extends HTMLAttributes<T> {
   poster?: string | undefined
   preload?: string | undefined
   readOnly?: boolean | undefined
-  rel?: string | undefined
   required?: boolean | undefined
   reversed?: boolean | undefined
   rows?: number | undefined
@@ -1163,7 +1211,6 @@ interface AnchorHTMLAttributes<T> extends HTMLAttributes<T> {
   hrefLang?: string | undefined
   media?: string | undefined
   ping?: string | undefined
-  rel?: string | undefined
   target?: HTMLAttributeAnchorTarget | undefined
   type?: string | undefined
   referrerPolicy?: HTMLAttributeReferrerPolicy | undefined
@@ -1179,7 +1226,6 @@ interface AreaHTMLAttributes<T> extends HTMLAttributes<T> {
   hrefLang?: string | undefined
   media?: string | undefined
   referrerPolicy?: HTMLAttributeReferrerPolicy | undefined
-  rel?: string | undefined
   shape?: string | undefined
   target?: string | undefined
 }
@@ -1194,7 +1240,6 @@ interface BlockquoteHTMLAttributes<T> extends HTMLAttributes<T> {
 }
 
 interface ButtonHTMLAttributes<T> extends HTMLAttributes<T> {
-  autoFocus?: boolean | undefined
   disabled?: boolean | undefined
   form?: string | undefined
   formAction?: string | undefined
@@ -1236,6 +1281,8 @@ interface DelHTMLAttributes<T> extends HTMLAttributes<T> {
 }
 
 interface DialogHTMLAttributes<T> extends HTMLAttributes<T> {
+  onCancel?: ReactEventHandler<T> | undefined
+  onClose?: ReactEventHandler<T> | undefined
   open?: boolean | undefined
 }
 
@@ -1292,7 +1339,7 @@ interface IframeHTMLAttributes<T> extends HTMLAttributes<T> {
 
 interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
   alt?: string | undefined
-  crossOrigin?: "anonymous" | "use-credentials" | "" | undefined
+  crossOrigin?: CrossOrigin
   decoding?: "async" | "auto" | "sync" | undefined
   height?: number | string | undefined
   loading?: "eager" | "lazy" | undefined
@@ -1309,14 +1356,38 @@ interface InsHTMLAttributes<T> extends HTMLAttributes<T> {
   dateTime?: string | undefined
 }
 
+type HTMLInputTypeAttribute =
+  | "button"
+  | "checkbox"
+  | "color"
+  | "date"
+  | "datetime-local"
+  | "email"
+  | "file"
+  | "hidden"
+  | "image"
+  | "month"
+  | "number"
+  | "password"
+  | "radio"
+  | "range"
+  | "reset"
+  | "search"
+  | "submit"
+  | "tel"
+  | "text"
+  | "time"
+  | "url"
+  | "week"
+  | (string & {})
+
 interface InputHTMLAttributes<T> extends HTMLAttributes<T> {
   accept?: string | undefined
   alt?: string | undefined
   autoComplete?: string | undefined
   autoFocus?: boolean | undefined
-  capture?: boolean | string | undefined // https://www.w3.org/TR/html-media-capture/#the-capture-attribute
+  capture?: boolean | "user" | "environment" | undefined // https://www.w3.org/TR/html-media-capture/#the-capture-attribute
   checked?: boolean | undefined
-  crossOrigin?: string | undefined
   disabled?: boolean | undefined
   enterKeyHint?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send" | undefined
   form?: string | undefined
@@ -1340,7 +1411,7 @@ interface InputHTMLAttributes<T> extends HTMLAttributes<T> {
   size?: number | undefined
   src?: string | undefined
   step?: number | string | undefined
-  type?: string | undefined
+  type?: HTMLInputTypeAttribute | undefined
   value?: string | readonly string[] | number | undefined
   width?: number | string | undefined
 
@@ -1348,7 +1419,6 @@ interface InputHTMLAttributes<T> extends HTMLAttributes<T> {
 }
 
 interface KeygenHTMLAttributes<T> extends HTMLAttributes<T> {
-  autoFocus?: boolean | undefined
   challenge?: string | undefined
   disabled?: boolean | undefined
   form?: string | undefined
@@ -1368,13 +1438,15 @@ interface LiHTMLAttributes<T> extends HTMLAttributes<T> {
 
 interface LinkHTMLAttributes<T> extends HTMLAttributes<T> {
   as?: string | undefined
-  crossOrigin?: string | undefined
+  crossOrigin?: CrossOrigin
+  fetchPriority?: "high" | "low" | "auto"
   href?: string | undefined
   hrefLang?: string | undefined
   integrity?: string | undefined
   media?: string | undefined
+  imageSrcSet?: string | undefined
+  imageSizes?: string | undefined
   referrerPolicy?: HTMLAttributeReferrerPolicy | undefined
-  rel?: string | undefined
   sizes?: string | undefined
   type?: string | undefined
   charSet?: string | undefined
@@ -1392,7 +1464,6 @@ interface MediaHTMLAttributes<T> extends HTMLAttributes<T> {
   autoPlay?: boolean | undefined
   controls?: boolean | undefined
   controlsList?: string | undefined
-  crossOrigin?: string | undefined
   loop?: boolean | undefined
   mediaGroup?: string | undefined
   muted?: boolean | undefined
@@ -1473,11 +1544,10 @@ interface ScriptHTMLAttributes<T> extends HTMLAttributes<T> {
   async?: boolean | undefined
   /** @deprecated */
   charSet?: string | undefined
-  crossOrigin?: string | undefined
+  crossOrigin?: CrossOrigin
   defer?: boolean | undefined
   integrity?: string | undefined
   noModule?: boolean | undefined
-  nonce?: string | undefined
   referrerPolicy?: HTMLAttributeReferrerPolicy | undefined
   src?: string | undefined
   type?: string | undefined
@@ -1485,7 +1555,6 @@ interface ScriptHTMLAttributes<T> extends HTMLAttributes<T> {
 
 interface SelectHTMLAttributes<T> extends HTMLAttributes<T> {
   autoComplete?: string | undefined
-  autoFocus?: boolean | undefined
   disabled?: boolean | undefined
   form?: string | undefined
   multiple?: boolean | undefined
@@ -1512,21 +1581,24 @@ interface SourceHTMLAttributes<T> extends HTMLAttributes<T> {
 
 interface StyleHTMLAttributes<T> extends HTMLAttributes<T> {
   media?: string | undefined
-  nonce?: string | undefined
   scoped?: boolean | undefined
   type?: string | undefined
 }
 
 interface TableHTMLAttributes<T> extends HTMLAttributes<T> {
+  align?: "left" | "center" | "right" | undefined
+  bgcolor?: string | undefined
+  border?: number | undefined
   cellPadding?: number | string | undefined
   cellSpacing?: number | string | undefined
+  frame?: boolean | undefined
+  rules?: "none" | "groups" | "rows" | "columns" | "all" | undefined
   summary?: string | undefined
   width?: number | string | undefined
 }
 
 interface TextareaHTMLAttributes<T> extends HTMLAttributes<T> {
   autoComplete?: string | undefined
-  autoFocus?: boolean | undefined
   cols?: number | undefined
   dirName?: string | undefined
   disabled?: boolean | undefined
@@ -1595,6 +1667,9 @@ interface VideoHTMLAttributes<T> extends MediaHTMLAttributes<T> {
 //   - "string"
 //   - union of string literals
 export interface SVGAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+  // React-specific Attributes, noop in jsx-dom
+  suppressHydrationWarning?: boolean | undefined
+
   // Attributes which also defined in HTMLAttributes
   // See comment in SVGDOMPropertyConfig.js
   class?: ClassNames | undefined
@@ -1616,7 +1691,7 @@ export interface SVGAttributes<T> extends AriaAttributes, DOMAttributes<T> {
   // Other HTML properties supported by SVG elements in browsers
   role?: AriaRole | undefined
   tabIndex?: number | undefined
-  crossOrigin?: "anonymous" | "use-credentials" | "" | undefined
+  crossOrigin?: CrossOrigin
 
   // SVG Specific attributes
   accentHeight?: number | string | undefined
@@ -1702,6 +1777,7 @@ export interface SVGAttributes<T> extends AriaAttributes, DOMAttributes<T> {
   fontVariant?: number | string | undefined
   fontWeight?: number | string | undefined
   format?: number | string | undefined
+  fr?: number | string | undefined
   from?: number | string | undefined
   fx?: number | string | undefined
   fy?: number | string | undefined
@@ -1879,7 +1955,6 @@ export interface SVGAttributes<T> extends AriaAttributes, DOMAttributes<T> {
 interface WebViewHTMLAttributes<T> extends HTMLAttributes<T> {
   allowFullScreen?: boolean | undefined
   allowpopups?: boolean | undefined
-  autoFocus?: boolean | undefined
   autosize?: boolean | undefined
   blinkfeatures?: string | undefined
   disableblinkfeatures?: string | undefined
@@ -1962,6 +2037,19 @@ interface ReactSVG {
 }
 
 export namespace JSX {
+  // We don't just alias React.ElementType because React.ElementType
+  // historically does more than we need it to.
+  // E.g. it also contains .propTypes and so TS also verifies the declared
+  // props type does match the declared .propTypes.
+  // But if libraries declared their .propTypes but not props type,
+  // or they mismatch, you won't be able to use the class component
+  // as a JSX.ElementType.
+  // We could fix this everywhere but we're ultimately not interested in
+  // .propTypes assignability so we might as well drop it entirely here to
+  //  reduce the work of the type-checker.
+  // TODO: Check impact of making React.ElementType<P = any> = React.JSXElementConstructor<P>
+  type ElementType = string
+
   type Element = ReactElement
 
   interface ElementAttributesProperty {
@@ -1988,12 +2076,13 @@ export namespace JSX {
     bdi: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
     bdo: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
     big: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
-    blockquote: DetailedHTMLProps<BlockquoteHTMLAttributes<HTMLElement>, HTMLElement>
+    blockquote: DetailedHTMLProps<BlockquoteHTMLAttributes<HTMLQuoteElement>, HTMLQuoteElement>
     body: DetailedHTMLProps<HTMLAttributes<HTMLBodyElement>, HTMLBodyElement>
     br: DetailedHTMLProps<HTMLAttributes<HTMLBRElement>, HTMLBRElement>
     button: DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
     canvas: DetailedHTMLProps<CanvasHTMLAttributes<HTMLCanvasElement>, HTMLCanvasElement>
     caption: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
+    center: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
     cite: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
     code: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
     col: DetailedHTMLProps<ColHTMLAttributes<HTMLTableColElement>, HTMLTableColElement>
@@ -2001,8 +2090,8 @@ export namespace JSX {
     data: DetailedHTMLProps<DataHTMLAttributes<HTMLDataElement>, HTMLDataElement>
     datalist: DetailedHTMLProps<HTMLAttributes<HTMLDataListElement>, HTMLDataListElement>
     dd: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
-    del: DetailedHTMLProps<DelHTMLAttributes<HTMLElement>, HTMLElement>
-    details: DetailedHTMLProps<DetailsHTMLAttributes<HTMLElement>, HTMLElement>
+    del: DetailedHTMLProps<DelHTMLAttributes<HTMLModElement>, HTMLModElement>
+    details: DetailedHTMLProps<DetailsHTMLAttributes<HTMLDetailsElement>, HTMLDetailsElement>
     dfn: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
     dialog: DetailedHTMLProps<DialogHTMLAttributes<HTMLDialogElement>, HTMLDialogElement>
     div: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
@@ -2043,7 +2132,7 @@ export namespace JSX {
     menu: DetailedHTMLProps<MenuHTMLAttributes<HTMLElement>, HTMLElement>
     menuitem: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
     meta: DetailedHTMLProps<MetaHTMLAttributes<HTMLMetaElement>, HTMLMetaElement>
-    meter: DetailedHTMLProps<MeterHTMLAttributes<HTMLElement>, HTMLElement>
+    meter: DetailedHTMLProps<MeterHTMLAttributes<HTMLMeterElement>, HTMLMeterElement>
     nav: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
     noindex: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
     noscript: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
@@ -2051,7 +2140,7 @@ export namespace JSX {
     ol: DetailedHTMLProps<OlHTMLAttributes<HTMLOListElement>, HTMLOListElement>
     optgroup: DetailedHTMLProps<OptgroupHTMLAttributes<HTMLOptGroupElement>, HTMLOptGroupElement>
     option: DetailedHTMLProps<OptionHTMLAttributes<HTMLOptionElement>, HTMLOptionElement>
-    output: DetailedHTMLProps<OutputHTMLAttributes<HTMLElement>, HTMLElement>
+    output: DetailedHTMLProps<OutputHTMLAttributes<HTMLOutputElement>, HTMLOutputElement>
     p: DetailedHTMLProps<HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement>
     param: DetailedHTMLProps<ParamHTMLAttributes<HTMLParamElement>, HTMLParamElement>
     picture: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
@@ -2063,6 +2152,7 @@ export namespace JSX {
     ruby: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
     s: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
     samp: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
+    search: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
     script: DetailedHTMLProps<ScriptHTMLAttributes<HTMLScriptElement>, HTMLScriptElement>
     section: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
     select: DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>
@@ -2083,7 +2173,7 @@ export namespace JSX {
     tfoot: DetailedHTMLProps<HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement>
     th: DetailedHTMLProps<ThHTMLAttributes<HTMLTableHeaderCellElement>, HTMLTableHeaderCellElement>
     thead: DetailedHTMLProps<HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement>
-    time: DetailedHTMLProps<TimeHTMLAttributes<HTMLElement>, HTMLElement>
+    time: DetailedHTMLProps<TimeHTMLAttributes<HTMLTimeElement>, HTMLTimeElement>
     title: DetailedHTMLProps<HTMLAttributes<HTMLTitleElement>, HTMLTitleElement>
     tr: DetailedHTMLProps<HTMLAttributes<HTMLTableRowElement>, HTMLTableRowElement>
     track: DetailedHTMLProps<TrackHTMLAttributes<HTMLTrackElement>, HTMLTrackElement>
@@ -2134,7 +2224,7 @@ export namespace JSX {
     foreignObject: SVGProps<SVGForeignObjectElement>
     g: SVGProps<SVGGElement>
     image: SVGProps<SVGImageElement>
-    line: SVGProps<SVGLineElement>
+    line: SVGLineElementAttributes<SVGLineElement>
     linearGradient: SVGProps<SVGLinearGradientElement>
     marker: SVGProps<SVGMarkerElement>
     mask: SVGProps<SVGMaskElement>
@@ -2149,7 +2239,7 @@ export namespace JSX {
     stop: SVGProps<SVGStopElement>
     switch: SVGProps<SVGSwitchElement>
     symbol: SVGProps<SVGSymbolElement>
-    text: SVGProps<SVGTextElement>
+    text: SVGTextElementAttributes<SVGTextElement>
     textPath: SVGProps<SVGTextPathElement>
     tspan: SVGProps<SVGTSpanElement>
     use: SVGProps<SVGUseElement>
