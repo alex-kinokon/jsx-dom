@@ -1,3 +1,6 @@
+# 8.1.1
+- Undo: Removes all `*Capture` event listener types. They were never supported.
+
 # 8.1.0
 - Fixes #97: support `disabled` on `<link>` element.
 - Fixes #94: supports `forwardRef` and `useImperativeHandle`.
