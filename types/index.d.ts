@@ -1439,6 +1439,7 @@ interface LiHTMLAttributes<T> extends HTMLAttributes<T> {
 interface LinkHTMLAttributes<T> extends HTMLAttributes<T> {
   as?: string | undefined
   crossOrigin?: CrossOrigin
+  disabled?: boolean
   fetchPriority?: "high" | "low" | "auto"
   href?: string | undefined
   hrefLang?: string | undefined
