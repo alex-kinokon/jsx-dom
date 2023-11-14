@@ -9,7 +9,7 @@ import type * as CSS from "csstype"
 export * from "./extra"
 export { styled } from "./styled"
 
-type Booleanish = boolean | "true" | "false"
+export type Booleanish = boolean | "true" | "false"
 type CrossOrigin = "anonymous" | "use-credentials" | "" | undefined
 
 export function className(value: ClassNames): string
@@ -34,7 +34,7 @@ declare const __defaultExport: {
 }
 export default __defaultExport
 
-type Key = string | number | bigint
+export type Key = string | number | bigint
 
 type ClassName = string | { [key: string]: boolean } | false | null | undefined | ClassName[]
 
@@ -235,7 +235,7 @@ export class Component<P = {}, T extends Element = JSX.Element> {
 
 export { Component as PureComponent }
 
-type PropsWithChildren<P = unknown> = P & { children?: ReactNode | undefined }
+export type PropsWithChildren<P = unknown> = P & { children?: ReactNode | undefined }
 
 export type ComponentType<P = {}, T extends Element = JSX.Element> =
   | ComponentClass<P, T>
