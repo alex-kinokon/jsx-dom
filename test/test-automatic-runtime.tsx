@@ -17,7 +17,7 @@ describe("Automatic Runtime", () => {
 
   async function generateBundle(code: string, babelOptions?: Record<string, any>) {
     const entryPath = resolve(TEMP_FOLDER, "index.js")
-    await writeFile(entryPath, formatCode(code))
+    await writeFile(entryPath, await formatCode(code))
     const build = await rollup({
       input: entryPath,
       external: path => path.startsWith("jsx-dom"),
@@ -37,7 +37,7 @@ describe("Automatic Runtime", () => {
     })
     const { output } = await build.generate({})
     expect(output).to.have.lengthOf(1)
-    return formatCode(output[0].code)
+    return await formatCode(output[0].code)
   }
 
   generateBundle.options = (options: Record<string, any>) => (code: string) =>

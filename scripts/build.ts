@@ -112,7 +112,7 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
     const content = `export ${imports} from "${src}"`
 
     await fs.mkdirp(dest)
-    await fs.writeFile(resolve(dest, name), formatSource(content))
+    await fs.writeFile(resolve(dest, name), await formatSource(content))
   }
 
   // https://github.com/jprichardson/node-fs-extra/issues/323

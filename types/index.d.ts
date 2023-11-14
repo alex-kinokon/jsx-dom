@@ -142,6 +142,11 @@ export function createElement<T extends Element>(
   ...children: ReactNode[]
 ): T
 
+// Locally scoped JSX types
+export namespace createElement {
+  export { JSX }
+}
+
 // DOM Elements
 export function jsx<K extends HTMLElementTagNames, T extends HTMLElementTagNameMap[K]>(
   type: K,
