@@ -214,7 +214,7 @@ export function ShadowRoot(
 }
 
 export interface FunctionComponent<P = {}, T extends Element = JSX.Element> {
-  (props: P, context?: any): T | null
+  (props: PropsWithChildren<P>, context?: any): T | null
   defaultProps?: Partial<P>
   displayName?: string
 }
@@ -235,7 +235,7 @@ export class Component<P = {}, T extends Element = JSX.Element> {
 
 export { Component as PureComponent }
 
-export type PropsWithChildren<P = unknown> = P & { children?: ReactNode | undefined }
+export type PropsWithChildren<P> = P & { children?: ReactNode | undefined }
 
 export type ComponentType<P = {}, T extends Element = JSX.Element> =
   | ComponentClass<P, T>
@@ -489,7 +489,7 @@ interface EventHandlers<T> {
   transitionend?: TransitionEventHandler<T> | undefined
 
   // Custom events
-  [K: string]: ReactEventHandler<T> | undefined
+  [K: string]: EventHandler<any, T> | undefined
 }
 
 export interface DOMAttributes<T> {
@@ -2046,6 +2046,14 @@ interface ReactSVG {
   view: SVGFactory
 }
 
+type JSXElementConstructor<P> =
+| ((
+    props: P
+) => ReactNode)
+| (new(
+    props: P
+) => Component<any, any>);
+
 export namespace JSX {
   // We don't just alias React.ElementType because React.ElementType
   // historically does more than we need it to.
@@ -2058,8 +2066,7 @@ export namespace JSX {
   // .propTypes assignability so we might as well drop it entirely here to
   //  reduce the work of the type-checker.
   // TODO: Check impact of making React.ElementType<P = any> = React.JSXElementConstructor<P>
-  type ElementType = string
-
+  type ElementType = string | JSXElementConstructor<any>;
   type Element = ReactElement
 
   interface ElementAttributesProperty {
