@@ -1,3 +1,6 @@
+# 8.1.3
+- Merged #101.
+
 # 8.1.1
 - Undo: Removes all `*Capture` event listener types. They were never supported.
 
