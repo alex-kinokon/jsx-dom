@@ -1693,6 +1693,7 @@ export interface SVGAttributes<T> extends AriaAttributes, DOMAttributes<T> {
   method?: string | undefined
   min?: number | string | undefined
   name?: string | undefined
+  slot?: string | undefined
   style?: string | CSSProperties | undefined
   target?: string | undefined
   type?: string | undefined
