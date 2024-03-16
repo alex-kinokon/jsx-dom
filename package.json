@@ -1,6 +1,6 @@
 {
   "name": "jsx-dom",
-  "version": "8.1.2",
+  "version": "8.1.3",
   "description": "JSX to document.createElement.",
   "main": "index.js",
   "module": "index.js",
