@@ -1,4 +1,0 @@
-{
-  "extension": ["js", "ts", "tsx"],
-  "require": ["ts-node/register/transpile-only", "test/register.js"]
-}

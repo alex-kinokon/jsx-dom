@@ -1,6 +1,6 @@
 import { expect } from "chai"
-import { describe, it } from "mocha"
-import { React } from "./register"
+import { describe, it } from "vitest"
+import * as React from "../src"
 import type { JSX } from "../types"
 
 describe("SVG", () => {

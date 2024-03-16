@@ -1,4 +1,4 @@
-const { JSDOM } = require("jsdom")
+import { JSDOM } from "jsdom"
 process.env.TEST = true
 
 // Set up jsdom
@@ -32,10 +32,6 @@ Object.defineProperties(window.Element.prototype, {
   },
 })
 
-/** @type {typeof import("../types/index.d")} */
-const React = require("../src/index.ts")
-exports.React = React
-
 // eslint-disable-next-line import/order
-const chai = require("chai")
-chai.use(require("chai-string"))
+import { use } from "chai"
+use(require("chai-string"))

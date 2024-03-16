@@ -1,12 +1,11 @@
-import { expect } from "chai"
-import { describe, it } from "mocha"
+import { describe, expect, it } from "vitest"
 import type { StandardLonghandProperties } from "csstype"
-import { React } from "./register"
+import * as React from "../src"
 
 describe("CSS", () => {
   it("supports numeric CSS properties", () => {
     const test = (key: keyof StandardLonghandProperties) =>
-      expect((<div style={{ [key]: 2 }} />).style[key]).to.equal("2px", key)
+      expect((<div style={{ [key]: 2 }} />).style[key]).toBe("2px")
 
     test("paddingTop")
     test("fontSize")
@@ -63,7 +62,7 @@ describe("CSS", () => {
 
   it("supports CSS custom properties (variables)", () => {
     const test = (key: string, value: string) =>
-      expect((<div style={{ [key]: value }} />).style.getPropertyValue(key)).to.equal(value, key)
+      expect((<div style={{ [key]: value }} />).style.getPropertyValue(key)).toBe(value)
 
     test("--my-variable", "1")
     test("--my-variable", "1px")

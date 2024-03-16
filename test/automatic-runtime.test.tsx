@@ -1,23 +1,23 @@
-import { resolve } from "path"
-import { ensureDir, remove, writeFile } from "fs-extra"
-import { after, before, describe, it } from "mocha"
-import { expect } from "chai"
+import { resolve } from "node:path"
+import fs from "node:fs/promises"
+import { afterAll, beforeAll, describe, expect, it } from "vitest"
+import { expect as chai } from "chai"
 import { rollup } from "rollup"
 import babel from "@rollup/plugin-babel"
 import { formatSource as formatCode } from "../scripts/format-source"
 
 const TEMP_FOLDER = "./temp"
 describe("Automatic Runtime", () => {
-  before(async () => {
-    await ensureDir(TEMP_FOLDER)
+  beforeAll(async () => {
+    await fs.mkdir(TEMP_FOLDER, { recursive: true })
   })
-  after(async () => {
-    await remove(TEMP_FOLDER)
+  afterAll(async () => {
+    await fs.rm(TEMP_FOLDER, { recursive: true })
   })
 
   async function generateBundle(code: string, babelOptions?: Record<string, any>) {
     const entryPath = resolve(TEMP_FOLDER, "index.js")
-    await writeFile(entryPath, await formatCode(code))
+    await fs.writeFile(entryPath, await formatCode(code))
     const build = await rollup({
       input: entryPath,
       external: path => path.startsWith("jsx-dom"),
@@ -36,7 +36,7 @@ describe("Automatic Runtime", () => {
       ],
     })
     const { output } = await build.generate({})
-    expect(output).to.have.lengthOf(1)
+    expect(output).toHaveLength(1)
     return await formatCode(output[0].code)
   }
 
@@ -47,7 +47,7 @@ describe("Automatic Runtime", () => {
     const bundle = await generateBundle(/* javascript */ `
       render(<div />)
     `)
-    expect(bundle).to.equalIgnoreSpaces(/* javascript */ `
+    chai(bundle).to.equalIgnoreSpaces(/* javascript */ `
       import { jsx } from "jsx-dom/jsx-runtime"
       render(jsx("div", {}))
     `)
@@ -59,8 +59,8 @@ describe("Automatic Runtime", () => {
       render(<div />)
     `)
 
-    expect(bundle).to.startWith('import { jsxDEV } from "jsx-dom/jsx-dev-runtime"')
-    expect(bundle).to.containIgnoreSpaces(/* javascript */ `
+    chai(bundle).to.startWith('import { jsxDEV } from "jsx-dom/jsx-dev-runtime"')
+    chai(bundle).to.containIgnoreSpaces(/* javascript */ `
       render(
         jsxDEV("div", {}, void 0, false, { 
           fileName: _jsxFileName,

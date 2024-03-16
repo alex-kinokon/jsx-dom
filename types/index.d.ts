@@ -38,7 +38,7 @@ export type Key = string | number | bigint
 
 type ClassName = string | { [key: string]: boolean } | false | null | undefined | ClassName[]
 
-export type ClassNames = ClassName | BasicClassList | DOMTokenList
+export type ClassNames = ClassName | BasicClassList | Iterable<string>
 
 export interface RefObject<T> {
   readonly current: T | null
@@ -2047,13 +2047,7 @@ interface ReactSVG {
   view: SVGFactory
 }
 
-type JSXElementConstructor<P> =
-| ((
-    props: P
-) => ReactNode)
-| (new(
-    props: P
-) => Component<any, any>);
+type JSXElementConstructor<P> = ((props: P) => ReactNode) | (new (props: P) => Component<any, any>)
 
 export namespace JSX {
   // We don't just alias React.ElementType because React.ElementType
@@ -2067,7 +2061,7 @@ export namespace JSX {
   // .propTypes assignability so we might as well drop it entirely here to
   //  reduce the work of the type-checker.
   // TODO: Check impact of making React.ElementType<P = any> = React.JSXElementConstructor<P>
-  type ElementType = string | JSXElementConstructor<any>;
+  type ElementType = string | JSXElementConstructor<any>
   type Element = ReactElement
 
   interface ElementAttributesProperty {

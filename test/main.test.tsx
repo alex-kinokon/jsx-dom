@@ -1,11 +1,11 @@
-import { expect } from "chai"
-import { describe, it } from "mocha"
+import { describe, expect, it } from "vitest"
 import type { HTML } from "../types/index"
-import { React, React as lib } from "./register"
+import * as React from "../src"
+import * as lib from "../src"
 
 describe("jsx-dom", () => {
   it("creates a <div> element", () => {
-    expect((<div id="hello">world</div>).outerHTML).to.equal('<div id="hello">world</div>')
+    expect((<div id="hello">world</div>).outerHTML).toBe('<div id="hello">world</div>')
   })
 
   describe("supports publicly declared APIs", () => {
@@ -20,25 +20,25 @@ describe("jsx-dom", () => {
       expect(lib.useText).to.be.a("function")
 
       const Div = lib.createFactory("div")
-      expect((<Div>div tag</Div>).tagName).to.equal("DIV")
+      expect((<Div>div tag</Div>).tagName).toBe("DIV")
 
       function CustomComponent(props: any): any {
         if (!new.target) return new (CustomComponent as any)(props)
       }
-      expect(<CustomComponent />).to.be.instanceOf(CustomComponent)
+      expect(<CustomComponent />).toBeInstanceOf(CustomComponent)
     })
   })
 
   it("supports functional components", () => {
     function Component(props: { a: 1; b: 2; c: 3 }) {
-      expect(props.a).to.equal(1)
-      expect(props.b).to.equal(2)
-      expect(props.c).to.equal(3)
+      expect(props.a).toBe(1)
+      expect(props.b).toBe(2)
+      expect(props.c).toBe(3)
       expect(cast(props).children).to.be.empty
       return <div>{props.a + props.b + props.c}</div>
     }
 
-    expect((<Component a={1} b={2} c={3} />).innerHTML).to.equal("6")
+    expect((<Component a={1} b={2} c={3} />).innerHTML).toBe("6")
   })
 
   it("supports class components", () => {
@@ -48,20 +48,20 @@ describe("jsx-dom", () => {
       }
 
       render() {
-        expect(this.props.a).to.equal(1)
-        expect(this.props.b).to.equal(2)
-        expect(this.props.c).to.equal(3)
+        expect(this.props.a).toBe(1)
+        expect(this.props.b).toBe(2)
+        expect(this.props.c).toBe(3)
         expect(this.props.children).to.be.empty
         return <div>{this.props.a + this.props.b + this.props.c}</div>
       }
     }
 
-    expect((<Component a={1} b={2} c={3} />).innerHTML).to.equal("6")
+    expect((<Component a={1} b={2} c={3} />).innerHTML).toBe("6")
   })
 
   it("supports dynamic tagname", () => {
     const TagName = "div"
-    expect((<TagName />).tagName).to.equal(TagName.toUpperCase())
+    expect((<TagName />).tagName).toBe(TagName.toUpperCase())
   })
 
   it("supports React automatic runtime", () => {
@@ -69,21 +69,21 @@ describe("jsx-dom", () => {
       lib.jsx("div", {
         className: "className",
       }).outerHTML
-    ).to.equal('<div class="className"></div>')
+    ).toBe('<div class="className"></div>')
 
     expect(
       lib.jsx("div", {
         className: "className",
         children: "One child",
       }).outerHTML
-    ).to.equal('<div class="className">One child</div>')
+    ).toBe('<div class="className">One child</div>')
 
     expect(
       lib.jsx("div", {
         className: "className",
         children: ["One child", lib.jsx("div", { className: "child", children: "Two children" })],
       }).outerHTML
-    ).to.equal('<div class="className">One child<div class="child">Two children</div></div>')
+    ).toBe('<div class="className">One child<div class="child">Two children</div></div>')
   })
 
   describe("childNodes", () => {
@@ -95,19 +95,19 @@ describe("jsx-dom", () => {
     })
 
     it("supports deep nested childNodes", () => {
-      expect((<div>{[2, 3]}</div>).textContent).to.equal("23")
-      expect((<div>{[2, [2, "3", null, false, [4]]]}</div>).textContent).to.equal("2234")
+      expect((<div>{[2, 3]}</div>).textContent).toBe("23")
+      expect((<div>{[2, [2, "3", null, false, [4]]]}</div>).textContent).toBe("2234")
     })
 
     it("supports DOM elements as childNode", () => {
       const img = document.createElement("img")
       const node = <div>{img}</div>
       expect(node.children).to.have.lengthOf(1)
-      expect(node.firstElementChild).to.equal(img)
+      expect(node.firstElementChild).toBe(img)
     })
 
     it("supports string as childNode", () => {
-      expect((<div>{"text"}</div>).textContent).to.equal("text")
+      expect((<div>{"text"}</div>).textContent).toBe("text")
     })
 
     it("supports Node as childNode", () => {
@@ -117,7 +117,7 @@ describe("jsx-dom", () => {
 
       const node = <div>{span.firstChild}</div>
       expect(node.children).to.have.lengthOf(1)
-      expect(node.firstElementChild).to.equal(img)
+      expect(node.firstElementChild).toBe(img)
     })
 
     it("supports NodeList as childNode", () => {
@@ -127,7 +127,7 @@ describe("jsx-dom", () => {
 
       const node = <div>{span.childNodes}</div>
       expect(node.children).to.have.lengthOf(1)
-      expect(node.firstElementChild).to.equal(img)
+      expect(node.firstElementChild).toBe(img)
     })
 
     it("supports HTMLCollection as childNode", () => {
@@ -137,7 +137,7 @@ describe("jsx-dom", () => {
 
       const node = <div>{span.children}</div>
       expect(node.children).to.have.lengthOf(1)
-      expect(node.firstElementChild).to.equal(img)
+      expect(node.firstElementChild).toBe(img)
     })
 
     it("children must be copied before iteration", () => {
@@ -148,32 +148,32 @@ describe("jsx-dom", () => {
 
       const node = <div>{span.children}</div>
       expect(node.children).to.have.lengthOf(2)
-      expect(node.firstElementChild).to.equal(img)
-      expect(node.lastElementChild).to.equal(code)
+      expect(node.firstElementChild).toBe(img)
+      expect(node.lastElementChild).toBe(code)
     })
 
     it("supports passing `children` explicitly", () => {
-      expect((<div children="internal" />).textContent).to.equal("internal")
-      expect((<div children={["internal", 20]} />).textContent).to.equal("internal20")
+      expect((<div children="internal" />).textContent).toBe("internal")
+      expect((<div children={["internal", 20]} />).textContent).toBe("internal20")
     })
 
     it("will not override JSX childNodes with `children` attribute", () => {
-      expect((<div children="i">override</div>).textContent).to.equal("override")
+      expect((<div children="i">override</div>).textContent).toBe("override")
     })
   })
 
   describe("className", () => {
     it("accepts both `class`, `className` as valid input for classes.", () => {
-      expect((<div className="me irl" />).className).to.equal("me irl")
-      expect((<div class="me too thanks" />).className).to.equal("me too thanks")
+      expect((<div className="me irl" />).className).toBe("me irl")
+      expect((<div class="me too thanks" />).className).toBe("me too thanks")
     })
 
     it("accepts an array as valid input for class", () => {
-      expect((<div class={["first", "second"]} />).className).to.equal("first second")
+      expect((<div class={["first", "second"]} />).className).toBe("first second")
     })
 
     it("expects a recursive array as valid input for classes", () => {
-      expect((<div class={["first", ["second", false, "third"]]} />).className).to.equal(
+      expect((<div class={["first", ["second", false, "third"]]} />).className).toBe(
         "first second third"
       )
     })
@@ -188,21 +188,21 @@ describe("jsx-dom", () => {
         />
       )
 
-      expect(node.className).to.equal("included")
+      expect(node.className).toBe("included")
     })
 
     it("filters out falsy values, but not 0, from the class array", () => {
       const node = <div class={[Math.PI < 3 && "PI < 3?", [].length && "should be 0", "rest"]} />
 
-      expect(node.className).to.equal("0 rest")
+      expect(node.className).toBe("0 rest")
     })
 
     it("accepts a DOMTokenList as classname", () => {
       const base = (<div class="base" />) as HTMLDivElement
-      expect(base.classList).to.be.instanceOf(DOMTokenList)
+      expect(base.classList).toBeInstanceOf(DOMTokenList)
 
       const node = <div class={base.classList} />
-      expect(node.className).to.equal("base")
+      expect(node.className).toBe("base")
     })
   })
 
@@ -217,11 +217,11 @@ describe("jsx-dom", () => {
 
       customElements.define("boolean-test", MyCustomElement)
       it("shoud attach truly attribute as property", () => {
-        expect((<boolean-test isBoolean={true} />).isBoolean).to.equal(true)
+        expect((<boolean-test isBoolean={true} />).isBoolean).toBe(true)
       })
 
       it("shoud attach falsy attribute as property", () => {
-        expect((<boolean-test isBoolean={false} />).isBoolean).to.equal(false)
+        expect((<boolean-test isBoolean={false} />).isBoolean).toBe(false)
       })
     })
 
@@ -233,17 +233,17 @@ describe("jsx-dom", () => {
       }
       customElements.define("rich-data-test", MyCustomElement)
       const richData = { foo: "bar" }
-      expect((<rich-data-test richData={richData} />).richData).to.equal(richData)
+      expect((<rich-data-test richData={richData} />).richData).toBe(richData)
     })
 
     it("supports boolean attributes", () => {
-      expect((<input disabled={true} />).getAttribute("disabled")).to.equal("")
-      expect((<input disabled={false} />).getAttribute("disabled")).to.equal(null)
+      expect((<input disabled={true} />).getAttribute("disabled")).toBe("")
+      expect((<input disabled={false} />).getAttribute("disabled")).toBe(null)
     })
 
     it("supports dataset", () => {
-      expect((<div data-key="value" />).dataset.key).to.equal("value")
-      expect((<div dataset={{ key: "0" }} />).getAttribute("data-key")).to.equal("0")
+      expect((<div data-key="value" />).dataset.key).toBe("value")
+      expect((<div dataset={{ key: "0" }} />).getAttribute("data-key")).toBe("0")
     })
 
     it("suppresses null / undefined dataset", () => {
@@ -255,11 +255,9 @@ describe("jsx-dom", () => {
     })
 
     it("supports innerHTML, innerText and textContent", () => {
-      expect((<div innerHTML="<div></div><div></div>" />).querySelectorAll("div").length).to.equal(
-        2
-      )
+      expect((<div innerHTML="<div></div><div></div>" />).querySelectorAll("div").length).toBe(2)
       expect((<div innerText="<img>" />).querySelectorAll("img")).to.be.empty
-      expect((<div innerText="<img>" />).textContent).to.equal("<img>")
+      expect((<div innerText="<img>" />).textContent).toBe("<img>")
       expect((<div textContent="<img>" />).querySelectorAll("img")).to.be.empty
     })
 
@@ -268,13 +266,13 @@ describe("jsx-dom", () => {
         (<div dangerouslySetInnerHTML={{ __html: "<div></div><div></div>" }} />).querySelectorAll(
           "div"
         ).length
-      ).to.equal(2)
+      ).toBe(2)
 
       expect(
         (
           <svg dangerouslySetInnerHTML={{ __html: "<path></path><path></path>" }} />
         ).querySelectorAll("path").length
-      ).to.equal(2)
+      ).toBe(2)
     })
 
     it("supports ref store function", () => {
@@ -284,24 +282,24 @@ describe("jsx-dom", () => {
           <button ref={e => (button = e)} />
         </div>
       )
-      expect(button).not.to.be.null
-      expect(div.children[0]).to.equal(button)
+      expect(button).not.toBeNull()
+      expect(div.children[0]).toBe(button)
     })
 
     it("supports React style createRef.", () => {
       const ref = lib.createRef()
-      expect(ref).to.have.property("current", null)
+      expect(ref).toHaveProperty("current", null)
 
       const div = (
         <div>
           <button ref={ref} />
         </div>
       )
-      expect(ref).not.to.be.null
-      expect(div.children[0]).to.equal(ref.current)
+      expect(ref).not.toBeNull()
+      expect(div.children[0]).toBe(ref.current)
       cast(<input ref={ref} />)
-      expect(ref).not.to.be.null
-      expect(ref.current).to.have.property("tagName", "INPUT")
+      expect(ref).not.toBeNull()
+      expect(ref.current).toHaveProperty("tagName", "INPUT")
     })
 
     it("supports ref in functional components", () => {
@@ -316,9 +314,9 @@ describe("jsx-dom", () => {
           <Button ref={e => (button = e)} />
         </div>
       )
-      expect(button).not.to.be.null
-      expect(div.children[0].children[0]).to.equal(button)
-      expect(button).to.be.instanceOf(HTMLButtonElement)
+      expect(button).not.toBeNull()
+      expect(div.children[0].children[0]).toBe(button)
+      expect(button).toBeInstanceOf(HTMLButtonElement)
     })
 
     describe("supports forwardRef", () => {
@@ -335,8 +333,8 @@ describe("jsx-dom", () => {
             Click me!
           </Container>
         )
-        expect(node.className).to.equal("container")
-        expect(ref.current).to.be.instanceOf(HTMLButtonElement)
+        expect(node.className).toBe("container")
+        expect(ref.current).toBeInstanceOf(HTMLButtonElement)
       })
 
       it("component", () => {
@@ -353,8 +351,8 @@ describe("jsx-dom", () => {
             Click me!
           </Container>
         )
-        expect(node.className).to.equal("container")
-        expect(ref.current).to.be.instanceOf(HTMLButtonElement)
+        expect(node.className).toBe("container")
+        expect(ref.current).toBeInstanceOf(HTMLButtonElement)
       })
     })
 
@@ -372,16 +370,16 @@ describe("jsx-dom", () => {
           Click me!
         </Button>
       )
-      expect(node.className).to.equal("container")
-      expect(ref.current).to.have.property("focus")
-      expect(ref.current.focus()).to.equal("ping")
+      expect(node.className).toBe("container")
+      expect(ref.current).toHaveProperty("focus")
+      expect(ref.current.focus()).toBe("ping")
     })
 
     it("supports defaultProps in functional components", () => {
       const Button = (props: any) => <div className={props.className} />
       Button.defaultProps = { className: "defaultClass" }
       const button = <Button />
-      expect(button.className).to.equal("defaultClass")
+      expect(button.className).toBe("defaultClass")
     })
 
     it("supports defaultProps in class components", () => {
@@ -393,19 +391,19 @@ describe("jsx-dom", () => {
       }
       // @ts-ignore
       const button = <Button />
-      expect(button.className).to.equal("defaultClass")
+      expect(button.className).toBe("defaultClass")
     })
 
     it("supports spellCheck attribute", () => {
-      expect(cast<HTML.Input>(<input spellCheck={true} />).spellcheck).to.equal(true)
-      expect(cast<HTML.Input>(<input spellCheck={false} />).spellcheck).to.equal(false)
-      expect(cast<HTML.TextArea>(<textarea spellCheck={true} />).spellcheck).to.equal(true)
-      expect(cast<HTML.TextArea>(<textarea spellCheck={false} />).spellcheck).to.equal(false)
+      expect(cast<HTML.Input>(<input spellCheck={true} />).spellcheck).toBe(true)
+      expect(cast<HTML.Input>(<input spellCheck={false} />).spellcheck).toBe(false)
+      expect(cast<HTML.TextArea>(<textarea spellCheck={true} />).spellcheck).toBe(true)
+      expect(cast<HTML.TextArea>(<textarea spellCheck={false} />).spellcheck).toBe(false)
     })
 
     it("supports value attribute on textarea", () => {
-      expect(cast<HTML.TextArea>(<textarea value="Test" />).value).to.equal("Test")
-      expect(cast<HTML.TextArea>(<textarea value={undefined} />).value).to.equal("")
+      expect(cast<HTML.TextArea>(<textarea value="Test" />).value).toBe("Test")
+      expect(cast<HTML.TextArea>(<textarea value={undefined} />).value).toBe("")
     })
 
     it("supports value attribute on select", () => {
@@ -417,7 +415,7 @@ describe("jsx-dom", () => {
         </select>
       ) as HTMLSelectElement
 
-      expect(select.querySelector<HTMLOptionElement>("[value=B]").selected).to.equal(true)
+      expect(select.querySelector<HTMLOptionElement>("[value=B]").selected).toBe(true)
 
       const selectDeep = (
         <select value={["C"]}>
@@ -431,7 +429,7 @@ describe("jsx-dom", () => {
         </select>
       ) as HTMLSelectElement
 
-      expect(selectDeep.querySelector<HTMLOptionElement>("[value=C]").selected).to.equal(true)
+      expect(selectDeep.querySelector<HTMLOptionElement>("[value=C]").selected).toBe(true)
     })
 
     it("supports value attribute on select with multiple", () => {
@@ -443,9 +441,9 @@ describe("jsx-dom", () => {
         </select>
       ) as HTMLSelectElement
 
-      expect(select.querySelector<HTMLOptionElement>("[value=A]").selected).to.equal(false)
-      expect(select.querySelector<HTMLOptionElement>("[value=B]").selected).to.equal(true)
-      expect(select.querySelector<HTMLOptionElement>("[value=C]").selected).to.equal(true)
+      expect(select.querySelector<HTMLOptionElement>("[value=A]").selected).toBe(false)
+      expect(select.querySelector<HTMLOptionElement>("[value=B]").selected).toBe(true)
+      expect(select.querySelector<HTMLOptionElement>("[value=C]").selected).toBe(true)
 
       const selectSingle = (
         <select multiple value={"C"}>
@@ -455,9 +453,9 @@ describe("jsx-dom", () => {
         </select>
       ) as HTMLSelectElement
 
-      expect(selectSingle.querySelector<HTMLOptionElement>("[value=A]").selected).to.equal(false)
-      expect(selectSingle.querySelector<HTMLOptionElement>("[value=B]").selected).to.equal(false)
-      expect(selectSingle.querySelector<HTMLOptionElement>("[value=C]").selected).to.equal(true)
+      expect(selectSingle.querySelector<HTMLOptionElement>("[value=A]").selected).toBe(false)
+      expect(selectSingle.querySelector<HTMLOptionElement>("[value=B]").selected).toBe(false)
+      expect(selectSingle.querySelector<HTMLOptionElement>("[value=C]").selected).toBe(true)
 
       const selectDeep = (
         <select multiple value={["A", "B"]}>
@@ -471,45 +469,52 @@ describe("jsx-dom", () => {
         </select>
       ) as HTMLSelectElement
 
-      expect(selectDeep.querySelector<HTMLOptionElement>("[value=A]").selected).to.equal(true)
-      expect(selectDeep.querySelector<HTMLOptionElement>("[value=B]").selected).to.equal(true)
-      expect(selectDeep.querySelector<HTMLOptionElement>("[value=C]").selected).to.equal(false)
+      expect(selectDeep.querySelector<HTMLOptionElement>("[value=A]").selected).toBe(true)
+      expect(selectDeep.querySelector<HTMLOptionElement>("[value=B]").selected).toBe(true)
+      expect(selectDeep.querySelector<HTMLOptionElement>("[value=C]").selected).toBe(false)
     })
   })
 
   describe("styles", () => {
     it("supports style object", () => {
-      expect((<div style={{ display: "none" }} />).style.display).to.equal("none")
+      expect((<div style={{ display: "none" }} />).style.display).toBe("none")
     })
 
     it("supports style string", () => {
       const el = <div style="display: none; margin: 1px;" />
-      expect(el.style.display).to.equal("none")
-      expect(el.style.margin).to.equal("1px")
+      expect(el.style.display).toBe("none")
+      expect(el.style.margin).toBe("1px")
     })
   })
 
+  const _it =
+    (name: string, fn: (resolve: () => void, reject: (reason?: any) => void) => void) => () =>
+      it(name, () => new Promise<void>(fn))
+
   describe("events", () => {
-    it("supports event listeners", done => {
+    _it("supports event listeners", done => {
       const button = (<button onClick={() => done()} />) as HTMLButtonElement
       button.click()
     })
-    it("supports capture event listeners", done => {
+
+    _it("supports capture event listeners", (done, reject) => {
       const button = (
         <button
           onClickCapture={event => {
             event.stopImmediatePropagation()
             done()
           }}
-          onClick={() => done("`onClickCapture` was not called")}
+          onClick={() => reject("`onClickCapture` was not called")}
         />
       ) as HTMLButtonElement
       button.click()
     })
+
     it("uses `element.on...` properties", () => {
       const button = (<button onClick={() => void 0} />) as HTMLButtonElement
       expect(button.onclick).to.be.a("function")
     })
+
     it("uses addEventListener", () => {
       const button = (<button onCustomEvent={() => void 0} />) as HTMLButtonElement
       // @ts-expect-error checking not existing property
@@ -517,15 +522,18 @@ describe("jsx-dom", () => {
       // @ts-expect-error checking not existing property
       expect(button.customEvent).to.not.be.a("function")
     })
-    it("supports custom events", done => {
+
+    _it("supports custom events", done => {
       const button = (<button onCustomEvent={() => done()} />) as HTMLButtonElement
       button.dispatchEvent(new window.Event("customEvent"))
     })
-    it("supports event listeners using `on` attribute", done => {
+
+    _it("supports event listeners using `on` attribute", done => {
       const button = (<button on={{ click: () => done() }} />) as HTMLButtonElement
       button.click()
     })
-    it("supports capture event listeners using `onCapture` attribute", done => {
+
+    _it("supports capture event listeners using `onCapture` attribute", (done, reject) => {
       const button = (
         <button
           onCapture={{
@@ -534,45 +542,48 @@ describe("jsx-dom", () => {
               done()
             },
           }}
-          onClick={() => done("`onCapture` was not called")}
+          onClick={() => reject("`onCapture` was not called")}
         />
       ) as HTMLButtonElement
       button.click()
     })
-    it("supports custom events using `on` attribute", done => {
+
+    _it("supports custom events using `on` attribute", done => {
       const button = (<button on={{ CustomEvent: () => done() }} />) as HTMLButtonElement
       button.dispatchEvent(new window.Event("CustomEvent"))
     })
-    it("maps onDoubleClick to dblclick event", done => {
+    _it("maps onDoubleClick to dblclick event", done => {
       const button = (<button onDoubleClick={() => done()} />) as HTMLButtonElement
       button.dispatchEvent(new window.Event("dblclick"))
     })
-    it("maps onDblClick to dblclick event", done => {
+    _it("maps onDblClick to dblclick event", done => {
       const button = (<button onDblClick={() => done()} />) as HTMLButtonElement
       button.dispatchEvent(new window.Event("dblclick"))
     })
-    it("maps onDoubleClickCapture to dblclick event", done => {
+    _it("maps onDoubleClickCapture to dblclick event", done => {
       const button = (<button onDoubleClickCapture={() => done()} />) as HTMLButtonElement
       button.dispatchEvent(new window.Event("dblclick"))
     })
-    it("maps onDblClickCapture to dblclick event", done => {
+    _it("maps onDblClickCapture to dblclick event", done => {
       const button = (<button onDblClickCapture={() => done()} />) as HTMLButtonElement
       button.dispatchEvent(new window.Event("dblclick"))
     })
   })
 
   describe("forwardRef", () => {
-    // const FancyButton = React.forwardRef((props, ref) => (
-    const FancyButton = props => (
-      <button ref={props.ref} className="FancyButton">
-        {props.children}
-      </button>
-    )
+    it("supports forwardRef", () => {
+      // const FancyButton = React.forwardRef((props, ref) => (
+      const FancyButton = props => (
+        <button ref={props.ref} className="FancyButton">
+          {props.children}
+        </button>
+      )
 
-    // You can now get a ref directly to the DOM button:
-    const ref = lib.createRef()
-    cast(<FancyButton ref={ref}>Click me!</FancyButton>)
-    expect(ref.current).to.be.instanceOf(HTMLButtonElement)
+      // You can now get a ref directly to the DOM button:
+      const ref = lib.createRef()
+      cast(<FancyButton ref={ref}>Click me!</FancyButton>)
+      expect(ref.current).toBeInstanceOf(HTMLButtonElement)
+    })
   })
 
   describe("fragment", () => {
@@ -584,10 +595,10 @@ describe("jsx-dom", () => {
         </>
       )
       const nodes = frag.childNodes
-      expect(nodes[0].nodeType).to.equal(Node.TEXT_NODE)
-      expect(nodes[0].textContent).to.equal("2")
-      expect(nodes[1].nodeName).to.equal("SPAN")
-      expect(nodes[1].textContent).to.equal("Bonjour")
+      expect(nodes[0].nodeType).toBe(Node.TEXT_NODE)
+      expect(nodes[0].textContent).toBe("2")
+      expect(nodes[1].nodeName).toBe("SPAN")
+      expect(nodes[1].textContent).toBe("Bonjour")
     })
 
     it("supports fragments with explicit tag", () => {
@@ -598,10 +609,10 @@ describe("jsx-dom", () => {
         </lib.Fragment>
       )
       const nodes = frag.childNodes
-      expect(nodes[0].nodeType).to.equal(Node.TEXT_NODE)
-      expect(nodes[0].textContent).to.equal("2")
-      expect(nodes[1].nodeName).to.equal("SPAN")
-      expect(nodes[1].textContent).to.equal("Bonjour")
+      expect(nodes[0].nodeType).toBe(Node.TEXT_NODE)
+      expect(nodes[0].textContent).toBe("2")
+      expect(nodes[1].nodeName).toBe("SPAN")
+      expect(nodes[1].textContent).toBe("Bonjour")
     })
 
     it("supports fragments with one child", () => {
@@ -612,13 +623,15 @@ describe("jsx-dom", () => {
       )
       const nodes = frag.childNodes
       expect(nodes).to.have.lengthOf(1)
-      expect(nodes[0].nodeName).to.equal("SPAN")
-      expect(nodes[0].textContent).to.equal("Text")
+      expect(nodes[0].nodeName).toBe("SPAN")
+      expect(nodes[0].textContent).toBe("Text")
     })
   })
 
   describe("web component events", () => {
-    customElements.define("web-component", class WebComponent extends HTMLElement {})
+    it("can be defined as a web component", () => {
+      customElements.define("web-component", class WebComponent extends HTMLElement {})
+    })
   })
 
   describe("templates", () => {
@@ -631,10 +644,10 @@ describe("jsx-dom", () => {
       ) as HTMLTemplateElement
 
       const nodes = template.content.childNodes
-      expect(nodes[0].nodeType).to.equal(Node.TEXT_NODE)
-      expect(nodes[0].textContent).to.equal("2")
-      expect(nodes[1].nodeName).to.equal("SPAN")
-      expect(nodes[1].textContent).to.equal("Bonjour")
+      expect(nodes[0].nodeType).toBe(Node.TEXT_NODE)
+      expect(nodes[0].textContent).toBe("2")
+      expect(nodes[1].nodeName).toBe("SPAN")
+      expect(nodes[1].textContent).toBe("Bonjour")
     })
   })
 })

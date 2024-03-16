@@ -1,7 +1,7 @@
 import { expect } from "chai"
 import { forEach } from "lodash"
-import { describe, it } from "mocha"
-import { React } from "./register"
+import { describe, it } from "vitest"
+import * as React from "../src"
 import { htmlElementTags } from "./assets.json"
 
 describe("styled components", () => {

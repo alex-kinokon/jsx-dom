@@ -1,7 +1,5 @@
-import { expect } from "chai"
-import { describe, it } from "mocha"
-import sinon from "sinon"
-import { React } from "./register"
+import { describe, expect, it, vi } from "vitest"
+import * as React from "../src"
 
 describe("shadow", () => {
   const { ShadowRoot: Shadow } = React
@@ -13,7 +11,7 @@ describe("shadow", () => {
           <Shadow mode="open">world</Shadow>
         </div>
       ).outerHTML
-    ).to.equal("<div></div>")
+    ).toBe("<div></div>")
   })
 
   it("supports mode `open`", () => {
@@ -26,8 +24,8 @@ describe("shadow", () => {
     ) as HTMLDivElement
 
     expect(div.shadowRoot).to.exist
-    expect(div.shadowRoot.mode).to.equal("open")
-    expect(div.shadowRoot.innerHTML).to.equal("<i>world</i>")
+    expect(div.shadowRoot.mode).toBe("open")
+    expect(div.shadowRoot.innerHTML).toBe("<i>world</i>")
   })
 
   it("supports mode `closed`", () => {
@@ -42,7 +40,7 @@ describe("shadow", () => {
     ) as HTMLDivElement
 
     expect(div.shadowRoot).to.be.null
-    expect(ref.current!.innerHTML).to.equal("<b>world</b>")
+    expect(ref.current!.innerHTML).toBe("<b>world</b>")
   })
 
   it("supports ref on ShadowRoot", () => {
@@ -57,7 +55,7 @@ describe("shadow", () => {
 
     expect(ref1.current).to.be.instanceOf(ShadowRoot)
 
-    const ref2 = sinon.fake<[ShadowRoot], void>()
+    const ref2 = vi.fn<[ShadowRoot], void>()
     Object(
       <div>
         <Shadow ref={ref2} mode="open">
@@ -66,8 +64,8 @@ describe("shadow", () => {
       </div>
     )
 
-    expect(ref2.calledOnce)
-    expect(ref2.args[0]).to.have.lengthOf(1)
-    expect(ref2.args[0][0]).to.be.instanceOf(ShadowRoot)
+    expect(ref2.mock.calls).toHaveLength(1)
+    expect(ref2.mock.calls[0]).to.have.lengthOf(1)
+    expect(ref2.mock.calls[0][0]).to.be.instanceOf(ShadowRoot)
   })
 })

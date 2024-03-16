@@ -26,8 +26,6 @@ function isVisibleChild(value: any): boolean {
   return !isBoolean(value) && value != null
 }
 
-const DomTokenList = typeof DOMTokenList !== "undefined" ? DOMTokenList : function () {}
-
 /**
  * Convert a `value` to a className string.
  * `value` can be a string, an array or a `Dictionary<boolean>`.
@@ -35,9 +33,10 @@ const DomTokenList = typeof DOMTokenList !== "undefined" ? DOMTokenList : functi
 export function className(value: any): string {
   if (Array.isArray(value)) {
     return value.map(className).filter(Boolean).join(" ")
-  } else if (value instanceof DomTokenList) {
-    return "" + value
   } else if (isObject(value)) {
+    if (Symbol.iterator in value) {
+      return className(Array.from(value))
+    }
     return keys(value)
       .filter(k => value[k])
       .join(" ")

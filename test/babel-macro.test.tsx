@@ -1,10 +1,8 @@
-import { resolve } from "path"
+import { resolve } from "node:path"
 import { transformSync } from "@babel/core"
-import { expect } from "chai"
-import { describe, it } from "mocha"
+import { describe, expect, it } from "vitest"
 import dedent from "dedent"
-
-import "../src/styled.macro"
+import macro from "../src/styled.macro"
 
 function javascript(list: TemplateStringsArray, ...interpols: any[]) {
   const lastIndex = list.length - 1
@@ -17,6 +15,7 @@ function javascript(list: TemplateStringsArray, ...interpols: any[]) {
         {
           isMacrosName: v => /[./]macro(\.ts)?$/.test(v),
           resolvePath: () => resolve(__dirname, "../src/styled.macro.ts"),
+          require: () => macro,
         },
       ],
     ],
@@ -33,7 +32,7 @@ describe("styled.macro", () => {
         font-family: "Helvetica Neue";
         font-size: 16px;
       \`
-    `).to.equal(dedent/* javascript */ `
+    `).toBe(dedent/* javascript */ `
       import { styled } from "jsx-dom";
       export const Component = styled.div(["font-family:\"Helvetica Neue\";font-size:16px"]);
     `)
@@ -60,8 +59,8 @@ describe("styled.macro", () => {
       ${code}
     `
 
-    expect(js("styled.abc.div`font-family: too-long;")).to.throw()
-    expect(js("styled`font-family: too-long;")).to.throw()
-    expect(js("styled(ABC)(DEF)/* a */``")).to.throw()
+    expect(js("styled.abc.div`font-family: too-long;")).toThrow()
+    expect(js("styled`font-family: too-long;")).toThrow()
+    expect(js("styled(ABC)(DEF)/* a */``")).toThrow()
   })
 })
