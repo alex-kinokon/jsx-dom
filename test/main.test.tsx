@@ -364,14 +364,12 @@ describe("jsx-dom", () => {
         }
 
         const ref = lib.createRef<Button>()
-        React.createElement(Button, { className: "", ref })
         const node = (
           <Button className="container" ref={ref}>
             Click me!
           </Button>
         )
         expect(node.className).toBe("container")
-        console.log(ref)
         expect(ref.current).toBeInstanceOf(Button)
       })
     })
