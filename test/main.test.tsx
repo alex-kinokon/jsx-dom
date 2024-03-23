@@ -354,6 +354,26 @@ describe("jsx-dom", () => {
         expect(node.className).toBe("container")
         expect(ref.current).toBeInstanceOf(HTMLButtonElement)
       })
+
+      // #104
+      it("class component with ref", () => {
+        class Button extends React.Component<{ className: string }> {
+          render() {
+            return <button className={this.props.className} />
+          }
+        }
+
+        const ref = lib.createRef<Button>()
+        React.createElement(Button, { className: "", ref })
+        const node = (
+          <Button className="container" ref={ref}>
+            Click me!
+          </Button>
+        )
+        expect(node.className).toBe("container")
+        console.log(ref)
+        expect(ref.current).toBeInstanceOf(Button)
+      })
     })
 
     it("supports useImperativeHandle", () => {
@@ -603,10 +623,10 @@ describe("jsx-dom", () => {
 
     it("supports fragments with explicit tag", () => {
       const frag = (
-        <lib.Fragment>
+        <React.Fragment>
           {[2]}
           <span>Bonjour</span>
-        </lib.Fragment>
+        </React.Fragment>
       )
       const nodes = frag.childNodes
       expect(nodes[0].nodeType).toBe(Node.TEXT_NODE)

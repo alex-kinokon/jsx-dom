@@ -111,7 +111,7 @@ export function createFactory(tag: string) {
   return createElement.bind(null, tag)
 }
 
-export function Fragment(attr: { children: JSX.Element | JSX.Element[] }) {
+export function Fragment(attr: { children: (JSX.Element | JSX.Element)[] }) {
   const fragment = document.createDocumentFragment()
   appendChild(attr.children, fragment)
   return fragment
@@ -134,7 +134,11 @@ export class Component {
 function initComponentClass(Class: ComponentClass, attr, children) {
   attr = { ...attr, children }
   const instance = new Class(attr)
-  return instance.render()
+  const node = instance.render()
+  if ("ref" in attr) {
+    attachRef(attr.ref, instance)
+  }
+  return node
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

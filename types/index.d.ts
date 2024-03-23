@@ -144,9 +144,16 @@ export function createElement<T extends Element>(
 ): T
 
 // Custom components
-export function createElement<P extends {}, T extends Element>(
-  type: ComponentType<P, T>,
-  props?: (Attributes & P) | null,
+export function createElement<T extends Element, Type extends ComponentClass<any, T>>(
+  type: Type,
+  props?:
+    | (Attributes & PropOfComponent<Type> & { ref?: Ref<InstanceType<Type>> | undefined })
+    | null,
+  ...children: ReactNode[]
+): T
+export function createElement<P extends {}, T extends Element, Type extends ComponentClass<P, T>>(
+  type: Type,
+  props?: (Attributes & P & { ref?: Ref<InstanceType<Type>> | undefined }) | null,
   ...children: ReactNode[]
 ): T
 
@@ -228,7 +235,7 @@ export interface ComponentClass<P = {}, T extends Element = JSX.Element> {
 }
 
 export class Component<P = {}, T extends Element = JSX.Element> {
-  constructor(props: PropsWithChildren<P>)
+  constructor(props: PropsWithChildren<P> & { ref?: Ref<any> })
   readonly props: PropsWithChildren<P>
   render(): T | null
 }
@@ -240,6 +247,8 @@ export type PropsWithChildren<P> = P & { children?: ReactNode | undefined }
 export type ComponentType<P = {}, T extends Element = JSX.Element> =
   | ComponentClass<P, T>
   | FunctionComponent<P, T>
+
+type PropOfComponent<T> = T extends ComponentType<infer P> ? P : never
 
 //
 // React Hooks

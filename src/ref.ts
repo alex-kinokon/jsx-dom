@@ -1,10 +1,10 @@
 import { isObject } from "./util"
 
-interface Ref<T = Node> {
+interface Ref<T> {
   current: null | T
 }
 
-export function createRef<T extends Node = Node>(): Ref<T> {
+export function createRef<T>(): Ref<T> {
   return Object.seal({ current: null })
 }
 
