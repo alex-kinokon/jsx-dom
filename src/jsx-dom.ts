@@ -118,7 +118,7 @@ export function Fragment(attr: { children: JSX.Element | JSX.Element[] }) {
 }
 
 export class Component {
-  constructor(readonly props: any) { }
+  constructor(readonly props: any) {}
 
   render() {
     return null
@@ -191,7 +191,7 @@ export function createElement(tag: any, attr: any, ...children: any[]) {
   attr = attr || {}
 
   if (attr.children != null && !children.length) {
-    ; ({ children, ...attr } = attr)
+    ;({ children, ...attr } = attr)
   }
 
   return jsx(tag, { ...attr, children }, attr.key)
