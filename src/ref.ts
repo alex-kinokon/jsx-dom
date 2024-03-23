@@ -4,7 +4,7 @@ interface Ref<T = Node> {
   current: null | T
 }
 
-export function createRef<T extends Node = Node>(): Ref<T> {
+export function createRef<T = Node>(): Ref<T> {
   return Object.seal({ current: null })
 }
 

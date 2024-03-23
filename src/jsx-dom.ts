@@ -118,7 +118,7 @@ export function Fragment(attr: { children: JSX.Element | JSX.Element[] }) {
 }
 
 export class Component {
-  constructor(readonly props: any) {}
+  constructor(readonly props: any) { }
 
   render() {
     return null
@@ -134,7 +134,9 @@ export class Component {
 function initComponentClass(Class: ComponentClass, attr, children) {
   attr = { ...attr, children }
   const instance = new Class(attr)
-  return instance.render()
+  var result = instance.render();
+  attachRef(attr.ref, instance);
+  return result;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -189,7 +191,7 @@ export function createElement(tag: any, attr: any, ...children: any[]) {
   attr = attr || {}
 
   if (attr.children != null && !children.length) {
-    ;({ children, ...attr } = attr)
+    ; ({ children, ...attr } = attr)
   }
 
   return jsx(tag, { ...attr, children }, attr.key)

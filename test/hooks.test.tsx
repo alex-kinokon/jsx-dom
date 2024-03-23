@@ -30,6 +30,27 @@ describe("hooks", () => {
     expect(ref2.current).toHaveProperty("tagName", "INPUT")
   })
 
+  it("supports useRef with class components", () => {
+    class MyButton extends React.Component {
+      render() {
+        return <button type="button"></button>
+      }
+    }
+
+    const ref = React.useRef<MyButton>()
+    expect(ref).toHaveProperty("current", null)
+
+    const div = (
+      <div>
+        <MyButton ref={ref} />
+      </div>
+    )
+    expect(ref).not.toBeNull()
+    expect(ref.current).not.toBeNull()
+    expect(ref.current instanceof MyButton).toBe(true);
+    expect(div.children[0] instanceof HTMLButtonElement).toBe(true)
+  })
+
   it("supports useClassList", () => {
     const cls = React.useClassList()
     cls.add("me")
