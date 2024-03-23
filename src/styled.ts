@@ -9,8 +9,11 @@ const createStyledComponent =
   ({ style, ...props }) => {
     const lastIndex = list.length - 1
     const css =
-      list.slice(0, lastIndex).reduce((p, s, i) => p + s + interpolations[i](props), "") +
-      list[lastIndex]
+      list.slice(0, lastIndex).reduce((p, s, i) => {
+        const interpolation = interpolations[i]
+        const current = typeof interpolation === "function" ? interpolation(props) : interpolation
+        return p + s + current
+      }, "") + list[lastIndex]
     return createElement(name, { style: [css, style], ...props })
   }
 

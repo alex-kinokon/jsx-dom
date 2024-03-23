@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 import type { HTML } from "../types/index"
-import * as React from "../src"
 import * as lib from "../src"
+import { React } from "./_utils"
 
 describe("jsx-dom", () => {
   it("creates a <div> element", () => {
@@ -66,7 +66,7 @@ describe("jsx-dom", () => {
 
   it("supports React automatic runtime", () => {
     expect(
-      lib.jsx("div", {
+      React.jsx("div", {
         className: "className",
       }).outerHTML
     ).toBe('<div class="className"></div>')
@@ -364,7 +364,7 @@ describe("jsx-dom", () => {
         return <button {...props} />
       })
 
-      const ref = lib.createRef()
+      const ref = lib.createRef<HTMLButtonElement>()
       const node = (
         <Button className="container" ref={ref}>
           Click me!
@@ -383,7 +383,7 @@ describe("jsx-dom", () => {
     })
 
     it("supports defaultProps in class components", () => {
-      class Button extends lib.Component<{ className: string }> {
+      class Button extends React.Component<{ className: string }> {
         static defaultProps = { className: "defaultClass" }
         render() {
           return <div className={this.props.className} />

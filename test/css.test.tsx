@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 import type { StandardLonghandProperties } from "csstype"
-import * as React from "../src"
+import { React } from "./_utils"
 
 describe("CSS", () => {
   it("supports numeric CSS properties", () => {

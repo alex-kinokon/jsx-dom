@@ -4,7 +4,7 @@ export type InterpolationFunction<T> = (props: T) => string | number | null
 
 export type StyledComponent<InherentProps> = <AdditionalProps = {}>(
   template: TemplateStringsArray,
-  ...interpolations: InterpolationFunction<InherentProps & AdditionalProps>[]
+  ...interpolations: (InterpolationFunction<InherentProps & AdditionalProps> | string | number)[]
 ) => FunctionComponent<InherentProps & AdditionalProps>
 
 type HTMLStyledComponentMap = {
@@ -14,7 +14,7 @@ type CustomStyledComponent = <Props extends { style: any }>(
   customComponent: FunctionComponent<Props>
 ) => (
   template: TemplateStringsArray,
-  ...interpolations: InterpolationFunction<Props>[]
+  ...interpolations: (InterpolationFunction<Props> | string | number)[]
 ) => FunctionComponent<
   Omit<Props, "style"> & {
     style: StyleInput

@@ -1,8 +1,8 @@
 import { expect } from "chai"
 import { forEach } from "lodash"
 import { describe, it } from "vitest"
-import * as React from "../src"
 import { htmlElementTags } from "./assets.json"
+import { React } from "./_utils"
 
 describe("styled components", () => {
   const { styled } = React
@@ -36,14 +36,14 @@ describe("styled components", () => {
   })
 
   it("supports functional components", () => {
-    const Header = (props: { style; prefix: string; children; weight: number }) => (
+    const Header = (props: { style: any; prefix: string; children; weight: number }) => (
       <span style={props.style} class="header">
         {props.prefix}
         {props.children}
       </span>
     )
     const StyledHeader = styled(Header)`
-      font-size: 20px;
+      font-size: ${20}px;
       font-weight: ${p => p.weight};
     `
     const node = (
@@ -54,7 +54,7 @@ describe("styled components", () => {
     )
     assertStyle(node, { fontSize: "20px", fontWeight: "600" })
     expect(node.tagName).to.deep.equal("SPAN")
-    expect(node.innerText).to.deep.equal("Prefix: Text")
+    expect(node.textContent).to.deep.equal("Prefix: Text")
   })
 
   it("allows overriding styles", () => {

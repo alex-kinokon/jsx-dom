@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest"
-import * as React from "../src"
+import { React } from "./_utils"
 
 describe("shadow", () => {
   const { ShadowRoot: Shadow } = React
