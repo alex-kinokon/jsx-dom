@@ -644,6 +644,20 @@ describe("jsx-dom", () => {
       expect(nodes[0].nodeName).toBe("SPAN")
       expect(nodes[0].textContent).toBe("Text")
     })
+
+    it("supports fragments as child", () => {
+      const frag = (
+        <div>
+          <>
+            <span>Text</span>
+          </>
+        </div>
+      )
+      const nodes = frag.childNodes
+      expect(nodes).to.have.lengthOf(1)
+      expect(nodes[0].nodeName).toBe("SPAN")
+      expect(nodes[0].textContent).toBe("Text")
+    })
   })
 
   describe("web component events", () => {

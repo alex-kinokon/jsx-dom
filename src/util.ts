@@ -30,9 +30,10 @@ export function isFunction(val: any): val is Function {
   return typeof val === "function"
 }
 
-export function isComponentClass(Component: Function): Component is ComponentClass {
-  const { prototype } = Component
-  return !!(prototype && prototype.isReactComponent)
+export function isComponentClass(
+  Component: Function & { isComponent?: boolean }
+): Component is ComponentClass {
+  return !!(Component && Component.isComponent)
 }
 
 export function isArrayLike(obj: any): obj is ArrayLike<any> {

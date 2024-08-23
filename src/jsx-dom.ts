@@ -118,18 +118,14 @@ export function Fragment(attr: { children: (JSX.Element | JSX.Element)[] }) {
 }
 
 export class Component {
+  static isComponent = true
+
   constructor(readonly props: any) {}
 
   render() {
     return null
   }
 }
-
-/* @__PURE__ */ Object.defineProperties(Component.prototype, {
-  isReactComponent: {
-    value: true,
-  },
-})
 
 function initComponentClass(Class: ComponentClass, attr, children) {
   attr = { ...attr, children }
@@ -208,7 +204,7 @@ export function attachRef<T = Node>(ref: any | undefined, node: T) {
 }
 
 function appendChild(
-  child: any[] | string | number | ShadowRootContainer | null | Element,
+  child: any[] | string | number | ShadowRootContainer | null | Element | DocumentFragment,
   node: Node
 ) {
   if (isArrayLike(child)) {

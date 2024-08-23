@@ -58,7 +58,7 @@ interface AttrWithRef<T> extends Attributes {
   ref?: Ref<T> | undefined
 }
 
-export type ReactElement = HTMLElement | SVGElement
+export type ReactElement = HTMLElement | SVGElement | DocumentFragment
 
 type DOMFactory<P extends DOMAttributes<T>, T extends Element> = (
   props?: (AttrWithRef<T> & P) | null,
@@ -220,7 +220,7 @@ export function ShadowRoot(
   children: ReactElement | ReactElement[]
 }
 
-export interface FunctionComponent<P = {}, T extends Element = JSX.Element> {
+export interface FunctionComponent<P = {}, T extends Node = JSX.Element> {
   (props: PropsWithChildren<P>, context?: any): T | null
   defaultProps?: Partial<P>
   displayName?: string
@@ -228,13 +228,13 @@ export interface FunctionComponent<P = {}, T extends Element = JSX.Element> {
 
 export { FunctionComponent as FC }
 
-export interface ComponentClass<P = {}, T extends Element = JSX.Element> {
+export interface ComponentClass<P = {}, T extends Node = JSX.Element> {
   new (props: P, context?: any): Component<P, T>
   defaultProps?: Partial<P> | undefined
   displayName?: string | undefined
 }
 
-export class Component<P = {}, T extends Element = JSX.Element> {
+export class Component<P = {}, T extends Node = JSX.Element> {
   constructor(props: PropsWithChildren<P> & { ref?: Ref<any> })
   readonly props: PropsWithChildren<P>
   render(): T | null
@@ -244,7 +244,7 @@ export { Component as PureComponent }
 
 export type PropsWithChildren<P> = P & { children?: ReactNode | undefined }
 
-export type ComponentType<P = {}, T extends Element = JSX.Element> =
+export type ComponentType<P = {}, T extends Node = JSX.Element> =
   | ComponentClass<P, T>
   | FunctionComponent<P, T>
 

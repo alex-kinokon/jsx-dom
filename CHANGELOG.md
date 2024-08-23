@@ -1,3 +1,9 @@
+# 8.1.5
+- Fixes #108: Class components are now differentiated from functional components by `.isComponent` instead of `.prototype.isReactComponent`, fixing an issue with terser.
+
+# 8.1.4
+- Fixes #104: Class Components do not populate their ref attribute.
+
 # 8.1.3
 - Merged #101.
 
