@@ -137,10 +137,9 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
     fs.writeFile(
       resolve(OUT_DIR, "jsx-dev-runtime.js"),
       format === "esm"
-        ? /* javascript */ `export * from "./jsx-runtime";`
+        ? /* javascript */ `export * from "./jsx-runtime.js";`
         : /* javascript */ `module.exports = require("./jsx-runtime");`
     ),
-
     buildRollup("styled.macro", {
       moduleFormat: "cjs",
       cjsExtension: true,
@@ -155,9 +154,10 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
       outputDir: OUT_DIR_MIN,
       inject: { "./jsx-dom": `${packageName}/min`, delimiters: ["", ""] },
     }),
+    reexport("jsx-dev-runtime.js", OUT_DIR_MIN, "./jsx-runtime.js"),
     reexport("index.d.ts", OUT_DIR_MIN, "../index"),
     reexport("jsx-runtime.d.ts", OUT_DIR_MIN, "./index", jsxRuntimeExports),
-    reexport("jsx-runtime.d.ts", OUT_DIR, "./index", jsxRuntimeExports),
+    reexport("jsx-runtime.d.ts", OUT_DIR, "./index", jsxRuntimeExports)
   ])
 }
 
