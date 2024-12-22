@@ -18,7 +18,12 @@ pnpm add jsx-dom
 
 ## Usage
 
-`jsx-dom` is ESM only. If you need CommonJS support, install `jsx-dom-cjs` instead. These two packages only differ in module format.
+`jsx-dom` is ESM only.
+
+If you need CommonJS support, you can
+
+1. Use this library directly if you use [Node v22](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require) or above.
+2. install `jsx-dom-cjs` instead. These two packages only differ in module format.
 
 **Note:** If you are using [React Automatic Runtime](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx), simply set `jsxImportSource` to `jsx-dom` or `jsx-dom/min` and you can omit the import.
 
