@@ -157,7 +157,7 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
     reexport("jsx-dev-runtime.js", OUT_DIR_MIN, "./jsx-runtime.js"),
     reexport("index.d.ts", OUT_DIR_MIN, "../index"),
     reexport("jsx-runtime.d.ts", OUT_DIR_MIN, "./index", jsxRuntimeExports),
-    reexport("jsx-runtime.d.ts", OUT_DIR, "./index", jsxRuntimeExports)
+    reexport("jsx-runtime.d.ts", OUT_DIR, "./index", jsxRuntimeExports),
   ])
 }
 

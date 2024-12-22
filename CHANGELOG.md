@@ -1,5 +1,9 @@
+# 8.1.6
+- Fixes #110: Add missing .js extension to export in "jsx-dev-runtime.js"
+
 # 8.1.5
 - Fixes #108: Class components are now differentiated from functional components by `.isComponent` instead of `.prototype.isReactComponent`, fixing an issue with terser.
+- React.ReactElement now extends DocumentFragment.
 
 # 8.1.4
 - Fixes #104: Class Components do not populate their ref attribute.
