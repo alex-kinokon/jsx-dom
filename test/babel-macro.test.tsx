@@ -13,7 +13,7 @@ function javascript(list: TemplateStringsArray, ...interpols: any[]) {
       [
         "babel-plugin-macros",
         {
-          isMacrosName: v => /[./]macro(\.ts)?$/.test(v),
+          isMacrosName: (v: string) => /[./]macro(\.ts)?$/.test(v),
           resolvePath: () => resolve(__dirname, "../src/styled.macro.ts"),
           require: () => macro,
         },
@@ -32,7 +32,7 @@ describe("styled.macro", () => {
         font-family: "Helvetica Neue";
         font-size: 16px;
       \`
-    `).toBe(dedent/* javascript */ `
+    `).toBe(dedent /* javascript */ `
       import { styled } from "jsx-dom";
       export const Component = styled.div(["font-family:\"Helvetica Neue\";font-size:16px"]);
     `)
@@ -46,7 +46,7 @@ describe("styled.macro", () => {
         font-family: "Helvetica Neue";
         font-size: 16px;
       \`
-    `).to.equal(dedent/* javascript */ `
+    `).to.equal(dedent /* javascript */ `
       import { styled } from "jsx-dom";
       export const Component = styled(Header)(["font-family:\"Helvetica Neue\";font-size:16px"]);
     `)

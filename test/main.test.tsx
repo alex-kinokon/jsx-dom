@@ -204,6 +204,50 @@ describe("jsx-dom", () => {
       const node = <div class={base.classList} />
       expect(node.className).toBe("base")
     })
+
+    it("accepts Iterable<ClassName> for nested class structures", () => {
+      // Test with Set containing nested ClassName types
+      const nodeFromSet = (
+        <div
+          class={
+            new Set([
+              "first",
+              { active: true, disabled: false },
+              ["nested", "array"],
+              null,
+              undefined,
+              false,
+            ])
+          }
+        />
+      )
+      expect(nodeFromSet.className).toBe("first active nested array")
+
+      const nodeFromGenerator = (
+        <div
+          class={(function* test() {
+            yield "generated"
+            yield { dynamic: true }
+            yield ["from", "generator"]
+            yield false // should be filtered out
+          })()}
+        />
+      )
+      expect(nodeFromGenerator.className).toBe("generated dynamic from generator")
+
+      const nodeFromCustom = (
+        <div
+          class={{
+            *[Symbol.iterator]() {
+              yield "custom"
+              yield { iterable: true, test: false }
+              yield ["with", "nested", "arrays"]
+            },
+          }}
+        />
+      )
+      expect(nodeFromCustom.className).toBe("custom iterable with nested arrays")
+    })
   })
 
   describe("attributes", () => {

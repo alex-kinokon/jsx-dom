@@ -1,6 +1,7 @@
 import { resolve } from "path"
-import type { ModuleFormat } from "rollup"
 import * as fs from "fs-extra"
+import type { PackageJson } from "type-fest"
+
 import babel from "@rollup/plugin-babel"
 import type { RollupReplaceOptions } from "@rollup/plugin-replace"
 import replace from "@rollup/plugin-replace"
@@ -12,13 +13,10 @@ import { dependencies, devDependencies } from "../package.json"
 
 interface BuildOptions {
   targetDir: string
-  format: ModuleFormat
   packageName: string
 }
 
-export async function build({ targetDir, format, packageName }: BuildOptions) {
-  const isESM = format === "esm"
-
+export async function build({ targetDir, packageName }: BuildOptions) {
   const extensions = [".ts", ".js"]
   const jsxRuntimeExports = "jsx, jsxs, jsx as jsxDEV, Fragment, JSX"
 
@@ -31,13 +29,11 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
       outputDir = OUT_DIR,
       inject = {},
       externals = [],
-      moduleFormat = format,
       cjsExtension = false,
     }: {
       outputDir?: string
       inject?: RollupReplaceOptions
       externals?: string[]
-      moduleFormat?: ModuleFormat
       cjsExtension?: boolean
     } = {}
   ) {
@@ -83,7 +79,7 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
     })
 
     await bundle.write({
-      format: moduleFormat,
+      format: "esm",
       file: `${outputDir}/${name}.${cjsExtension ? "cjs" : "js"}`,
       exports: "named",
       banner: "/* eslint-disable */",
@@ -91,7 +87,7 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
   }
 
   async function copyPackageJson() {
-    const source = await fs.readJSON(resolve(__dirname, "../package.json"))
+    const source = (await fs.readJSON(resolve(__dirname, "../package.json"))) as PackageJson
     source.name = packageName
     delete source.devDependencies
     delete source.private
@@ -99,10 +95,14 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
     delete source.prettier
     delete source.pnpm
     delete source.browserslist
-    if (isESM) {
-      source.type = "module"
-    } else {
-      delete source.module
+    source.type = "module"
+    source.exports = {
+      ".": "./index.js",
+      "./jsx-runtime": "./jsx-runtime.js",
+      "./jsx-dev-runtime": "./jsx-dev-runtime.js",
+      "./min": "./min/index.js",
+      "./min/jsx-runtime": "./min/jsx-runtime.js",
+      "./min/jsx-dev-runtime": "./min/jsx-dev-runtime.js",
     }
     await fs.writeJSON(resolve(OUT_DIR, "package.json"), source, { spaces: 2 })
   }
@@ -134,14 +134,8 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
       resolve(OUT_DIR, "styled.macro.d.ts"),
       /* javascript */ `import { styled } from "./index.d";\nexport default styled;`
     ),
-    fs.writeFile(
-      resolve(OUT_DIR, "jsx-dev-runtime.js"),
-      format === "esm"
-        ? /* javascript */ `export * from "./jsx-runtime.js";`
-        : /* javascript */ `module.exports = require("./jsx-runtime");`
-    ),
+    fs.writeFile(resolve(OUT_DIR, "jsx-dev-runtime.js"), `export * from "./jsx-runtime.js";`),
     buildRollup("styled.macro", {
-      moduleFormat: "cjs",
       cjsExtension: true,
       externals: Object.keys(dependencies).concat(Object.keys(devDependencies)),
     }),
@@ -158,9 +152,6 @@ export async function build({ targetDir, format, packageName }: BuildOptions) {
   ])
 }
 
-Promise.all([
-  build({ targetDir: "esm", format: "esm", packageName: "jsx-dom" }),
-  build({ targetDir: "cjs", format: "cjs", packageName: "jsx-dom-cjs" }),
-]).then(() => {
+Promise.all([build({ targetDir: "esm", packageName: "jsx-dom" })]).then(() => {
   console.log("Done")
 })

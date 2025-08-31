@@ -1,8 +1,11 @@
+/** @jsxImportSource ./esm */
 import { describe, expect, it, vi } from "vitest"
 import { React } from "./_utils"
 
 describe("shadow", () => {
   const { ShadowRoot: Shadow } = React
+
+  const div = React.createElement("div")
 
   it("ShadowRoot should not expose HTML", () => {
     expect(

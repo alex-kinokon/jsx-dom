@@ -38,7 +38,7 @@ export type Key = string | number | bigint
 
 type ClassName = string | { [key: string]: boolean } | false | null | undefined | ClassName[]
 
-export type ClassNames = ClassName | BasicClassList | Iterable<string>
+export type ClassNames = ClassName | BasicClassList | Iterable<ClassName>
 
 export interface RefObject<T> {
   readonly current: T | null
@@ -58,7 +58,11 @@ interface AttrWithRef<T> extends Attributes {
   ref?: Ref<T> | undefined
 }
 
-export type ReactElement = HTMLElement | SVGElement | DocumentFragment
+/**
+ * This technically should include `DocumentFragment` as well, but a lot of web APIs
+ * expect an `Element`.
+ */
+export type ReactElement = HTMLElement | SVGElement
 
 type DOMFactory<P extends DOMAttributes<T>, T extends Element> = (
   props?: (AttrWithRef<T> & P) | null,

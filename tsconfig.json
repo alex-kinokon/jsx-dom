@@ -3,9 +3,10 @@
     "esModuleInterop": true,
     "allowJs": true,
     "importHelpers": true,
-    "jsx": "react",
+    "jsx": "preserve",
+    "jsxImportSource": "./esm",
     "lib": ["dom", "esnext"],
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
     "noUnusedLocals": true,
@@ -14,7 +15,8 @@
     "resolveJsonModule": true,
     "useDefineForClassFields": true,
     "sourceMap": false,
-    "target": "ES2021"
+    "target": "ES2021",
+    "skipLibCheck": false
   },
   "exclude": ["node_modules", "coverage", "drafts", "alias", "lib"]
 }
